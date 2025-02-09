@@ -2,26 +2,41 @@ import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import { Form, Button, Row, Col } from 'react-bootstrap';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import email from '../../assets/icon/email.png';
 import lock from '../../assets/icon/lock.png';
 import '../../styles/LoginForm.css'; // استيراد ملف الستايل
 import logo from '../../assets/image/logo.png';
 import logouticon from '../../assets/icon/logout.png';
+import '../../firebase/firebaseConfig'; // تأكد من استيراد ملف إعدادات Firebase
 
 const LoginForm = () => {
     const [emailValue, setEmailValue] = useState('');  // تخزين البريد الإلكتروني
     const [passwordValue, setPasswordValue] = useState('');  // تخزين كلمة المرور
     const [errorMessage, setErrorMessage] = useState('');  // لتخزين رسالة الخطأ
     const navigate = useNavigate();
+    const auth = getAuth();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (!emailValue || !passwordValue) {
             setErrorMessage('يرجى ملء جميع الحقول!');
-        } else {
+            return;
+        }
+
+        try {
+            await signInWithEmailAndPassword(auth, emailValue, passwordValue);
             setErrorMessage('');
             navigate('/Home');  // الانتقال للصفحة الرئيسية
+        } catch (error) {
+            if (error.code === 'auth/user-not-found') {
+                setErrorMessage('المستخدم غير موجود، يرجى التأكد من البريد الإلكتروني.');
+            } else if (error.code === 'auth/wrong-password') {
+                setErrorMessage('كلمة المرور غير صحيحة، حاول مرة أخرى.');
+            } else {
+                setErrorMessage('حدث خطأ أثناء تسجيل الدخول، يرجى المحاولة لاحقًا.');
+            }
         }
     };
 
@@ -61,7 +76,7 @@ const LoginForm = () => {
                         </Col>
                     </Form.Group>
 
-                    {/* عرض رسالة الخطأ إذا كانت الحقول فارغة */}
+                    {/* عرض رسالة الخطأ إذا كانت موجودة */}
                     {errorMessage && <p className="error-message text-danger">{errorMessage}</p>}
 
                     <div className="login-actions">

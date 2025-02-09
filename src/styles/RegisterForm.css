@@ -1,16 +1,34 @@
-/* register-form.css */
 .register-container {
     max-width: 800px;
-    height: 650px;
-    margin: 0 auto; /* يمكنك تعديل الارتفاع حسب الحاجة */
+    min-height: 650px; /* استخدمي min-height بدلاً من height لجعل المحتوى مرنًا */
+    margin: 0 auto;
     margin-bottom: 50px;
-    margin-top: 30px; /* تعديل المسافة من أعلى الصفحة */
+    margin-top: 30px;
     padding: 25px;
     background-color: #541a7d8f;
     border-radius: 25px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.282);
     align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* توزيع العناصر بالتساوي */
 }
+
+.invalid-feedback {
+    min-height: 20px; /* حجز مساحة ثابتة لرسالة الخطأ */
+    font-size: 14px;
+    color: red;
+    margin-top: 5px;
+    display: block; /* يبقى الحقل محتفظًا بمساحته */
+    opacity: 0; /* إخفاء الرسالة بدلاً من حذفها */
+    transition: opacity 0.3s ease-in-out; /* تأثير سلس عند الظهور */
+}
+
+.was-validated .invalid-feedback,
+.is-invalid + .invalid-feedback {
+    opacity: 1; /* عرض الرسالة عند الحاجة */
+}
+
 
 .register-title {
     text-align: center;
@@ -19,6 +37,10 @@
     margin-bottom: 30px;
     color: #ffffff;
 }
+
+.form-group {
+    margin-bottom: 20px; /* توفير مسافة ثابتة لكل حقل */
+} 
 
 h4 {
     font-size: 25px;
@@ -71,6 +93,7 @@ h4 {
     font-size: 18px;
     transition: all 0.3s ease-in-out;
     margin-top: 20px; /* إضافة مسافة فوق الزر */
+
 }
 
 .submit-btn:hover {
