@@ -1,0 +1,54 @@
+/* تنسيق الفورم */
+.user-type-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 140px auto;
+    max-width: 600px;
+    height: 350px;
+    padding: 30px;
+    background-color: #541a7d8f;
+    border-radius: 25px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.282);
+}
+
+.user-type-option {
+    width: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.user-type-option:hover  {
+    border: #541A7D 3px solid;
+    transform: scale(1.05);
+    /* لتكبير العنصر عند التمرير عليه */
+}
+
+.user-type-image {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.user-type-title {
+    font-size: 1.5rem;
+    color: #541A7D;
+    font-weight: bold;
+    margin: 0;
+}
+
+.link {
+    text-decoration: none;
+}
+
+

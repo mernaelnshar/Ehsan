@@ -1,0 +1,130 @@
+/* الحاوية الرئيسية */
+.sessionscontainer {
+    margin-top: 50px;
+    margin-left: 270px; /* يترك مسافة تعادل عرض السايدبار */
+    padding: 50px;
+    width: calc(100% - 270px); /* يحسب المساحة المتبقية */
+}
+
+.sessionscontainer .sessionsgrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 50px;
+}
+
+/* تصميم الكارد */
+.sessionscontainer .sessioncard {
+    background: #E7DEEC;
+    width: 340px;
+    height: 300px;
+    border-radius: 10px;
+    border: #9E7DB7 solid 2px;
+    padding: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.sessionscontainer .sessionheader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sessionscontainer .teacherinfo {
+    width: 80px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: Semibold;
+    background-color: #541A7D;
+    color: white;
+    padding: 0px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+.sessionscontainer .teacherinfo p{
+    margin-top: 15px;
+    
+}
+
+.sessionscontainer .icons {
+    display: flex;
+    gap: 10px;
+    color: #541A7D;
+    font-size: 25px;
+}
+
+.sessionscontainer .sessiontitle {
+    color: #541A7D;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+.sessionscontainer .sessiondetails {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #9E7DB7;
+    margin: 10px 0;
+}
+.sessionscontainer .sessiondetails p{
+    border: #9E7DB7 solid 2px;
+    border-radius: 5px;
+    padding: 2px;
+}
+
+/* شريط التقدم */
+.sessionscontainer .progress-section {
+    display: flex;
+    margin: 10px 0;
+    font-size: 13px;
+    font-weight: bold;
+    color: #9747FF;
+}
+
+.sessionscontainer .progress-section span{
+    width: 50px;
+}
+
+.sessionscontainer .progress-container {
+    width: 100%;
+    background: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 20px;
+}
+
+.sessionscontainer .progress-bar {
+    height: 100%;
+    background: #9747FF;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 20px;
+    transition: width 0.5s ease-in-out;
+}
+
+/* زر مراقبة الحضور */
+.sessionscontainer .monitoringbtn {
+    width: 100%;
+    background: #541A7D ;
+    color: white ;
+    border: none ;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+.sessionscontainer .monitoringbtn:hover {
+    background: #E7DEEC ;
+    color: #541A7D ;
+    border: #541A7D solid 2px;
+}

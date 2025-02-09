@@ -1,0 +1,137 @@
+.profile-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 30px;
+    margin-left: 270px;
+    padding: 50px;
+    width: calc(100% - 270px);
+    gap: 2rem;
+}
+
+.profile-content {
+    margin-top: 20px;
+    direction: rtl;
+    
+    text-align: center;
+}
+
+.profile-card {
+    background-color: #E7DEEC;
+    color: #541A7D;
+    width: 40rem;
+    padding: 20px;
+    border-radius: 10px;
+    border: #541A7D solid 3px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.profile-title {
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.edit-icon {
+    cursor: pointer;
+    color: #541A7D;
+    font-size: 1.4rem;
+}
+
+.del-btn{
+    background-color: #541A7D;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 1.5rem;
+    transition: 0.3s;
+    color: white;
+    
+}
+
+.del-btn:hover{
+    background-color: #E7DEEC;
+    color: #541A7D;
+    border: 2px solid #541A7D;
+}
+
+.profile-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: #E7DEEC;
+    height: 26rem;
+    color: #541A7D;
+    width: 20rem;
+    padding: 20px;
+    padding-top: 7rem;
+    border-radius: 10px;
+    border: #541A7D solid 3px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.user-icon {
+    margin-bottom: 30px;
+}
+
+
+.modal-delet-profile .modal-content{
+    background-color: #E7DEEC;
+    color: #541A7D;
+    width: 450px;
+    height: 250px;
+    
+}
+
+.modal-delet-profile .modal-content h3{
+    margin: 2rem;
+}
+
+.modal-delet-profile .modal-content .btn{
+    background-color: #541A7D;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    transition: 0.3s;
+    color: white;
+}
+
+.modal-delet-profile .modal-content .btn:hover{
+    background-color: #E7DEEC;
+    color: #541A7D;
+    border: 2px solid #541A7D;
+}
+
+.modal-edit-profile .modal-content{
+    background-color: #E7DEEC;
+    color: #541A7D;
+    width: 450px;
+    height: 400px;
+}
+
+.modal-edit-profile .modal-content h3{
+    margin: 2rem;
+    font-weight: bold;
+}
+
+.modal-edit-profile .modal-content .btn{
+    background-color: #541A7D;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: 0.3s;
+    color: white;
+}
+
+.modal-edit-profile .modal-content .btn:hover{
+    background-color: #E7DEEC;
+    color: #541A7D;
+    border: 2px solid #541A7D;
+}

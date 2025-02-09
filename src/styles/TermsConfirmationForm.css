@@ -1,0 +1,128 @@
+/* استايل نموذج تأكيد الشروط والأحكام */
+.terms-container {
+    max-width: 600px;
+    margin: 30px auto 50px;
+    padding: 30px;
+    background-color: #541a7d8f;
+    border-radius: 25px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.282);
+    align-items: center;
+}
+
+.terms-title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #ffffff;
+}
+
+.terms-text {
+    font-size: 18px;
+    color: #ffffff;
+    text-align: justify;
+    margin-bottom: 50px;
+    line-height: 1.7;
+}
+
+.form-check-input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    border: 2px solid #541A7D;
+    background-color: #fff;
+}
+
+.form-check-input[type="checkbox"]:checked {
+    background-color: #541A7D;
+    border-color: #541A7D;
+}
+
+.form-check-label {
+    font-size: 18px;
+    color: #ffffff;
+}
+
+.terms-btn , .back-btn {
+    width: 150px;
+    height: 50px;
+    background-color: #541A7D;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    font-size: 18px;
+    transition: all 0.3s ease-in-out;
+    margin-top: 20px;
+}
+
+.terms-btn:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}
+
+.terms-btn:hover:not(:disabled) , .back-btn:hover {
+    background-color: #E7DEEC;
+    color: #541A7D;
+    border: 2px solid #541A7D;
+}
+
+/* تخصيص خلفية المودال */
+.modal-content {
+    background-color: #f9f9f9; /* لون خلفية ناعم */
+    border-radius: 15px; /* زوايا دائرية */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* إضافة ظل */
+    border: none;
+}
+
+/* تخصيص عنوان المودال */
+.modal-header {
+    background-color: #541A7D; /* لون بنفسجي غامق */
+    color: white;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-title {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* تخصيص نص المودال */
+.modal-body {
+    font-size: 18px;
+    color: #333;
+    text-align: center;
+    padding: 20px;
+}
+
+/* تخصيص أزرار المودال */
+.modal-footer {
+    display: flex;
+    justify-content: center;
+    border-top: none;
+}
+
+.modal-footer .btn {
+    width: 120px;
+    height: 45px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* زر الإغلاق */
+.modal-footer .btn-secondary {
+    background-color: #541A7D;
+    color: white;
+    border: none;
+}
+
+.modal-footer .btn-secondary:hover {
+    background-color: #E7DEEC;
+    color: #541A7D;
+    border: 2px solid #541A7D;
+}

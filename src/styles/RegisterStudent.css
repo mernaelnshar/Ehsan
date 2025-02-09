@@ -1,0 +1,150 @@
+.register-student-container {
+    margin-top: 30px;
+    margin-left: 270px;
+    padding: 50px;
+    width: calc(100% - 270px);
+}
+
+.register-student-title{
+    color: #541A7D;
+    text-align: center;
+    margin-bottom: 30px;
+}
+.register-student-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 50px;
+}
+
+.register-student-container .session-card {
+    background: #9E7DB7;
+    padding: 15px;
+    border-radius: 10px;
+    border: #ffffff solid 2px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    text-align: center;
+    transition: 0.3s ease-in-out;
+}
+
+.register-student-container .session-title {
+    color: #ffffff;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 12px 0;
+}
+
+
+
+.register-student-container .session-details {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    
+}
+
+.register-student-container p {
+    font-size: 20px;
+    color: #541A7D;
+    font-weight: bold;
+    padding: 5px;
+}
+
+
+.session-status{
+    margin-right: 60px;
+    background-color: #ffffff;
+    width: 40%;
+    border: #541A7D solid 2px;
+    border-radius: 5px;
+}
+/* تغيير لون نص الحالة */
+.register-student-container .session-status.accepted {
+    color: green;
+    
+}
+
+.register-student-container .session-status.rejected {
+    color: red;
+}
+
+.register-student-container .session-status.pending {
+    color: orange;
+}
+
+
+.register-student-container .add-session-btn {
+    background: #541A7D;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.332);
+}
+
+.register-student-container .modal-add-session  {
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border: none;
+}
+
+
+.register-student-container .modal-add-session .modal-header {
+    background-color: #541A7D;
+    color: white;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    padding: 15px;
+    font-weight: bold;
+}
+
+.register-student-container .modal-add-session .modal-title {
+    font-size: 1.2rem;
+}
+
+.register-student-container .modal-add-session .modal-header .btn-close {
+    color: #E7DEEC;
+    filter: invert(1);
+}
+
+.register-student-container .modal-add-session .modal-body {
+    padding: 20px;
+}
+
+.register-student-container .modal-add-session .modal-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #541A7D;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.register-student-container .modal-add-session .modal-footer {
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+    border-top: none;
+}
+
+.register-student-container .modal-add-session .add-btn {
+    background-color: #541A7D;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: 0.3s;
+    color: white;
+}
+
+.register-student-container .modal-add-session .add-btn:hover {
+    background-color: #E7DEEC;
+    color: #541A7D;
+    border: 2px solid #541A7D;
+} 

@@ -1,0 +1,80 @@
+/* register-form.css */
+.register-container {
+    max-width: 800px;
+    height: 650px;
+    margin: 0 auto; /* يمكنك تعديل الارتفاع حسب الحاجة */
+    margin-bottom: 50px;
+    margin-top: 30px; /* تعديل المسافة من أعلى الصفحة */
+    padding: 25px;
+    background-color: #541a7d8f;
+    border-radius: 25px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.282);
+    align-items: center;
+}
+
+.register-title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #ffffff;
+}
+
+h4 {
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #ffffff;
+    margin-top: 20px;
+}
+.gender{
+    color: #ffffff;
+    font-size: 18px;
+}
+/* تخصيص دائرة الـ Radio Button */
+.form-check-input[type="radio"] {
+    background-color: #fff; /* لون الخلفية */
+    border-color: #541A7D; /* لون الحدود */
+    width: 18px; /* تعديل حجم الدائرة */
+    height: 18px; /* تعديل حجم الدائرة */
+    border-radius: 50%; /* تأكيد أن الشكل دائري */
+}
+
+.form-check-input[type="radio"]:checked {
+    background-color: #541A7D; /* تغيير لون الدائرة عند التحديد */
+    border-color: #541A7D; /* تغيير لون الحدود عند التحديد */
+}
+
+.form-check-input[type="radio"]:focus {
+    border-color: #E7DEEC; /* لون الحدود عند التركيز */
+    box-shadow: 0 0 0 0.25rem rgba(235, 218, 240, 0.5); /* تأثير الظل عند التركيز */
+}
+
+.form-check-label {
+    color: #ffffff; /* تغيير لون النص */
+    font-size: 16px; /* تغيير حجم الخط */
+}
+
+
+.Col {
+    display: flex;
+}
+
+.submit-btn {
+    width: 150px;
+    height: 60px;
+    padding: 10px;
+    background-color: #541A7D;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    font-size: 18px;
+    transition: all 0.3s ease-in-out;
+    margin-top: 20px; /* إضافة مسافة فوق الزر */
+}
+
+.submit-btn:hover {
+    background-color: #E7DEEC;
+    color: #541A7D;
+    border: #541A7D solid 4px;
+}
