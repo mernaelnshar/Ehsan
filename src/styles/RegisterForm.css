@@ -49,17 +49,16 @@ h4 {
     color: #ffffff;
     margin-top: 20px;
 }
-.gender{
-    color: #ffffff;
-    font-size: 18px;
-}
-/* تخصيص دائرة الـ Radio Button */
+
+
+
 .form-check-input[type="radio"] {
     background-color: #fff; /* لون الخلفية */
     border-color: #541A7D; /* لون الحدود */
     width: 18px; /* تعديل حجم الدائرة */
     height: 18px; /* تعديل حجم الدائرة */
     border-radius: 50%; /* تأكيد أن الشكل دائري */
+    cursor: pointer; /* إضافة مؤشر اليد */
 }
 
 .form-check-input[type="radio"]:checked {
@@ -75,7 +74,9 @@ h4 {
 .form-check-label {
     color: #ffffff; /* تغيير لون النص */
     font-size: 16px; /* تغيير حجم الخط */
+    cursor: pointer; /* تسهيل التفاعل */
 }
+
 
 
 .Col {

@@ -27,7 +27,15 @@ const RegisterForm = () => {
     const [firebaseError, setFirebaseError] = useState(null);
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        let { name, value } = e.target;
+
+        if (name === "dateOfBirth" && value.includes("/")) {
+            const [day, month, year] = value.split("/");
+            value = `${year}-${month}-${day}`;
+        }
+
+        setFormData((prevData) => ({ ...prevData, [name]: value }));
+
     };
 
     const validate = () => {
@@ -62,11 +70,11 @@ const RegisterForm = () => {
     const handleRegister = async (e) => {
         e.preventDefault();
         if (!validate()) return;
-    
-    
+
+
         try {
             // جرب إنشاء مستخدم جديد بالبريد الإلكتروني وكلمة المرور
-    
+
             // إذا نجح التسجيل، احفظ البيانات مؤقتًا وانتقل لصفحة تأكيد الشروط
             localStorage.setItem('pendingUser', JSON.stringify(formData));
             navigate('/TermsConfirmationForm');
@@ -78,7 +86,7 @@ const RegisterForm = () => {
             }
         }
     };
-    
+
 
     return (
         <div>
@@ -125,7 +133,200 @@ const RegisterForm = () => {
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3 mx-3" controlId="formNationality">
                             <Col>
-                                <Form.Control type="text" name="nationality" placeholder="أدخل الجنسية" value={formData.nationality} onChange={handleChange} />
+                                <Form.Select name="nationality" value={formData.nationality} onChange={handleChange}>
+                                    <option value="">اختر الجنسية</option>
+                                    {[
+                                        { "en": "Afghan", "ar": "أفغاني" },
+                                        { "en": "Albanian", "ar": "ألباني" },
+                                        { "en": "Algerian", "ar": "جزائري" },
+                                        { "en": "American", "ar": "أمريكي" },
+                                        { "en": "Andorran", "ar": "أندوري" },
+                                        { "en": "Angolan", "ar": "أنغولي" },
+                                        { "en": "Antiguan and Barbudan", "ar": "أنتيغوي وبربودي" },
+                                        { "en": "Argentine", "ar": "أرجنتيني" },
+                                        { "en": "Armenian", "ar": "أرميني" },
+                                        { "en": "Australian", "ar": "أسترالي" },
+                                        { "en": "Austrian", "ar": "نمساوي" },
+                                        { "en": "Azerbaijani", "ar": "أذربيجاني" },
+                                        { "en": "Bahamian", "ar": "باهامي" },
+                                        { "en": "Bahraini", "ar": "بحريني" },
+                                        { "en": "Bangladeshi", "ar": "بنغلاديشي" },
+                                        { "en": "Barbadian", "ar": "باربادوسي" },
+                                        { "en": "Belarusian", "ar": "بيلاروسي" },
+                                        { "en": "Belgian", "ar": "بلجيكي" },
+                                        { "en": "Belizean", "ar": "بليزي" },
+                                        { "en": "Beninese", "ar": "بنيني" },
+                                        { "en": "Bhutanese", "ar": "بوتاني" },
+                                        { "en": "Bolivian", "ar": "بوليفي" },
+                                        { "en": "Bosnian", "ar": "بوسني" },
+                                        { "en": "Botswanan", "ar": "بوتسواني" },
+                                        { "en": "Brazilian", "ar": "برازيلي" },
+                                        { "en": "Bruneian", "ar": "بروني" },
+                                        { "en": "Bulgarian", "ar": "بلغاري" },
+                                        { "en": "Burkinabe", "ar": "بوركيني" },
+                                        { "en": "Burmese", "ar": "بورمي" },
+                                        { "en": "Burundian", "ar": "بوروندي" },
+                                        { "en": "Cambodian", "ar": "كمبودي" },
+                                        { "en": "Cameroonian", "ar": "كاميروني" },
+                                        { "en": "Canadian", "ar": "كندي" },
+                                        { "en": "Cape Verdean", "ar": "كاب فيردي" },
+                                        { "en": "Central African", "ar": "أفريقي مركزي" },
+                                        { "en": "Chadian", "ar": "تشادي" },
+                                        { "en": "Chilean", "ar": "تشيلي" },
+                                        { "en": "Chinese", "ar": "صيني" },
+                                        { "en": "Colombian", "ar": "كولومبي" },
+                                        { "en": "Comorian", "ar": "قمري" },
+                                        { "en": "Congolese", "ar": "كونغولي" },
+                                        { "en": "Costa Rican", "ar": "كوستاريكي" },
+                                        { "en": "Croatian", "ar": "كرواتي" },
+                                        { "en": "Cuban", "ar": "كوبي" },
+                                        { "en": "Cypriot", "ar": "قبرصي" },
+                                        { "en": "Czech", "ar": "تشيكي" },
+                                        { "en": "Danish", "ar": "دنماركي" },
+                                        { "en": "Djiboutian", "ar": "جيبوتي" },
+                                        { "en": "Dominican", "ar": "دومينيكاني" },
+                                        { "en": "Dutch", "ar": "هولندي" },
+                                        { "en": "Ecuadorean", "ar": "إكوادوري" },
+                                        { "en": "Egyptian", "ar": "مصري" },
+                                        { "en": "Salvadoran", "ar": "سلفادوري" },
+                                        { "en": "Equatorial Guinean", "ar": "غيني استوائي" },
+                                        { "en": "Eritrean", "ar": "إريتري" },
+                                        { "en": "Estonian", "ar": "إستوني" },
+                                        { "en": "Ethiopian", "ar": "إثيوبي" },
+                                        { "en": "Fijian", "ar": "فيجي" },
+                                        { "en": "Filipino", "ar": "فلبيني" },
+                                        { "en": "Finnish", "ar": "فنلندي" },
+                                        { "en": "French", "ar": "فرنسي" },
+                                        { "en": "Gabonese", "ar": "غابوني" },
+                                        { "en": "Gambian", "ar": "غامبي" },
+                                        { "en": "Georgian", "ar": "جورجي" },
+                                        { "en": "German", "ar": "ألماني" },
+                                        { "en": "Ghanaian", "ar": "غاني" },
+                                        { "en": "Greek", "ar": "يوناني" },
+                                        { "en": "Grenadian", "ar": "غرينادي" },
+                                        { "en": "Guatemalan", "ar": "غواتيمالي" },
+                                        { "en": "Guinean", "ar": "غيني" },
+                                        { "en": "Guinea-Bissauan", "ar": "غيني بيساوي" },
+                                        { "en": "Guyanese", "ar": "غوياني" },
+                                        { "en": "Haitian", "ar": "هايتي" },
+                                        { "en": "Honduran", "ar": "هندوراسي" },
+                                        { "en": "Hungarian", "ar": "مجري" },
+                                        { "en": "Icelandic", "ar": "آيسلندي" },
+                                        { "en": "Indian", "ar": "هندي" },
+                                        { "en": "Indonesian", "ar": "إندونيسي" },
+                                        { "en": "Iranian", "ar": "إيراني" },
+                                        { "en": "Iraqi", "ar": "عراقي" },
+                                        { "en": "Irish", "ar": "إيرلندي" },
+                                        { "en": "Israeli", "ar": "إسرائيلي" },
+                                        { "en": "Italian", "ar": "إيطالي" },
+                                        { "en": "Ivorian", "ar": "إيفواري" },
+                                        { "en": "Jamaican", "ar": "جامايكي" },
+                                        { "en": "Japanese", "ar": "ياباني" },
+                                        { "en": "Jordanian", "ar": "أردني" },
+                                        { "en": "Kazakh", "ar": "كازاخستاني" },
+                                        { "en": "Kenyan", "ar": "كيني" },
+                                        { "en": "Kiribati", "ar": "كيريباتي" },
+                                        { "en": "Kuwaiti", "ar": "كويتي" },
+                                        { "en": "Kyrgyz", "ar": "قيرغيزي" },
+                                        { "en": "Laotian", "ar": "لاوسي" },
+                                        { "en": "Latvian", "ar": "لاتفي" },
+                                        { "en": "Lebanese", "ar": "لبناني" },
+                                        { "en": "Lesotho", "ar": "ليسوتي" },
+                                        { "en": "Liberian", "ar": "ليبيري" },
+                                        { "en": "Libyan", "ar": "ليبي" },
+                                        { "en": "Liechtensteiner", "ar": "ليختنشتايني" },
+                                        { "en": "Lithuanian", "ar": "ليتواني" },
+                                        { "en": "Luxembourgish", "ar": "لوكسمبورغي" },
+                                        { "en": "Madagascan", "ar": "مدغشقري" },
+                                        { "en": "Malawian", "ar": "مالاوي" },
+                                        { "en": "Malaysian", "ar": "ماليزي" },
+                                        { "en": "Maldivian", "ar": "مالديفي" },
+                                        { "en": "Malian", "ar": "مالي" },
+                                        { "en": "Maltese", "ar": "مالطي" },
+                                        { "en": "Marshallese", "ar": "مارشالي" },
+                                        { "en": "Mauritanian", "ar": "موريتاني" },
+                                        { "en": "Mauritian", "ar": "موريشي" },
+                                        { "en": "Mexican", "ar": "مكسيكي" },
+                                        { "en": "Micronesian", "ar": "ميكرونيزي" },
+                                        { "en": "Moldovan", "ar": "مولدوفي" },
+                                        { "en": "Monacan", "ar": "مونيكي" },
+                                        { "en": "Mongolian", "ar": "منغولي" },
+                                        { "en": "Montenegrin", "ar": "مونتينيغري" },
+                                        { "en": "Moroccan", "ar": "مغربي" },
+                                        { "en": "Mozambican", "ar": "موزمبيقي" },
+                                        { "en": "Namibian", "ar": "ناميبي" },
+                                        { "en": "Nauruan", "ar": "نوري" },
+                                        { "en": "Nepalese", "ar": "نيبالي" },
+                                        { "en": "New Zealander", "ar": "نيوزيلندي" },
+                                        { "en": "Nicaraguan", "ar": "نيكاراغوي" },
+                                        { "en": "Nigerien", "ar": "نيجيري" },
+                                        { "en": "Nigerian", "ar": "نيجيري" },
+                                        { "en": "North Korean", "ar": "كوري شمالي" },
+                                        { "en": "Norwegian", "ar": "نرويجي" },
+                                        { "en": "Omani", "ar": "عماني" },
+                                        { "en": "Pakistani", "ar": "باكستاني" },
+                                        { "en": "Palauan", "ar": "بالاوي" },
+                                        { "en": "Palestinian", "ar": "فلسطيني" },
+                                        { "en": "Panamanian", "ar": "بنمي" },
+                                        { "en": "Papua New Guinean", "ar": "بابوا غيني جديد" },
+                                        { "en": "Paraguayan", "ar": "باراغوياني" },
+                                        { "en": "Peruvian", "ar": "بيروفي" },
+                                        { "en": "Polish", "ar": "بولندي" },
+                                        { "en": "Portuguese", "ar": "برتغالي" },
+                                        { "en": "Qatari", "ar": "قطري" },
+                                        { "en": "Romanian", "ar": "روماني" },
+                                        { "en": "Russian", "ar": "روسي" },
+                                        { "en": "Rwandan", "ar": "رواندي" },
+                                        { "en": "Saint Lucian", "ar": "سانت لوسياني" },
+                                        { "en": "Samoan", "ar": "ساموي" },
+                                        { "en": "San Marino", "ar": "سان ماريني" },
+                                        { "en": "Saudi", "ar": "سعودي" },
+                                        { "en": "Senegalese", "ar": "سنغالي" },
+                                        { "en": "Serbian", "ar": "صربي" },
+                                        { "en": "Seychellois", "ar": "سيشيلي" },
+                                        { "en": "Sierra Leonean", "ar": "سيراليوني" },
+                                        { "en": "Singaporean", "ar": "سنغافوري" },
+                                        { "en": "Slovak", "ar": "سلوفاكي" },
+                                        { "en": "Slovenian", "ar": "سلوفيني" },
+                                        { "en": "Solomon Islander", "ar": "سولوموني" },
+                                        { "en": "Somali", "ar": "صومالي" },
+                                        { "en": "South African", "ar": "جنوب أفريقي" },
+                                        { "en": "South Korean", "ar": "كوري جنوبي" },
+                                        { "en": "Spanish", "ar": "إسباني" },
+                                        { "en": "Sri Lankan", "ar": "سريلانكي" },
+                                        { "en": "Sudanese", "ar": "سوداني" },
+                                        { "en": "Surinamer", "ar": "سورينامي" },
+                                        { "en": "Swazi", "ar": "سوازي" },
+                                        { "en": "Swedish", "ar": "سويدي" },
+                                        { "en": "Swiss", "ar": "سويسري" },
+                                        { "en": "Syrian", "ar": "سوري" },
+                                        { "en": "Taiwanese", "ar": "تايواني" },
+                                        { "en": "Tajik", "ar": "طاجيكي" },
+                                        { "en": "Tanzanian", "ar": "تنزاني" },
+                                        { "en": "Thai", "ar": "تايلندي" },
+                                        { "en": "Togolese", "ar": "توغولي" },
+                                        { "en": "Tongan", "ar": "تونغي" },
+                                        { "en": "Trinidadian", "ar": "ترينيدادي" },
+                                        { "en": "Tunisian", "ar": "تونسي" },
+                                        { "en": "Turkish", "ar": "تركي" },
+                                        { "en": "Turkmen", "ar": "تركماني" },
+                                        { "en": "Tuvaluan", "ar": "توفالي" },
+                                        { "en": "Ugandan", "ar": "أوغندي" },
+                                        { "en": "Ukrainian", "ar": "أوكراني" },
+                                        { "en": "Uruguayan", "ar": "أوروغوياني" },
+                                        { "en": "Uzbek", "ar": "أوزبكي" },
+                                        { "en": "Vanuatu", "ar": "فانواتي" },
+                                        { "en": "Venezuelan", "ar": "فنزويلي" },
+                                        { "en": "Vietnamese", "ar": "فيتنامي" },
+                                        { "en": "Yemeni", "ar": "يمني" },
+                                        { "en": "Zambian", "ar": "زامبي" },
+                                        { "en": "Zimbabwean", "ar": "زيمبابوي" }
+                                    ].map((nationality, index) => (
+                                        <option key={index} value={nationality.en}>
+                                            {nationality.ar}
+                                        </option>
+                                    ))}
+                                </Form.Select>
                                 {errors.nationality && <p className="text-danger">{errors.nationality}</p>}
                             </Col>
                         </Form.Group>
@@ -139,9 +340,25 @@ const RegisterForm = () => {
                     </Form.Group>
 
                     <Form.Group as={Row} className="mb-3 mx-3" controlId="formGender">
-                        <Col className=' d-flex mx-4'>
-                            <Form.Check type="radio" label="ذكر" name="gender" value="ذكر" className='gender mx-3' checked={formData.gender === "ذكر"} onChange={handleChange} />
-                            <Form.Check type="radio" label="أنثى" name="gender" value="أنثى" className='gender mx-3' checked={formData.gender === "أنثى"} onChange={handleChange} />
+                        <Col className='d-flex mx-4'>
+                            <Form.Check
+                                type="radio"
+                                label="ذكر"
+                                name="gender"
+                                value="Male"
+                                className='gender mx-3'
+                                checked={formData.gender === "Male"}
+                                onChange={handleChange}
+                            />
+                            <Form.Check
+                                type="radio"
+                                label="أنثى"
+                                name="gender"
+                                value="Female"
+                                className='gender mx-3'
+                                checked={formData.gender === "Female"}
+                                onChange={handleChange}
+                            />
                             {errors.gender && <p className="text-danger">{errors.gender}</p>}
                         </Col>
                     </Form.Group>

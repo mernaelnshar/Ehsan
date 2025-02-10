@@ -43,7 +43,7 @@ const TermsConfirmationForm = () => {
                 phoneNumber: formData.phoneNumber,
                 email: formData.email,
                 idNumber: formData.idNumber,
-                uid: user.uid
+                
             });
 
             localStorage.setItem('registeredUser', JSON.stringify({
