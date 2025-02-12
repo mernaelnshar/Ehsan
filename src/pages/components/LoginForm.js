@@ -26,17 +26,17 @@ const LoginForm = () => {
         }
 
         try {
-            await signInWithEmailAndPassword(auth, emailValue, passwordValue);
-            setErrorMessage('');
+            // await signInWithEmailAndPassword(auth, emailValue, passwordValue);
+            // setErrorMessage('');
             navigate('/Home');  // الانتقال للصفحة الرئيسية
         } catch (error) {
-            if (error.code === 'auth/user-not-found') {
-                setErrorMessage('المستخدم غير موجود، يرجى التأكد من البريد الإلكتروني.');
-            } else if (error.code === 'auth/wrong-password') {
-                setErrorMessage('كلمة المرور غير صحيحة، حاول مرة أخرى.');
-            } else {
-                setErrorMessage('حدث خطأ أثناء تسجيل الدخول، يرجى المحاولة لاحقًا.');
-            }
+            // if (error.code === 'auth/user-not-found') {
+            //     setErrorMessage('المستخدم غير موجود، يرجى التأكد من البريد الإلكتروني.');
+            // } else if (error.code === 'auth/wrong-password') {
+            //     setErrorMessage('كلمة المرور غير صحيحة، حاول مرة أخرى.');
+            // } else {
+            //     setErrorMessage('حدث خطأ أثناء تسجيل الدخول، يرجى المحاولة لاحقًا.');
+            // }
         }
     };
 

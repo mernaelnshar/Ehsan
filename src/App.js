@@ -16,6 +16,7 @@ import RegisterStudent from './pages/components/RegisterStudent';
 import Profile from './pages/components/Profile';
 import StudentsList from './pages/components/StudentsList';
 import StudentEvaluation from './pages/components/StudentEvaluation';
+import AddNewHifzReview from './pages/components/AddNewHifzReview';
 function App() {
   return (
     <Router>
@@ -39,6 +40,7 @@ function App() {
         <Route element={<DashboardLayoutHome />}>
           <Route path='/StudentsList' element={<StudentsList />} />
           <Route path='/StudentEvaluation' element={<StudentEvaluation />} />
+          <Route path='/AddNewHifzReview' element={<AddNewHifzReview />} />
         </Route>
       </Routes>
     </Router>

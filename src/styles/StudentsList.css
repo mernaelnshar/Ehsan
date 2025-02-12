@@ -96,3 +96,15 @@
 .Container-StudentsList .form-check-label:hover {
     background: #d9b3ff;
 }
+
+.Container-StudentsList-btn{
+    color: white;
+    background-color: #541A7D;
+    border: none;
+}
+
+.Container-StudentsList-btn:hover{
+    color: #541A7D;
+    background-color: #ffffff;
+    border: 3px solid #7319b8;
+}

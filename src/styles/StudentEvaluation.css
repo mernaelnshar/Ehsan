@@ -1,0 +1,99 @@
+.student-evaluation {
+    text-align: center;
+    align-items: center;
+    margin-top: 30px;
+    margin-left: 200px;
+    padding: 50px;
+    width: calc(100% - 270px);
+}
+
+.student-evaluation .student-evaluation-title {
+    color: #541A7D;
+    margin-bottom: 25px;
+}
+
+.sections {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.evaluation-section {
+    flex: 1;
+    background: #eaddf4;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.section-header h2 {
+    font-size: 20px;
+    color: #611d92;
+}
+
+.plus-box-icon {
+    font-size: 22px;
+    color: #611d92;
+    cursor: pointer;
+}
+
+.evaluation-content {
+    background: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+    margin-bottom: 10px;
+}
+
+.evaluation-content p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #444;
+}
+
+.evaluation-content span {
+    font-weight: bold;
+    color: #611d92;
+}
+
+.rating-section {
+    text-align: center;
+    padding: 10px;
+}
+
+.rating-section p {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #611d92;
+}
+
+.rating-label {
+    font-size: 16px;
+    color: #611d92;
+    margin-top: 5px;
+}
+
+.save-button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    margin-top: 30px;
+    background-color: #541A7D;
+    border: none;
+    font-size: 1.5rem;
+    transition: 0.3s;
+    color: white;
+}
+
+.save-button:hover {
+    background-color: #E7DEEC;
+    color: #541A7D;
+    border: 3px solid #541A7D;
+}

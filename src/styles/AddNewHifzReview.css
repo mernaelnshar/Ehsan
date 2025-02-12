@@ -1,0 +1,58 @@
+.add-hifz-review {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #9e7db793;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-top: 70px;
+
+    
+}
+
+h2 {
+    color: #541A7D;
+    margin-bottom: 15px;
+}
+
+.selection-section {
+    margin-bottom: 15px;
+    text-align: right;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #541A7D;
+}
+
+.css-b62m3t-container {
+    width: 100%;
+}
+
+.save-button {
+    width: 100%;
+    background-color: #541A7D;
+    color: white;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.save-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.save-button:hover:not(:disabled) {
+    background-color: #ffffff;
+    color: #541A7D;
+    border: #541A7D 3px solid;
+}
+
+
