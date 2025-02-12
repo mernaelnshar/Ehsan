@@ -1,0 +1,122 @@
+/* 🎨 تنسيق الصفحة العامة */
+.Container-StudentRecords {
+    max-width: 900px;
+    margin-top:100px;
+    margin-right: 180px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 🔍 تنسيق شريط البحث */
+.Container-StudentRecords input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.Container-StudentRecords input[type="text"]:focus {
+    border-color: #541A7D;
+    box-shadow: 0 0 5px rgba(170, 0, 255, 0.5);
+}
+
+/* 📋 تنسيق الجدول */
+.Container-StudentRecords table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.Container-StudentRecords th, td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #541A7D;
+    
+}
+
+/* ضبط توزيع الاسم والأيقونات */
+.Container-StudentRecords td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    color: #541A7D;
+}
+
+
+.Container-StudentRecords th {
+    
+    font-size: 22px;
+    color: #541A7D !important;
+}
+
+/* 🎭 تنسيق الأيقونات داخل الجدول */
+.Container-StudentRecords .iconsTable {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: flex-end;
+    
+}
+
+.Container-StudentRecords .iconsTable .eye{
+    cursor: pointer;
+}
+
+
+
+/* إخفاء السهم الافتراضي */
+.Container-StudentRecords .custom-dropdown-toggle::after {
+    display: none !important;
+    color: #541A7D;
+    cursor: pointer;
+}
+
+/* تغيير لون الأيقونة عند التمرير */
+.Container-StudentRecords .custom-dropdown-toggle svg   {
+    color: #541A7D;
+    cursor: pointer;
+}
+
+
+.dropdown-toggle {
+    background: none !important;
+    border: none !important;
+    font-size: 20px;
+    cursor: pointer;
+    color: #333;
+}
+
+.dropdown-toggle:hover {
+    color: #541A7D;
+}
+
+.dropdown-menu {
+    text-align: right;
+    min-width: 180px;
+    border: #541A7D 2px solid;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    padding: 10px;
+    color: #541A7D;
+    
+}
+
+.dropdown-item svg {
+    margin-left: 10px;
+    color: #541A7D;
+}
+
+.dropdown-item:hover {
+    background-color: #7b26b78a;
+}
+

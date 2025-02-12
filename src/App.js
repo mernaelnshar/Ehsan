@@ -17,6 +17,9 @@ import Profile from './pages/components/Profile';
 import StudentsList from './pages/components/StudentsList';
 import StudentEvaluation from './pages/components/StudentEvaluation';
 import AddNewHifzReview from './pages/components/AddNewHifzReview';
+import StudentRecords from './pages/components/StudentRecords';
+import ProfileStudent from './pages/components/ProfileStudent';
+import ProfileTeacher from './pages/components/ProfileTeacher';
 function App() {
   return (
     <Router>
@@ -41,6 +44,9 @@ function App() {
           <Route path='/StudentsList' element={<StudentsList />} />
           <Route path='/StudentEvaluation' element={<StudentEvaluation />} />
           <Route path='/AddNewHifzReview' element={<AddNewHifzReview />} />
+          <Route path='/StudentRecords' element={<StudentRecords />} />
+          <Route path='/ProfileStudent' element={<ProfileStudent />} />
+          <Route path='/ProfileTeacher' element={<ProfileTeacher />} />
         </Route>
       </Routes>
     </Router>

@@ -24,9 +24,7 @@ const Home = () => {
 
     const navigate = useNavigate(); // لإنشاء التنقل
 
-    const goToStudentsList = () => {
-        navigate('/StudentsList'); // اسم الصفحة اللي هتروحي لها
-    };
+
     return (
         <div className="sessionscontainer" dir="rtl">
             <div className="sessionsgrid">
@@ -40,7 +38,9 @@ const Home = () => {
                             </div>
                             <div className="icons">
                                 <FaVideo className="videoicon" />
-                                <FaIdCard className="idicon"  style={{ cursor: "pointer" }} />
+                                <FaIdCard className="idicon" style={{ cursor: "pointer" }} onClick={() => {
+                                    navigate('/StudentRecords')
+                                }} />
                             </div>
                         </div>
 
@@ -66,13 +66,15 @@ const Home = () => {
                         </div>
 
                         {/* زر الإجراءات */}
-                        <Button className="monitoringbtn" onClick={goToStudentsList}>
+                        <Button className="monitoringbtn" onClick={() => {
+                            navigate('/StudentsList')
+                        }}>
                             {session.role === "معلم" ? "مراقبة الحضور" : "التقييم"}
                         </Button>
                     </div>
                 ))}
             </div>
-        </div>
+        </div >
     );
 };
 

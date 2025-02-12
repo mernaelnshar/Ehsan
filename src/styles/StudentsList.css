@@ -28,6 +28,11 @@
     transition: 0.3s;
 }
 
+input[type="text"]:focus {
+    border-color: #541A7D;
+    box-shadow: 0 0 5px rgba(166, 0, 255, 0.5);
+}
+
 .Container-StudentsList .form-control:focus {
     border-color: #7319b8;
     box-shadow: 0 0 5px rgba(115, 25, 184, 0.5);
