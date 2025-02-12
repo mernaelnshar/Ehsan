@@ -1,0 +1,89 @@
+.navbar-content {
+    width: calc(100% - 120px); /* اجعله يغطي المساحة بجانب الـ Sidebar */
+    height: 60px;
+    background: #9E7DB7;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    position: fixed;
+    top: 0;
+    left: 120px; /* يجب أن يطابق عرض الـ Sidebar */
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    color: white;
+    font-family: 'Cairo', sans-serif;
+}
+.navbar-content .navbar-title{
+    color: #ffffff;
+}
+/* الشريط الجانبي */
+.sidebarHome {
+    width: 120px;
+    height: 100vh;
+    background: #9E7DB7;
+    border-radius: 0px 0px 15px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+
+}
+
+/* اللوجو */
+.sidebarHome .logo-container {
+    width: 102.3px;
+    height: 102.3px;
+    background: #FAF0FF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px 15px 15px 15px;
+    margin-bottom: 20px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.sidebarHome .logo {
+    width: 120px;
+    height: auto;
+}
+
+/* القائمة */
+.sidebarHome .nav-link {
+    width: 120px;
+    margin: 10px;
+    color: white !important;
+    font-size: 20px;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: 0.3s ease;
+}
+
+.sidebarHome .nav-link:hover {
+    background: #541A7D;
+    border-radius: 5px;
+}
+
+/* الرابط النشط */
+.sidebarHome .active-link {
+    background: #541A7D !important;
+    border-radius: 5px;
+}
+
+
+/* أيقونات */
+.sidebarHome .icon {
+    font-size: 35px;
+}
+
+/* زر تسجيل الخروج */
+.sidebarHome .logout {
+    color: #FFD1D1 !important;
+}
+.sidebarHome .logout:hover {
+    background: #8B0000;
+}

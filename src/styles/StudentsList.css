@@ -1,0 +1,98 @@
+/* 🌟 ضبط الصفحة الرئيسية */
+.Container-StudentsList {
+    margin-top: 50px;
+    max-width: 900px;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* 📌 ضبط تنسيق العنوان والبحث */
+.Container-StudentsList .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.Container-StudentsList .header-container h2{
+    color: #541A7D;
+}
+
+/* 🔍 مربع البحث */
+.Container-StudentsList .form-control {
+    width: 650px;
+    border: 2px solid #9E7DB7;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.Container-StudentsList .form-control:focus {
+    border-color: #7319b8;
+    box-shadow: 0 0 5px rgba(115, 25, 184, 0.5);
+}
+
+/* 📋 تنسيق الجدول */
+.Container-StudentsList .table {
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.Container-StudentsList .table thead {
+    background: #7319b8;
+    color: white;
+    text-align: center;
+    font-size: 18px;
+}
+
+.Container-StudentsList .table th, .table td {
+    text-align: center;
+    padding: 12px;
+    font-size: 22px;
+    color: #541A7D;
+}
+
+.Container-StudentsList .table tbody tr {
+    transition: 0.3s;
+}
+
+.Container-StudentsList .table tbody tr:hover {
+    background: #f0e6ff;
+}
+
+/* 🎯 ضبط الراديو بوتنز */
+.Container-StudentsList .radio-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.Container-StudentsList .form-check input[type="radio"] {
+    display: none;
+}
+
+.Container-StudentsList .form-check-label {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    border: 2px solid transparent;
+    color: #541A7D;
+}
+
+/* 🎯 ألوان الحالات */
+.Container-StudentsList .form-check input[type="radio"]:checked + label {
+    border-color: #7319b8;
+    background: #7319b8;
+    color: white;
+}
+
+.Container-StudentsList .form-check-label:hover {
+    background: #d9b3ff;
+}

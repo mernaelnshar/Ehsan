@@ -2,6 +2,7 @@ import React from 'react';
 import '../../styles/Home.css'; // تأكدي من وجود ملف CSS في المسار الصحيح
 import { FaChalkboardTeacher, FaUserGraduate, FaVideo, FaIdCard } from 'react-icons/fa';
 import { Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 const ProgressBar = ({ percentage }) => {
     return (
@@ -18,9 +19,14 @@ const Home = () => {
         { id: 1, role: "معلم", name: 'المعلم', session: 'حلقات الحفظ الفصلية', students: 3872, time: 'من 8 إلى 10 م', type: 'الحفظ', attendance: 75, evaluation: 85 },
         { id: 2, role: "طالب", name: 'الطالب', session: 'حلقات المراجعة', students: 1200, time: 'من 6 إلى 8 م', type: 'المراجعة', attendance: 90, evaluation: 95 },
         { id: 3, role: "معلم", name: 'المعلم', session: 'حلقات التلاوة', students: 950, time: 'من 5 إلى 7 م', type: 'التلاوة', attendance: 60, evaluation: 70 },
-        
+
     ];
 
+    const navigate = useNavigate(); // لإنشاء التنقل
+
+    const goToStudentsList = () => {
+        navigate('/StudentsList'); // اسم الصفحة اللي هتروحي لها
+    };
     return (
         <div className="sessionscontainer" dir="rtl">
             <div className="sessionsgrid">
@@ -34,7 +40,7 @@ const Home = () => {
                             </div>
                             <div className="icons">
                                 <FaVideo className="videoicon" />
-                                <FaIdCard className="idicon" />
+                                <FaIdCard className="idicon"  style={{ cursor: "pointer" }} />
                             </div>
                         </div>
 
@@ -60,7 +66,7 @@ const Home = () => {
                         </div>
 
                         {/* زر الإجراءات */}
-                        <Button className="monitoringbtn">
+                        <Button className="monitoringbtn" onClick={goToStudentsList}>
                             {session.role === "معلم" ? "مراقبة الحضور" : "التقييم"}
                         </Button>
                     </div>

@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/navLogin.css';
 import DashboardLayout from "./pages/components/DashboardLayout";
+import DashboardLayoutHome from "./pages/components/DashboardLayoutHome";
 import LandingPage from './pages/LandingPage';
 import Login from './pages/components/LoginForm';
 import RegisterForm from './pages/components/RegisterForm';
@@ -13,6 +14,8 @@ import Home from './pages/components/Home';
 import RegisterTeacher from './pages/components/RegisterTeacher';
 import RegisterStudent from './pages/components/RegisterStudent';
 import Profile from './pages/components/Profile';
+import StudentsList from './pages/components/StudentsList';
+import StudentEvaluation from './pages/components/StudentEvaluation';
 function App() {
   return (
     <Router>
@@ -31,6 +34,11 @@ function App() {
           <Route path="/register-teacher" element={<RegisterTeacher />} />
           <Route path="/register-student" element={<RegisterStudent />} />
           <Route path="/profile" element={<Profile />} />
+        </Route>
+
+        <Route element={<DashboardLayoutHome />}>
+          <Route path='/StudentsList' element={<StudentsList />} />
+          <Route path='/StudentEvaluation' element={<StudentEvaluation />} />
         </Route>
       </Routes>
     </Router>
