@@ -20,6 +20,7 @@ import AddNewHifzReview from './pages/components/AddNewHifzReview';
 import StudentRecords from './pages/components/StudentRecords';
 import ProfileStudent from './pages/components/ProfileStudent';
 import ProfileTeacher from './pages/components/ProfileTeacher';
+import EducationalPlan from './pages/components/EducationalPlan';
 function App() {
   return (
     <Router>
@@ -47,6 +48,7 @@ function App() {
           <Route path='/StudentRecords' element={<StudentRecords />} />
           <Route path='/ProfileStudent' element={<ProfileStudent />} />
           <Route path='/ProfileTeacher' element={<ProfileTeacher />} />
+          <Route path='/EducationalPlan' element={<EducationalPlan />} />
         </Route>
       </Routes>
     </Router>

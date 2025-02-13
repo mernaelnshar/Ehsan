@@ -1,0 +1,52 @@
+.educational-container {
+    max-width: 900px;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 70px;
+    margin-left: 300px;
+    color: #541A7D;
+    font-size: 30px;
+}
+
+.educational-title {
+    font-size: 30px;
+    font-weight: bold;
+    color: #541A7D;
+}
+
+.educational-cards {
+    display: flex;
+    justify-content: center;
+}
+
+.educational-card {
+    color: #541A7D;
+    border: 5px solid #D9BFEC !important;
+    width: 280px;
+    transition: transform 0.3s ease-in-out;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.educational-card:hover {
+    transform: scale(1.05);
+}
+
+.plan-duration {
+    font-size: 14px;
+    color: #541A7D;
+}
+
+.options .form-check {
+    margin-top: 10px;
+}
+
+.options .form-check-label {
+    font-size: 16px;
+    color: #541A7D;
+}
+
+.alert {
+    text-align: center;
+    font-size: 14px;
+}

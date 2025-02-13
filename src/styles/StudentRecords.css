@@ -120,3 +120,81 @@
     background-color: #7b26b78a;
 }
 
+/* 🌟 تنسيق عام للمودال */
+
+
+/* 🎨 تنسيق العنوان */
+.modal-title {
+    font-weight: bold;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.modal-title svg {
+    font-size: 22px;
+    margin-left: 8px;
+}
+
+/* 📌 تنسيق اسم الطالب */
+h5.text-center {
+    font-size: 22px;
+    font-weight: 600;
+    color: #541A7D;
+}
+
+/* 🎯 تنسيق الراديو بوتون */
+.form-check-label {
+    font-size: 18px;
+    font-weight: 500;
+    color: #0a0000;
+    margin-right: 8px;
+}
+
+.form-check-input {
+    transform: scale(1.2); /* تكبير حجم الراديو */
+    margin-left: 5px;
+}
+
+/* 📝 تنسيق حقل إدخال السبب */
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #541A7D;
+    padding: 10px;
+    font-size: 15px;
+}
+
+.form-control:focus {
+    border-color: #541A7D;
+    box-shadow: 0px 0px 5px rgba(162, 79, 217, 0.5);
+}
+
+/* 🔘 أزرار المودال */
+.modal-footer .btn {
+    font-size: 16px;
+    font-weight: 500;
+    padding: 8px 15px;
+    border-radius: 8px;
+    min-width: 100px;
+    background-color: #541A7D;
+    color: white;
+    border: none;   
+}
+
+.reasons{
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+
+}
+
+.modal-footer .btn:hover {
+    background-color: #fff;
+    color: #541A7D;
+    border: 3px solid #541A7D;
+}
+
+.modal-footer .btn:last-child:disabled {
+    cursor: not-allowed;
+}
+
