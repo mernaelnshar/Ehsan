@@ -32,7 +32,7 @@
 }
 
 /* القائمة */
-.nav-link {
+.sidebar .nav-link {
     width: 220px;
     margin: 10px;
     padding: 10px;
@@ -46,27 +46,27 @@
     transition: 0.3s ease;
 }
 
-.nav-link:hover {
+.sidebar .nav-link:hover {
     background: #541A7D;
     border-radius: 5px;
 }
 
 /* الرابط النشط */
-.active-link {
+.sidebar .active-link {
     background: #541A7D !important;
     border-radius: 5px;
 }
 
 
 /* أيقونات */
-.icon {
+.sidebar .icon {
     font-size: 22px;
 }
 
 /* زر تسجيل الخروج */
-.logout {
+.sidebar .logout {
     color: #FFD1D1 !important;
 }
-.logout:hover {
+.sidebar .logout:hover {
     background: #8B0000;
 }

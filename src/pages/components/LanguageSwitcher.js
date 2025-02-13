@@ -7,8 +7,10 @@ const LanguageSwitcher = ({ switchLanguage }) => {
 
     const handleLanguageChange = (lang) => {
         setActive(lang);
-        switchLanguage(lang);  // استدعاء الدالة لتغيير اللغة
+        switchLanguage(lang);
+        document.documentElement.setAttribute("dir", lang === "ar" ? "rtl" : "ltr");
     };
+    
 
     return (
         <div className="ArEn">

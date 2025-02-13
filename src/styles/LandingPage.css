@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
     scroll-behavior: smooth;
     min-height: 100vh;
     margin: 0;
@@ -9,136 +10,173 @@ html, body {
 }
 
 body {
-    flex: 1;  /* يضمن أن محتوى الصفحة يأخذ المساحة المتاحة */
-    overflow-x: hidden;  /* لمنع التمرير الأفقي */
+    flex: 1;
+    overflow-x: hidden;
+    direction: rtl;
+    text-align: right;
 }
 
-.Navbar {
-    width: 100%;
-    height: 80px;
-    background-color: #E2D3DB;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.22);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    padding: 0 20px;
-    align-self: flex-start;
+
+/* تعديل المسافات والتراص عند اللغة العربية */
+.body[dir="rtl"] .navbar-nav {
+    margin-left: auto;
+    margin-right: 0;
 }
 
+.body[dir="ltr"] .navbar-nav {
+    margin-right: auto;
+    margin-left: 0;
+}
+
+/* تحسين تصميم زر اللغات */
 .ArEn {
     display: flex;
-    align-items: start;
-    gap: 5px;
-    padding-left: 30px;
+    align-items: center;
+    gap: 10px;
+    padding-right: 30px;
 }
 
+.body[dir="rtl"] .ArEn {
+    padding-left: 30px;
+    padding-right: unset;
+}
+
+/* تعديل المظهر عند تغيير اللغة */
 .ArEn .link {
     font-size: 16px;
     font-family: 'Cairo', sans-serif;
     text-decoration: none;
     transition: all 0.3s ease;
     color: #541A7D;
+    cursor: pointer;
 }
 
 .ArEn .link.active-ar {
-    color: #06B211;  /* اللون الأخضر عند تفعيل AR */
+    color: #06B211;
     font-weight: 900;
     text-decoration: underline;
 }
 
 .ArEn .link.active-en {
-    color: #06B211;  /* اللون الموف عند تفعيل EN */
+    color: #06B211;
     font-weight: 700;
     text-decoration: underline;
 }
 
+
+/* تخصيص شكل الـ Navbar */
+.navbar {
+    width: 100%;
+    height: 80px;
+    background-color: #E2D3DB !important;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.22);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    padding: 0 20px;
+}
+
+/* تخصيص الروابط داخل الـ Navbar */
+.navbar-nav .nav-link {
+    font-size: 20px;
+    font-weight: 700;
+    color: #541A7D !important;
+    text-decoration: none;
+    transition: 0.3s ease-in-out;
+
+}
+
+.navbar-nav .nav-link:hover {
+    text-decoration: underline;
+}
+
+/* تخصيص زر اللغات */
+.ArEn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-left: 30px;
+}
 .ArEn .link:hover {
     opacity: 0.8;
 }
-
-.nav-links {
-    display: flex;
-    align-items: start;
-    gap: 30px;
-    padding-right: 50px;
+/* تحسين تناسق الأزرار عند تصغير الشاشة */
+.navbar-toggler {
+    border: none;
+    outline: none;
+    box-shadow: none;
 }
 
-.nav-links .link {
-    font-size: 24px;
-    font-family: 'Cairo', sans-serif;
-    font-weight: 700;
-    color: #541A7D;
-    text-decoration: none;
-    transition: 0.3s ease-in-out;
-}
-
-.nav-links .link:hover {
-    text-decoration: underline;
-}
 
 .main {
     width: 100vw;
-    height: 650px;
+    height: 700px;
     background-image: url('../assets/image/Home.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     background-color: antiquewhite;
 }
 
-.right {
+.text-container {
     text-align: right;
-    flex: 1;
     padding: 50px;
 }
 
-.left {
-    flex: 1;
+.body[dir="ltr"] .text-container{
+    text-align: left;
+}
+.image-container {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .title {
-    width: 617px;
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    max-width: 617px;
     height: 73px;
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.22);
 }
 
+
 .title span {
-    font-size: 48px;
+    font-size: 40px;
     font-family: 'Cairo', sans-serif;
     font-weight: 700;
-    word-wrap: break-word;
+    display: block;
 }
 
-/* تنسيق النص الأول */
+.body[dir="ltr"] .title span {
+    font-size: 32px;
+}
+
 .title span:nth-child(1) {
     color: #541A7D;
 }
 
-/* تنسيق النص الثاني */
 .title span:nth-child(2) {
     color: #A175C2;
 }
 
-/* تنسيق النص الثالث */
 .title span:nth-child(3) {
     color: #541A7D;
 }
 
 .text-description {
-    width: 700px;
-    text-align: right;
+    max-width: 700px;
     color: #320652;
     font-size: 30px;
     font-weight: 400;
+}
+
+.body[dir="ltr"] .text-description{
+    font-size: 25px;
 }
 
 .btnn {
@@ -148,7 +186,7 @@ body {
 }
 
 .btnn button {
-    width: 177px;
+    width: 185px;
     height: 58px;
     font-size: 20px;
     font-family: 'Cairo', sans-serif;
@@ -162,6 +200,12 @@ body {
     color: #E7DEEC;
 }
 
+.body[dir="ltr"] .btnn button {
+    width: 250px;
+    height: 58px;
+    font-size: 20px;
+}
+
 .btnn button:hover {
     background-color: #E7DEEC;
     color: #541A7D;
@@ -170,33 +214,33 @@ body {
 }
 
 .btnn button img {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
 }
 
-.main .logo {
+.logo {
     width: 550px;
     height: 450px;
 }
 
+
 .NumberOfStudentsAndTeachers {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 50px;
-    padding: 50px 0;
     background-color: #C7B6D6;
     width: 100%;
     height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .group {
     text-align: center;
-    margin: 50px;
 }
 
 .num {
     display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .num h1 {
@@ -210,7 +254,7 @@ body {
 .num img {
     width: 40px;
     height: 40px;
-    margin-top: 30px;
+    margin-top: 10px;
 }
 
 .group p {
@@ -221,127 +265,114 @@ body {
     margin-top: 10px;
 }
 
-.Features {
+
+.features-section {
     padding: 50px 0;
-    height: 720px;
-    background: #FFF8EB;
-    text-align: center;
-    font-family: 'Cairo', sans-serif;
+    background: #fff8eb;
 }
 
-.Features h2 {
-    color: #541A7D;
+.features-title {
+    color: #541a7d;
     font-size: 48px;
     font-weight: 1000;
     margin-top: 43px;
 }
 
-.Features p {
-    color: #9953CE;
+.features-description {
+    color: #9953ce;
     font-size: 26px;
     font-weight: 400;
     margin: 20px auto;
     width: 60%;
 }
 
-.Features .cards {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    margin-top: 60px;
-}
-
-.Features .card {
-    width: 385px;
-    height: 340px;
-    background: #9E7DB7;
+.feature-card {
+    width: 22rem;
+    height: 21rem;
+    background: #9e7db7 !important;
     box-shadow: 3px 10px 4px rgba(0, 0, 0, 0.15);
     border-radius: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    text-align: center;
     padding: 20px;
     color: white;
 }
 
-.Features .card img {
+.feature-img {
     width: 89px;
     height: 90px;
+    margin: auto;
 }
 
-.Features .card h4 {
+.feature-title {
     font-size: 30px;
     font-weight: 700;
 }
 
-.Features .card p {
+.feature-text {
     font-size: 24px;
     font-weight: 700;
     color: #320652;
     text-align: center;
 }
 
-.Howit {
+/* ************************************** */
+.howit-section {
     text-align: center;
     padding: 50px 20px;
-    background: #C7B6D6;
+    background: #c7b6d6;
 }
 
-.Howit h2 {
+.howit-title {
     font-size: 48px;
-    color: #551A7D;
+    color: #551a7d;
     margin-bottom: 30px;
 }
 
-.Howit .cards {
+.howit-cards {
     display: flex;
     justify-content: center;
-    gap: 150px;
     flex-wrap: wrap;
+    gap: 100px;
 }
 
-.Howit .cards div {
-    background: #FFF8EB;
+.howit-card {
+    background: #fff8eb !important;
     padding: 20px;
     border-radius: 50%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.326);
     transition: transform 0.3s ease-in-out;
     width: 300px;
     height: 300px;
-    border: 4px dotted #541A7D;
+    border: 4px dotted #541a7d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
-.cards div:hover {
+.howit-card:hover {
     transform: translateY(-5px);
 }
 
-.Howit .cards h4 {
-    font-size: 25px;
-    color: #541A7D;
-    padding-top: 100px;
+.howit-text {
+    font-size: 35px;
+    color: #541a7d;
+    text-align: center;
+    padding-top: 70px;
+
 }
 
-.Howit .cards .card2 {
+.step2 {
     margin-top: 100px;
 }
 
-.Howit .cards .card3 {
+.step3 {
     margin-top: 200px;
 }
 
-.ContactUs {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 50px;
-}
-
-.contact-container {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    padding-right: 100px;
+/* **************************************** */
+.contact-us {
+    padding: 50px 20px;
 }
 
 .photo {
@@ -350,73 +381,52 @@ body {
     justify-content: center;
     align-items: center;
     gap: 20px;
-    padding-left: 120px;
 }
 
-.photo img {
-    width: 399px;
-    height: 403px;
+.email-photo {
+    width: 350px;
+    height: auto;
 }
 
 .icons {
     display: flex;
-    gap: 100px;
+    gap: 30px;
+    justify-content: center;
+    margin-top: 20px;
 }
 
-.icons a img {
-    width: 50px;
-    height: 43px;
+.icon {
+    font-size: 40px;
+    color: #541a7d;
+    transition: color 0.3s ease-in-out;
 }
+
+.icon:hover {
+    color: #9953ce;
+}
+
 
 .contact-box {
-    flex-grow: 1;
-    background: #E7DEEC;
+    background: #e7deec;
     padding: 30px;
     border-radius: 25px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    max-width: 650px;
 }
 
 .contact-title {
     text-align: center;
-    color: #541A7D;
-    font-size: 48px;
-    font-family: 'Cairo', sans-serif;
+    color: #541a7d;
+    font-size: 36px;
     font-weight: 900;
     margin-bottom: 20px;
-}
-
-.contact-box label {
-    text-align: center;
-    color: black;
-    font-size: 18px;
-    font-family: 'Cairo', sans-serif;
-    font-weight: 900;
-}
-
-.contact-box input,
-.contact-box textarea {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    font-size: 16px;
-    font-family: 'Cairo', sans-serif;
-}
-
-.contact-box textarea {
-    resize: none;
-    height: 100px;
 }
 
 .submitbtn {
     width: 150px;
     height: 50px;
-    background: #541A7D;
+    background: #541a7d;
     color: white;
     font-size: 20px;
-    font-family: 'Cairo', sans-serif;
     font-weight: 700;
     border: none;
     border-radius: 15px;
@@ -427,71 +437,90 @@ body {
 }
 
 .submitbtn:hover {
-    background-color: #E7DEEC;
-    color: #541A7D;
-    border: #541A7D solid 4px;
+    background-color: #e7deec;
+    color: #541a7d;
+    border: 4px solid #541a7d;
 }
 
 .submitbtn:active {
     transform: scale(0.98);
 }
 
-
 /* ************************************************************************ */
 .footer-container {
-    font-size: 18px;
-    display: flex;
-    justify-content: space-between;
-    padding: 50px;
     background-color: #9E7DB7;
     color: #E7DEEC;
-    max-height: 200px;
-    flex-wrap: wrap; /* ليتعامل مع الشاشات الصغيرة */
+    padding: 30px 0;
+    font-size: 18px;
+    font-weight: 700;
+
 }
 
-.footer-container .left-text, 
-.footer-container .right-text {
-    display: block;
+.footer-container .contact-container{
+    margin-right: 30px;
+}
+.body[dir="ltr"] .footer-container .contact-container{
+    margin-left: 30px;
+}
+
+.footer-container .contact-email{
+    margin-right: 100px;
+}
+
+.body[dir="ltr"] .footer-container .contact-email{
+    margin-left: 130px;
+}
+
+.footer-container .iconsFooter {
+    display: flex;
+    gap: 20px;
+    margin: 10px;
+    margin-right: 170px;
+}
+.body[dir="ltr"] .footer-container .iconsFooter{
+    margin-left: 170px;
 }
 
 .footer-container .privacy-terms {
-    display: flex;
-    gap: 30px;
-    margin-top: 10px;
+    margin-right: 80px;
+}
+.body[dir="ltr"] .footer-container .privacy-terms{
+    width: 350px;
 }
 
-.footer-container .nav-links {
-    display: flex;
-    flex-wrap: wrap; /* للسماح بالتوزيع المناسب على الشاشات الصغيرة */
-    gap: 30px;
-    margin: 10px 0;
-}
-
-.footer-container .nav-links .link {
-    font-size: 24px;
-    font-family: 'Cairo', sans-serif;
-    font-weight: 700;
+.footer-container .iconsFooter .icon {
+    font-size: 30px;
     color: #541A7D;
+    transition: color 0.3s ease-in-out;
+}
+
+.footer-container .iconsFooter .icon:hover {
+    color: #E7DEEC;
+}
+
+.footer-container .nav-links .nav-link {
+    font-size: 20px;
+    font-weight: 700;
+    color: #541A7D !important;
     text-decoration: none;
     transition: 0.3s ease-in-out;
 }
 
-.footer-container .nav-links .link:hover {
+.body[dir="ltr"] .footer-container .nav-links .nav-link{
+    font-size: 12px;
+}
+
+.footer-container .nav-links .nav-link:hover {
     text-decoration: underline;
 }
 
-.contact-email,
-.privacy-terms p,
-.copyright-text {
-    font-family: 'Cairo', sans-serif;
-    font-weight: 700;
-    margin: 5px 0;
-}
-
-.footer-container .right-text .logo-container {
+.footer-container .logo-container {
     display: flex;
-    align-items: center;
-    margin-bottom: 10px;
+    margin-left: 100px;
+    gap: 10px;
+}
+.body[dir="ltr"] .footer-container .logo-container{
+    margin-right: 200px;
 }
 
 .footer-container .logo {
@@ -502,16 +531,4 @@ body {
 .footer-container .brand-name {
     color: #541A7D;
     font-weight: 700;
-    margin-right: 10px;
-}
-
-.footer-container .iconsFooter {
-    display: flex;
-    gap: 40px;
-    margin: 10px 0;
-}
-
-.footer-container .iconsFooter a img {
-    width: 30px;
-    height: 30px;
 }

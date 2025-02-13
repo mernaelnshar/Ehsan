@@ -1,11 +1,35 @@
 import React, { useState } from 'react';
-import { Form, Button, Container } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import emailphoto from '../../assets/image/send-mail (1) 1.png';
-import insta from '../../assets/icon/insta.png';
-import xxx from '../../assets/icon/x.png';
-import whats from '../../assets/icon/whats.png';
+import { FaInstagram, FaWhatsapp, FaXTwitter } from "react-icons/fa6"; // استيراد الأيقونات
 
-function ContactUs() {
+
+function ContactUs({ language }) {
+    const texts = {
+        ar: {
+            title: "اتصل بنا",
+            name: "الاسم",
+            namePlaceholder: "أدخل اسمك",
+            email: "البريد الإلكتروني",
+            emailPlaceholder: "example@email.com",
+            emailNote: "لن نشارك بريدك الإلكتروني مع أي شخص آخر.",
+            message: "الرسالة",
+            messagePlaceholder: "اكتب رسالتك هنا...",
+            submit: "إرسال",
+        },
+        en: {
+            title: "Contact Us",
+            name: "Name",
+            namePlaceholder: "Enter your name",
+            email: "Email",
+            emailPlaceholder: "example@email.com",
+            emailNote: "We will not share your email with anyone else.",
+            message: "Message",
+            messagePlaceholder: "Write your message here...",
+            submit: "Send",
+        }
+    };
+
     // تعريف الحالات
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -18,64 +42,78 @@ function ContactUs() {
     };
 
     return (
-        <div className='ContactUs' id='contact'>
-            <div className='photo'>
-                <img src={emailphoto} alt="email" />
-                <div className='icons'>
-                    <a href='#'><img src={insta} alt="instagram" /></a>
-                    <a href='#'><img src={xxx} alt="xxx" /></a>
-                    <a href='#'><img src={whats} alt="whatsapp" /></a>
-                </div>
-            </div>
+        <div className="contact-us text-center" id="contact">
+            <Container>
+                <Row className="align-items-center justify-content-center">
+                    {/* نموذج الاتصال */}
+                    <Col lg={6}>
+                        <div className="contact-box">
+                            <Form onSubmit={handleSubmit}>
+                                <h2 className="contact-title">{texts[language].title}</h2>
 
-            <Container className="contact-container" dir='rtl'>
-                <div className="contact-box">
-                    <Form onSubmit={handleSubmit}>
-                        <h2 className="contact-title">تواصل معنا بسهولة</h2>
+                                {/* اسم المستخدم */}
+                                <Form.Group className="mb-3" controlId="formName">
+                                    <Form.Label>{texts[language].name}</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder={texts[language].namePlaceholder}
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                        required
+                                    />
+                                </Form.Group>
 
-                        {/* اسم المستخدم */}
-                        <Form.Group className="mb-3" controlId="formName">
-                            <Form.Label>الاسم</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="أدخل اسمك"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                required
-                            />
-                        </Form.Group>
+                                {/* البريد الإلكتروني */}
+                                <Form.Group className="mb-3" controlId="formEmail">
+                                    <Form.Label>{texts[language].email}</Form.Label>
+                                    <Form.Control
+                                        type="email"
+                                        placeholder={texts[language].emailPlaceholder}
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        required
+                                    />
+                                    <Form.Text muted>{texts[language].emailNote}</Form.Text>
+                                </Form.Group>
 
-                        {/* البريد الإلكتروني */}
-                        <Form.Group className="mb-3" controlId="formEmail">
-                            <Form.Label>البريد الإلكتروني</Form.Label>
-                            <Form.Control
-                                type="email"
-                                placeholder="example@email.com"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                            />
-                            <Form.Text muted>لن نشارك بريدك الإلكتروني مع أي شخص آخر.</Form.Text>
-                        </Form.Group>
+                                {/* الرسالة */}
+                                <Form.Group className="mb-3" controlId="formMessage">
+                                    <Form.Label>{texts[language].message}</Form.Label>
+                                    <Form.Control
+                                        as="textarea"
+                                        rows={4}
+                                        placeholder={texts[language].messagePlaceholder}
+                                        value={message}
+                                        onChange={(e) => setMessage(e.target.value)}
+                                        required
+                                    />
+                                </Form.Group>
 
-                        {/* الرسالة */}
-                        <Form.Group className="mb-3" controlId="formMessage">
-                            <Form.Label>الرسالة</Form.Label>
-                            <Form.Control
-                                as="textarea"
-                                rows={4}
-                                placeholder="اكتب رسالتك هنا..."
-                                value={message}
-                                onChange={(e) => setMessage(e.target.value)}
-                                required
-                            />
-                        </Form.Group>
+                                <Button type="submit" className="submitbtn">
+                                    {texts[language].submit}
+                                </Button>
+                            </Form>
 
-                        <Button type="submit" className="submitbtn" id='Login'>
-                            إرسال
-                        </Button>
-                    </Form>
-                </div>
+                        </div>
+                    </Col>
+                    {/* الصورة والأيقونات */}
+                    <Col lg={5} className="text-center">
+                        <div className="photo">
+                            <img src={emailphoto} alt="email" className="email-photo" />
+                            <div className="icons">
+                                <a href="#" className="icon">
+                                    <FaInstagram />
+                                </a>
+                                <a href="#" className="icon">
+                                    <FaXTwitter />
+                                </a>
+                                <a href="#" className="icon">
+                                    <FaWhatsapp />
+                                </a>
+                            </div>
+                        </div>
+                    </Col>
+                </Row>
             </Container>
         </div>
     );
