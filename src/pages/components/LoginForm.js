@@ -67,7 +67,7 @@ const LoginForm = () => {
     };
 
     return (
-        <div>
+        <div dir={language === 'ar' ? 'rtl' : 'ltr'}>
             <div className="Navbar">
                 <Link to="/" className="link">
                     <img src={logoutIcon} className='logouticon' alt='logout icon' />

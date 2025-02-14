@@ -11,8 +11,23 @@
     align-items: center;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* توزيع العناصر بالتساوي */
+     /* توزيع العناصر بالتساوي */
 }
+
+
+h4 {
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #ffffff;
+    margin-top: 20px;
+    text-align: end;
+}
+[dir="ltr"] h4{
+    text-align: start;
+}
+
+
 
 .invalid-feedback {
     min-height: 20px; /* حجز مساحة ثابتة لرسالة الخطأ */
@@ -41,14 +56,6 @@
 .form-group {
     margin-bottom: 20px; /* توفير مسافة ثابتة لكل حقل */
 } 
-
-h4 {
-    font-size: 25px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #ffffff;
-    margin-top: 20px;
-}
 
 
 
