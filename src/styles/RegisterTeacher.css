@@ -1,8 +1,15 @@
 .register-teacher-container {
     margin-top: 30px;
-    margin-left: 270px;
     padding: 50px;
     width: calc(100% - 270px);
+}
+
+.register-teacher-container.rtl{
+    margin-left: 270px;
+}
+
+.register-teacher-container.ltr{
+    margin-right: 270px;
 }
 
 .register-teacher-title{
@@ -37,32 +44,39 @@
 
 .session-time {
     width: 50%;
-    margin-right: 50px;
     color: #9E7DB7;
     border: #9E7DB7 solid 2px;
     border-radius: 5px;
     padding: 2px;
 }
-
-.session-details {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
+.register-teacher-container.rtl .session-time{
+    margin-right: 50px;
+}
+.register-teacher-container.ltr .session-time{
+    margin-left: 50px;
 }
 
+
 .session-type {
-    font-size: 20px;
+    font-size: 18px;
     color: #541A7D;
     font-weight: bold;
     padding: 5px;
 }
 
 .session-details {
+    width: 200px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 20px;
     font-weight: bold;
+    margin-top: 20px;
+    
+}
+.register-teacher-container.ltr .session-details {
+    gap: 50px;
+    font-size: 18px;
 }
 
 .session-status, .session-type {
@@ -71,9 +85,16 @@
     gap: 5px;
 }
 
+.register-teacher-container.ltr .session-status{
+    width: 250px;
+    font-size: 15px;
+    padding: 2px;
+}
+
 /* تغيير لون نص الحالة */
 .session-status.accepted {
     color: green;
+    
 }
 
 .session-status.rejected {
@@ -94,9 +115,15 @@
     cursor: pointer;
     position: fixed;
     bottom: 20px;
-    right: 20px;
     font-size: 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.332);
+}
+
+.register-teacher-container.rtl .add-session-btn{
+    right: 20px;
+}
+.register-teacher-container.ltr .add-session-btn{
+    left: 20px;
 }
 
 .modal-add-session  {
@@ -114,6 +141,13 @@
     border-top-right-radius: 12px;
     padding: 15px;
     font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-add-session.rtl .modal-title {
+    margin-left: 320px; 
 }
 
 .modal-add-session .modal-title {
@@ -129,13 +163,7 @@
     padding: 20px;
 }
 
-.modal-add-session .modal-input {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #541A7D;
-    border-radius: 6px;
-    font-size: 1rem;
-}
+
 
 .modal-add-session .modal-footer {
     display: flex;
@@ -159,3 +187,23 @@
     color: #541A7D;
     border: 2px solid #541A7D;
 }
+
+.custom-select {
+    appearance: none; 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='20' height='20' fill='black'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+    padding-right: 30px; 
+}
+
+.arabic-select {
+    direction: rtl;
+    text-align: right;
+    background-position: left 10px center; 
+    padding-right: 10px;
+    padding-left: 30px; /* إضافة مساحة للسهم في الجهة اليسرى */
+}
+

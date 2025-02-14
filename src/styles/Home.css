@@ -1,9 +1,16 @@
 /* الحاوية الرئيسية */
 .sessionscontainer {
     margin-top: 50px;
-    margin-left: 270px; /* يترك مسافة تعادل عرض السايدبار */
+     /* يترك مسافة تعادل عرض السايدبار */
     padding: 50px;
     width: calc(100% - 270px); /* يحسب المساحة المتبقية */
+}
+.sessionscontainer.rtl{
+    margin-left: 270px;
+}
+
+.sessionscontainer.ltr{
+    margin-right: 270px;
 }
 
 .sessionscontainer .sessionsgrid {
@@ -42,6 +49,9 @@
     padding: 0px 10px;
     border-radius: 5px;
     font-size: 14px;
+}
+.sessionscontainer.ltr .teacherinfo{
+    width: 90px;
 }
 .sessionscontainer .teacherinfo .icon{
     color: white;
@@ -93,7 +103,13 @@
 
 .sessionscontainer .progress-section span{
     width: 50px;
+    
 }
+
+.sessionscontainer.ltr .progress-section span{
+    margin-right: 30px;
+}
+
 
 .sessionscontainer .progress-container {
     width: 100%;
@@ -133,4 +149,47 @@
     background: #E7DEEC ;
     color: #541A7D ;
     border: #541A7D solid 2px;
+}
+
+
+/* ******************************************** */
+
+.modal-content[dir="ltr"] {
+    direction: ltr;
+    text-align: left;
+}
+
+.modal-content[dir="rtl"] {
+    direction: rtl;
+    text-align: right;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+}
+
+.modal-header[dir="rtl"] .modal-title {
+    margin-left: 370px; /* إضافة مسافة بين العنوان وزر الإغلاق */
+}
+
+
+.rating-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.rating-label {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.w-100 {
+    font-size: 18px;
+    font-weight: bold;
 }
