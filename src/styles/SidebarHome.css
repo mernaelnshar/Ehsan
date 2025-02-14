@@ -1,5 +1,5 @@
-.navbar-content {
-    width: calc(100% - 120px); /* اجعله يغطي المساحة بجانب الـ Sidebar */
+.navbarHome-content {
+    width: calc(100% - 120px); 
     height: 60px;
     background: #9E7DB7;
     display: flex;
@@ -7,20 +7,97 @@
     padding: 0 20px;
     position: fixed;
     top: 0;
-    left: 120px; /* يجب أن يطابق عرض الـ Sidebar */
+    gap: 20px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     color: white;
     font-family: 'Cairo', sans-serif;
 }
-.navbar-content .navbar-title{
-    color: #ffffff;
+/* الاتجاه من اليمين إلى اليسار (العربية) */
+.navbarHome.rtl {
+    margin-left: 120px; /* دفع الـ Navbar إلى اليمين عند العربية */
+    direction: rtl;
 }
+
+/* الاتجاه من اليسار إلى اليمين (الإنجليزية) */
+.navbarHome.ltr {
+    margin-right: 120px; /* دفع الـ Navbar إلى اليسار عند الإنجليزية */
+    direction: ltr;
+}
+
+/* اسم العنوان */
+.navbarHome-content .navbar-title {
+font-size: 24px;
+font-weight: 600;
+color: #ffffff;
+}
+
+/* حاوية الإشعارات */
+.navbarHome-content .notifications-container {
+position: relative;
+}
+
+/* أيقونة الجرس */
+.navbarHome-content .notification-icon {
+font-size: 24px;
+cursor: pointer;
+transition: 0.3s;
+}
+
+.navbarHome-content .notification-icon:hover {
+color: #FFD700;
+}
+
+/* قائمة الإشعارات */
+.navbarHome-content .notifications-dropdown {
+position: absolute;
+top: 40px;
+width: 250px;
+background: white;
+color: #541A7D;
+border-radius: 8px;
+box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+overflow: hidden;
+transition: all 0.3s ease;
+}
+
+/* ضبط مكان قائمة الإشعارات بناءً على اللغة */
+.navbarHome.rtl .notifications-dropdown {
+right: auto;
+left: -110px;
+}
+
+.navbarHome.ltr .notifications-dropdown {
+left: auto;
+right: -110px;
+}
+
+/* عنصر الإشعار */
+.navbarHome-content .notification-item {
+padding: 10px;
+border-bottom: 1px solid #541A7D;
+transition: background 0.3s;
+}
+
+.navbarHome-content .notification-item:hover {
+background: #9E7DB7;
+}
+
+/* عندما لا توجد إشعارات */
+.navbarHome-content .notification-item.empty {
+text-align: center;
+color: gray;
+font-style: italic;
+}
+
+
+
+
+/* ******************************************************************************** */
 /* الشريط الجانبي */
 .sidebarHome {
     width: 120px;
     height: 100vh;
     background: #9E7DB7;
-    border-radius: 0px 0px 15px 0px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -32,11 +109,14 @@
 .sidebarHome.rtl {
     left: 0;
     direction: rtl;
+    border-radius: 0px 0px 15px 0px;
+
 }
 .sidebarHome.ltr {
     right: 0;
     left: auto;
     direction: ltr;
+    border-radius: 0px 0px 0px 15px;
 }
 
 /* اللوجو */

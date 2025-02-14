@@ -1,6 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState , useContext } from 'react';
 import { FaBell } from 'react-icons/fa';
+import '../../styles/SidebarHome.css'; 
+import { LanguageContext } from '../../context/LanguageContext'; // استيراد الكونتكست
+
 const NavbarHome = () => {
+    const { language} = useContext(LanguageContext);
+    const isArabic = language === "ar";
     // حالة التحكم في ظهور قائمة الإشعارات
         const [showNotifications, setShowNotifications] = useState(false);
     
@@ -12,8 +17,8 @@ const NavbarHome = () => {
         ];
     
         return (
-            <div className="navbar" dir='rtl'>
-                <div className="navbar-content">
+            <div className={`navbarHome ${isArabic ? "rtl" : "ltr"}`} dir={language === 'ar' ? 'rtl' : 'ltr'}>
+                <div className="navbarHome-content">
                     {/* اسم الموقع */}
                     <h2 className="navbar-title">ميرنا حماده حنفي</h2>
     

@@ -8,24 +8,35 @@
     padding: 0 20px;
     position: fixed;
     top: 0;
-    left: 270px; /* يجب أن يطابق عرض الـ Sidebar */
+    gap: 20px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     color: white;
     font-family: 'Cairo', sans-serif;
+    transition: all 0.3s ease;
 }
 
+/* الاتجاه من اليمين إلى اليسار (العربية) */
+.navbar.rtl {
+    margin-left: 270px; /* دفع الـ Navbar إلى اليمين عند العربية */
+    direction: rtl;
+}
+
+/* الاتجاه من اليسار إلى اليمين (الإنجليزية) */
+.navbar.ltr {
+    margin-right: 270px; /* دفع الـ Navbar إلى اليسار عند الإنجليزية */
+    direction: ltr;
+}
 
 /* اسم العنوان */
 .navbar-content .navbar-title {
     font-size: 24px;
     font-weight: 600;
+    color: #ffffff;
 }
 
 /* حاوية الإشعارات */
 .navbar-content .notifications-container {
     position: relative;
-    margin-right: 20px;
-
 }
 
 /* أيقونة الجرس */
@@ -43,13 +54,24 @@
 .navbar-content .notifications-dropdown {
     position: absolute;
     top: 40px;
-    right: -100px;
     width: 250px;
     background: white;
     color: #541A7D;
     border-radius: 8px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+/* ضبط مكان قائمة الإشعارات بناءً على اللغة */
+.navbar.rtl .notifications-dropdown {
+    right: auto;
+    left: -110px;
+}
+
+.navbar.ltr .notifications-dropdown {
+    left: auto;
+    right: -110px;
 }
 
 /* عنصر الإشعار */
