@@ -16,31 +16,31 @@
 
 
 /* اسم العنوان */
-.navbar-title {
+.navbar-content .navbar-title {
     font-size: 24px;
     font-weight: 600;
 }
 
 /* حاوية الإشعارات */
-.notifications-container {
+.navbar-content .notifications-container {
     position: relative;
     margin-right: 20px;
 
 }
 
 /* أيقونة الجرس */
-.notification-icon {
+.navbar-content .notification-icon {
     font-size: 24px;
     cursor: pointer;
     transition: 0.3s;
 }
 
-.notification-icon:hover {
+.navbar-content .notification-icon:hover {
     color: #FFD700;
 }
 
 /* قائمة الإشعارات */
-.notifications-dropdown {
+.navbar-content .notifications-dropdown {
     position: absolute;
     top: 40px;
     right: -100px;
@@ -53,18 +53,18 @@
 }
 
 /* عنصر الإشعار */
-.notification-item {
+.navbar-content .notification-item {
     padding: 10px;
     border-bottom: 1px solid #541A7D;
     transition: background 0.3s;
 }
 
-.notification-item:hover {
+.navbar-content .notification-item:hover {
     background: #9E7DB7;
 }
 
 /* عندما لا توجد إشعارات */
-.notification-item.empty {
+.navbar-content .notification-item.empty {
     text-align: center;
     color: gray;
     font-style: italic;

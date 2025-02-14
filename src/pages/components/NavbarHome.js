@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { FaBell } from 'react-icons/fa';
-import '../../styles/SidebarHome.css'; // ملف الستايل
-
 const NavbarHome = () => {
     // حالة التحكم في ظهور قائمة الإشعارات
         const [showNotifications, setShowNotifications] = useState(false);

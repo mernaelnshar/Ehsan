@@ -27,7 +27,6 @@ import { LanguageProvider } from "./context/LanguageContext";
 function App() {
   return (
     <LanguageProvider>
-
       <Router>
         <Routes>
           <Route path="/" element={<LandingPage />} />
