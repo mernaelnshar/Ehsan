@@ -1,16 +1,42 @@
-import React, { useState } from 'react';
-import { Link } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useContext  } from 'react';
+import { Link , useNavigate} from "react-router-dom";
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import email from '../../assets/icon/email.png';
-import lock from '../../assets/icon/lock.png';
+import emailIcon  from '../../assets/icon/email.png';
+import lockIcon  from '../../assets/icon/lock.png';
 import '../../styles/LoginForm.css'; // استيراد ملف الستايل
 import logo from '../../assets/image/logo.png';
-import logouticon from '../../assets/icon/logout.png';
+import logoutIcon from '../../assets/icon/logout.png';
 import '../../firebase/firebaseConfig'; // تأكد من استيراد ملف إعدادات Firebase
-
+import { LanguageContext } from '../../context/LanguageContext';
+const texts = {
+    ar: {
+        loginTitle: "تسجيل الدخول",
+        emailPlaceholder: "email@example.com",
+        passwordPlaceholder: "أدخل كلمة المرور",
+        fillAllFields: "يرجى ملء جميع الحقول!",
+        userNotFound: "المستخدم غير موجود، يرجى التأكد من البريد الإلكتروني.",
+        wrongPassword: "كلمة المرور غير صحيحة، حاول مرة أخرى.",
+        errorOccurred: "حدث خطأ أثناء تسجيل الدخول، يرجى المحاولة لاحقًا.",
+        register: "تسجيل مستخدم",
+        forgotPassword: "نسيت كلمة المرور؟",
+        submit: "تسجيل الدخول"
+    },
+    en: {
+        loginTitle: "Login",
+        emailPlaceholder: "email@example.com",
+        passwordPlaceholder: "Enter your password",
+        fillAllFields: "Please fill in all fields!",
+        userNotFound: "User not found, please check your email.",
+        wrongPassword: "Incorrect password, please try again.",
+        errorOccurred: "An error occurred during login, please try again later.",
+        register: "Register",
+        forgotPassword: "Forgot Password?",
+        submit: "Login"
+    }
+};
 const LoginForm = () => {
+    const { language } = useContext(LanguageContext);
     const [emailValue, setEmailValue] = useState('');  // تخزين البريد الإلكتروني
     const [passwordValue, setPasswordValue] = useState('');  // تخزين كلمة المرور
     const [errorMessage, setErrorMessage] = useState('');  // لتخزين رسالة الخطأ
@@ -21,7 +47,7 @@ const LoginForm = () => {
         e.preventDefault();
 
         if (!emailValue || !passwordValue) {
-            setErrorMessage('يرجى ملء جميع الحقول!');
+            setErrorMessage(texts[language].fillAllFields);
             return;
         }
 
@@ -31,11 +57,11 @@ const LoginForm = () => {
             navigate('/Home');  // الانتقال للصفحة الرئيسية
         } catch (error) {
             // if (error.code === 'auth/user-not-found') {
-            //     setErrorMessage('المستخدم غير موجود، يرجى التأكد من البريد الإلكتروني.');
+            //     setErrorMessage(texts[language].userNotFound);
             // } else if (error.code === 'auth/wrong-password') {
-            //     setErrorMessage('كلمة المرور غير صحيحة، حاول مرة أخرى.');
+            //     setErrorMessage(texts[language].wrongPassword);
             // } else {
-            //     setErrorMessage('حدث خطأ أثناء تسجيل الدخول، يرجى المحاولة لاحقًا.');
+            //     setErrorMessage(texts[language].errorOccurred);
             // }
         }
     };
@@ -44,19 +70,19 @@ const LoginForm = () => {
         <div>
             <div className="Navbar">
                 <Link to="/" className="link">
-                    <img src={logouticon} className='logouticon' alt='logout icon' />
+                    <img src={logoutIcon} className='logouticon' alt='logout icon' />
                 </Link>
                 <img src={logo} className='logoicon' alt='logo icon' />
             </div>
-            <div className="login-container" dir='rtl'>
-                <h2 className="login-title">تسجيل الدخول</h2>
+            <div className="login-container" dir={language === "ar" ? "rtl" : "ltr"}>
+                <h2 className="login-title">{texts[language].loginTitle}</h2>
                 <Form className="login-form" onSubmit={handleSubmit}>
                     <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
                         <Col className='Col'>
-                            <img src={email} className='emailIcon' alt="Email Icon" />
+                            <img src={emailIcon} className='emailIcon' alt="Email Icon" />
                             <Form.Control 
                                 type="email" 
-                                placeholder="email@example.com" 
+                                placeholder={texts[language].emailPlaceholder} 
                                 value={emailValue}
                                 onChange={(e) => setEmailValue(e.target.value)} 
                             />
@@ -65,10 +91,10 @@ const LoginForm = () => {
 
                     <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
                         <Col className='Col'>
-                            <img src={lock} className='passwordIcon' alt="Password Icon" />
+                            <img src={lockIcon} className='passwordIcon' alt="Password Icon" />
                             <Form.Control 
                                 type="password" 
-                                placeholder="أدخل كلمة المرور" 
+                                placeholder={texts[language].passwordPlaceholder} 
                                 autoComplete="current-password" 
                                 value={passwordValue}
                                 onChange={(e) => setPasswordValue(e.target.value)} 
@@ -76,15 +102,16 @@ const LoginForm = () => {
                         </Col>
                     </Form.Group>
 
-                    {/* عرض رسالة الخطأ إذا كانت موجودة */}
                     {errorMessage && <p className="error-message text-danger">{errorMessage}</p>}
 
                     <div className="login-actions">
-                        <Link to="/RegisterForm" className="register">تسجيل مستخدم</Link>
-                        <Link to="/ForgetPassword" className="forgot-password">نسيت كلمة المرور؟</Link>
+                        <Link to="/RegisterForm" className="register">{texts[language].register}</Link>
+                        <Link to="/ForgetPassword" className="forgot-password">{texts[language].forgotPassword}</Link>
                     </div>
 
-                    <Button className="submit-btn me-5" type="submit">تسجيل الدخول</Button>
+                    <Button className="submit-btn me-5" type="submit">
+                        {texts[language].submit}
+                    </Button>
                 </Form>
             </div>
         </div>

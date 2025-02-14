@@ -1,16 +1,15 @@
-import React, { useState } from 'react';
-import { Link } from 'react-scroll';
-import '../../styles/LandingPage.css';
+import React, { useContext } from "react";
+import { LanguageContext } from "../../context/LanguageContext";
+import { Link } from "react-scroll";
+import "../../styles/LandingPage.css";
 
-const LanguageSwitcher = ({ switchLanguage }) => {
-    const [active, setActive] = useState('ar'); // الحالة لتتبع العنصر النشط
+const LanguageSwitcher = () => {
+    const { language, switchLanguage } = useContext(LanguageContext);
 
     const handleLanguageChange = (lang) => {
-        setActive(lang);
-        switchLanguage(lang);
+        switchLanguage(lang); // استخدام switchLanguage بدلاً من setLanguage
         document.documentElement.setAttribute("dir", lang === "ar" ? "rtl" : "ltr");
     };
-    
 
     return (
         <div className="ArEn">
@@ -18,8 +17,8 @@ const LanguageSwitcher = ({ switchLanguage }) => {
                 to="ar" 
                 smooth={true} 
                 duration={500} 
-                className={`link ${active === 'ar' ? 'active-ar' : 'inactive'}`}
-                onClick={() => handleLanguageChange('ar')}  // تغيير اللغة عند النقر
+                className={`link ${language === 'ar' ? 'active-ar' : 'inactive'}`}
+                onClick={() => handleLanguageChange('ar')}
             >
                 AR
             </Link>
@@ -27,8 +26,8 @@ const LanguageSwitcher = ({ switchLanguage }) => {
                 to="en" 
                 smooth={true} 
                 duration={500} 
-                className={`link ${active === 'en' ? 'active-en' : 'inactive'}`}
-                onClick={() => handleLanguageChange('en')}  // تغيير اللغة عند النقر
+                className={`link ${language === 'en' ? 'active-en' : 'inactive'}`}
+                onClick={() => handleLanguageChange('en')}
             >
                 | EN
             </Link>

@@ -1,4 +1,4 @@
-import React, { useState , useEffect } from 'react';
+import React, { useState , useEffect , useContext} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from "react-scroll";
 import '../styles/LandingPage.css';
@@ -13,82 +13,85 @@ import book from '../assets/icon/book.png';
 import LanguageSwitcher from '../pages/components/LanguageSwitcher';
 import { Navbar, Nav, Container, Row, Col, Button, Card } from "react-bootstrap";
 import { FaInstagram, FaWhatsapp, FaXTwitter } from "react-icons/fa6"; // أيقونات بديلة للصور
+import { LanguageContext } from '../context/LanguageContext';
 
+const texts = {
+    ar: {
+        contact: "اتصل بنا",
+        howItWorks: "كيف يعمل",
+        features: "المزايا",
+        home: "الرئيسية",
+        journeyTitle1: "رحلتك مع ",
+        journeyTitle2: "إحسان ",
+        journeyTitle3: "تبدأ هنا",
+        description: "من منصة شاملة لتحفيظ القرآن الكريم توفر أدوات مميزة ودعمًا مستمرًا لمساعدتك على تحقيق أهدافك بسهولة وسلاسة",
+        downloadAndroid: "تحميل Android",
+        downloadIOS: "تحميل iOS",
+        startNow: "ابدأ الآن",
+        numGroups: "مجموعة",
+        numTeachers: "معلم",
+        numStudents: "طالب",
+        platformFeatures: "مزايا منصتنا",
+        easyExperience: "تجربة سهلة",
+        feature1: "واجهة بسيطة وسهلة الاستخدام",
+        flexibleTime: "مرونة في الوقت",
+        feature2: "اختر الأوقات التي تناسب جدولك اليومي",
+        interactiveMemorization: "تحفيظ تفاعلي",
+        feature3: "تقنيات مبتكرة تساعدك على حفظ القرآن بسهولة",
+        howItWorksTitle: "كيف يعمل؟",
+        firstStep: "ابدأ خطواتك الأولى نحو حفظ القرآن الكريم",
+        chooseGroup: "اختر مجموعتك",
+        registerAccount: "سجل حسابك",
+        footerContactEmail: "Ehsaan@gmail.com",
+        privacyPolicy: "سياسة الخصوصية",
+        termsConditions: "الشروط والأحكام",
+        brandname: "إحسان",
+        copyright: "جميع الحقوق محفوظة © 2025"
+    },
+    en: {
+        contact: "Contact Us",
+        howItWorks: "How It Works",
+        features: "Features",
+        home: "Home",
+        journeyTitle1: "Your Journey with",
+        journeyTitle2: "Ehsaan",
+        journeyTitle3: "starts here",
+        description: "A comprehensive platform for Quran memorization providing great tools and continuous support to help you achieve your goals easily and smoothly.",
+        downloadAndroid: "Download Android",
+        downloadIOS: "Download iOS",
+        startNow: "Start Now",
+        numGroups: "Group",
+        numTeachers: "Teacher",
+        numStudents: "Student",
+        platformFeatures: "Our Platform Features",
+        easyExperience: "Easy Experience",
+        feature1: "Easy and user-friendly interface",
+        flexibleTime: "Flexible Time",
+        feature2: "Choose times that fit your daily schedule",
+        interactiveMemorization: "Interactive Memorization",
+        feature3: "Innovative techniques to help you memorize the Quran easily",
+        howItWorksTitle: "How it works?",
+        firstStep: "Take your first step toward Quran memorization",
+        chooseGroup: "Choose your group",
+        registerAccount: "Register your account",
+        footerContactEmail: "Ehsaan@gmail.com",
+        privacyPolicy: "Privacy Policy",
+        termsConditions: "Terms & Conditions",
+        brandname: "Ehsan",
+        copyright: "All rights reserved © 2025"
+    }
+};
 function LandingPage() {
+    const { language } = useContext(LanguageContext);
     const navigate = useNavigate()
-    const [language, setLanguage] = useState('ar');  // Default language is Arabic
+    // const [language, setLanguage] = useState('ar');  // Default language is Arabic
     // نصوص الصفحة بناءً على اللغة
-    const texts = {
-        ar: {
-            contact: "اتصل بنا",
-            howItWorks: "كيف يعمل",
-            features: "المزايا",
-            home: "الرئيسية",
-            journeyTitle1: "رحلتك مع ",
-            journeyTitle2: "إحسان ",
-            journeyTitle3: "تبدأ هنا",
-            description: "من منصة شاملة لتحفيظ القرآن الكريم توفر أدوات مميزة ودعمًا مستمرًا لمساعدتك على تحقيق أهدافك بسهولة وسلاسة",
-            downloadAndroid: "تحميل Android",
-            downloadIOS: "تحميل iOS",
-            startNow: "ابدأ الآن",
-            numGroups: "مجموعة",
-            numTeachers: "معلم",
-            numStudents: "طالب",
-            platformFeatures: "مزايا منصتنا",
-            easyExperience: "تجربة سهلة",
-            feature1: "واجهة بسيطة وسهلة الاستخدام",
-            flexibleTime: "مرونة في الوقت",
-            feature2: "اختر الأوقات التي تناسب جدولك اليومي",
-            interactiveMemorization: "تحفيظ تفاعلي",
-            feature3: "تقنيات مبتكرة تساعدك على حفظ القرآن بسهولة",
-            howItWorksTitle: "كيف يعمل؟",
-            firstStep: "ابدأ خطواتك الأولى نحو حفظ القرآن الكريم",
-            chooseGroup: "اختر مجموعتك",
-            registerAccount: "سجل حسابك",
-            footerContactEmail: "Ehsaan@gmail.com",
-            privacyPolicy: "سياسة الخصوصية",
-            termsConditions: "الشروط والأحكام",
-            brandname: "إحسان",
-            copyright: "جميع الحقوق محفوظة © 2025"
-        },
-        en: {
-            contact: "Contact Us",
-            howItWorks: "How It Works",
-            features: "Features",
-            home: "Home",
-            journeyTitle1: "Your Journey with",
-            journeyTitle2: "Ehsaan",
-            journeyTitle3: "starts here",
-            description: "A comprehensive platform for Quran memorization providing great tools and continuous support to help you achieve your goals easily and smoothly.",
-            downloadAndroid: "Download Android",
-            downloadIOS: "Download iOS",
-            startNow: "Start Now",
-            numGroups: "Group",
-            numTeachers: "Teacher",
-            numStudents: "Student",
-            platformFeatures: "Our Platform Features",
-            easyExperience: "Easy Experience",
-            feature1: "Easy and user-friendly interface",
-            flexibleTime: "Flexible Time",
-            feature2: "Choose times that fit your daily schedule",
-            interactiveMemorization: "Interactive Memorization",
-            feature3: "Innovative techniques to help you memorize the Quran easily",
-            howItWorksTitle: "How it works?",
-            firstStep: "Take your first step toward Quran memorization",
-            chooseGroup: "Choose your group",
-            registerAccount: "Register your account",
-            footerContactEmail: "Ehsaan@gmail.com",
-            privacyPolicy: "Privacy Policy",
-            termsConditions: "Terms & Conditions",
-            brandname: "Ehsan",
-            copyright: "All rights reserved © 2025"
-        }
-    };
+    
 
-    // تحديث اللغة عند التبديل
-    const switchLanguage = (lang) => {
-        setLanguage(lang);
-    };
+    // // تحديث اللغة عند التبديل
+    // const switchLanguage = (lang) => {
+    //     setLanguage(lang);
+    // };
 
     // تغيير اتجاه الصفحة بناءً على اللغة
     useEffect(() => {
@@ -116,7 +119,7 @@ function LandingPage() {
                         </Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
-                <LanguageSwitcher switchLanguage={switchLanguage} />
+                <LanguageSwitcher />
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
             </Navbar>
 
