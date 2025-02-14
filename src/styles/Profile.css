@@ -3,19 +3,29 @@
     justify-content: space-between;
     align-items: flex-start;
     margin-top: 30px;
-    margin-left: 270px;
     padding: 50px;
     width: calc(100% - 270px);
     gap: 2rem;
 }
 
+.profile-container.rtl{
+    margin-left: 270px;
+}
+
+.profile-container.ltr{
+    margin-right: 270px;
+}
+
 .profile-content {
     margin-top: 20px;
     direction: rtl;
-    
     text-align: center;
 }
 
+.profile-container.ltr .profile-content {
+    direction: ltr;
+
+}
 
 
 .profile-card {
@@ -130,7 +140,10 @@
     font-size: 1rem;
     transition: 0.3s;
     color: white;
+    width: 150px;
 }
+
+
 
 .modal-edit-profile .modal-content .btn:hover{
     background-color: #E7DEEC;
