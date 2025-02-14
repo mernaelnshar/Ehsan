@@ -213,7 +213,7 @@ const RegisterForm = () => {
     return (
         <div dir={language === 'ar' ? 'rtl' : 'ltr'}>
             <div className="Navbar">
-                <Link to="/Login" className="link">
+                <Link to="/" className="link">
                     <img src={logouticon} className='logouticon' alt='logout icon' />
                 </Link>
                 <img src={logo} className='logoicon' alt='logo icon' />

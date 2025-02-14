@@ -24,10 +24,12 @@
 .Registration-text {
     font-size: 18px;
     color: #ffffff;
-    text-align: justify;
+    text-align: center;
     padding: 10px;
     line-height: 1.7;
 }
+
+
 
 .register-card h5{
     color: #541A7D;
@@ -37,17 +39,22 @@
 /* تنسيق الحقول */
 .register-card .form-label {
     color: #541A7D;
-    width: 100px;
+    text-align: center;
 }
+
 
 .register-card .form-control {
     width: 300px;
-    margin-right: 20px;
     font-weight: bold;
     text-align: center;
     color: #541A7D;
-    
+    margin-right: 80px;
 }
+
+.register-card .togglePassword{
+    margin-right: 100px !important;
+}
+
 /* تنسيق الأزرار */
 .Registration-btn , .back-btn {
     width: 150px;
