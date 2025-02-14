@@ -7,9 +7,11 @@ export const LanguageContext = createContext();
 export const LanguageProvider = ({ children }) => {
     const [language, setLanguage] = useState(localStorage.getItem("language") || "ar");
 
+    // دالة تغيير اللغة
     const switchLanguage = (lang) => {
         setLanguage(lang);
     };
+
     // حفظ اللغة في Local Storage عند التغيير
     useEffect(() => {
         localStorage.setItem("language", language);

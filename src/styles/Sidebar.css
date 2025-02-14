@@ -12,7 +12,15 @@
     left: 0;
 
 }
-
+.sidebar.rtl {
+    left: 0;
+    direction: rtl;
+}
+.sidebar.ltr {
+    right: 0;
+    left: auto;
+    direction: ltr;
+}
 /* اللوجو */
 .sidebar .logo-container {
     width: 270px;
@@ -42,8 +50,12 @@
     font-weight: 600;
     display: flex;
     align-items: center;
-    gap: 30px;
+    gap: 20px;
     transition: 0.3s ease;
+}
+
+.sidebar.ltr .nav-link {
+    font-size: 16px;
 }
 
 .sidebar .nav-link:hover {
@@ -59,8 +71,9 @@
 
 
 /* أيقونات */
-.sidebar .icon {
-    font-size: 22px;
+.sidebar .nav-link .icon {
+    color: #ffffff;
+    font-size: 25px;
 }
 
 /* زر تسجيل الخروج */

@@ -21,7 +21,7 @@ const LanguageSwitcher = () => {
                 onClick={() => handleLanguageChange('ar')}
             >
                 AR
-            </Link>
+            </Link> 
             <Link 
                 to="en" 
                 smooth={true} 

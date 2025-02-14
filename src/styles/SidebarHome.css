@@ -29,6 +29,15 @@
     left: 0;
 
 }
+.sidebarHome.rtl {
+    left: 0;
+    direction: rtl;
+}
+.sidebarHome.ltr {
+    right: 0;
+    left: auto;
+    direction: ltr;
+}
 
 /* اللوجو */
 .sidebarHome .logo-container {
@@ -61,6 +70,10 @@
     align-items: center;
     text-align: center;
     transition: 0.3s ease;
+}
+
+.sidebarHome .nav-link .icon{
+    color: #ffffff;
 }
 
 .sidebarHome .nav-link:hover {
