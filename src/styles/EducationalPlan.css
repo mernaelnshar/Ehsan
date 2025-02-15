@@ -3,9 +3,16 @@
     padding: 20px;
     border-radius: 10px;
     margin-top: 70px;
-    margin-left: 300px;
+    
     color: #541A7D;
     font-size: 30px;
+}
+.educational-container.rtl{
+    margin-left: 300px;
+}
+
+.educational-container.ltr{
+    margin-right: 300px;
 }
 
 .educational-title {
@@ -36,6 +43,11 @@
     font-size: 14px;
     color: #541A7D;
 }
+.educational-container.ltr .plan-duration{
+    text-align: left;
+}
+
+
 
 .options .form-check {
     margin-top: 10px;

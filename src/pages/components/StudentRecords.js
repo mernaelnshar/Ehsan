@@ -1,10 +1,54 @@
-import React, { useState } from "react";
+import React, { useState , useContext} from "react";
 import { Table, Form, Dropdown, Container, Modal, Button } from "react-bootstrap";
 import { FaEye, FaBook, FaArchive, FaTrash, FaList } from "react-icons/fa";
 import '../../styles/StudentRecords.css';
 import { useNavigate } from 'react-router-dom';
+import { LanguageContext } from "../../context/LanguageContext";
 
+const texts = {
+    en: {
+        searchPlaceholder: "🔍 Search for a student...",
+        name: "Name",
+        curriculum: "Educational Plan",
+        archive: "Archive",
+        removeRequest: "Removal Request",
+        archiveTitle: "Archive",
+        student: "Student:",
+        evaluationType: "Evaluation Type",
+        selectEvaluation: "Select evaluation type",
+        archiveReason: "Archive Reason",
+        completed: "Completed",
+        evaluationError: "Evaluation Error",
+        enterErrorReason: "Please enter the error reason",
+        confirmArchive: "Confirm Archiving",
+        removeTitle: "Removal",
+        enterRemoveReason: "Enter reason here",
+        save: "Save",
+    },
+    ar: {
+        searchPlaceholder: "🔍 ابحث عن الطالب...",
+        name: "الاسم",
+        curriculum: "المنهج التعليمي",
+        archive: "الأرشيف",
+        removeRequest: "طلب إزالة",
+        archiveTitle: "الأرشيف",
+        student: "الطالب:",
+        evaluationType: "نوع التقييم",
+        selectEvaluation: "اختر نوع التقييم",
+        archiveReason: "سبب الأرشفة",
+        completed: "تم الانتهاء",
+        evaluationError: "خطأ في التقييم",
+        enterErrorReason: "الرجاء إدخال سبب الخطأ",
+        confirmArchive: "تأكيد الأرشفة",
+        removeTitle: "الإزالة",
+        enterRemoveReason: "اكتب السبب هنا",
+        save: "حفظ",
+    }
+};
 const StudentRecords = () => {
+    const { language } = useContext(LanguageContext);
+    const isArabic = language === "ar";
+    const t = texts[language];
     const navigate = useNavigate();
     const [search, setSearch] = useState("");
     const [showModal, setShowModal] = useState(false);
@@ -45,11 +89,11 @@ const StudentRecords = () => {
 
 
     return (
-        <Container className="Container-StudentRecords" dir="rtl">
+        <Container className={`Container-StudentRecords ${isArabic ? "rtl" : "ltr"}`} dir={isArabic ? "rtl" : "ltr"}>
             {/*  شريط البحث */}
             <Form.Control
                 type="text"
-                placeholder="🔍 ابحث عن الطالب..."
+                placeholder={t.searchPlaceholder}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="mb-3"
@@ -59,7 +103,7 @@ const StudentRecords = () => {
             <Table striped bordered hover>
                 <thead>
                     <tr>
-                        <th>الاسم</th>
+                        <th>{t.name}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -78,15 +122,15 @@ const StudentRecords = () => {
                                             <Dropdown.Menu align="end">
                                                 <Dropdown.Item onClick={() => navigate('/EducationalPlan')}>
                                                     <FaBook className="me-2" />
-                                                    المنهج التعليمي
+                                                    {t.curriculum}
                                                 </Dropdown.Item>
                                                 <Dropdown.Item onClick={() => handleOpenModal(student)}>
                                                     <FaArchive className="me-2" />
-                                                    الأرشيف
+                                                    {t.archive}
                                                 </Dropdown.Item>
                                                 <Dropdown.Item onClick={() => handleOpenRemoveModal(student)}>
                                                     <FaTrash className="me-2" />
-                                                    طلب إزالة
+                                                    {t.removeRequest}
                                                 </Dropdown.Item>
 
 
@@ -100,21 +144,21 @@ const StudentRecords = () => {
             </Table>
 
             {/*  مودال الأرشيف */}
-            <Modal show={showModal} onHide={handleCloseModal} centered>
+            <Modal show={showModal} onHide={handleCloseModal} centered className={`modal-Archive ${isArabic ? "rtl" : "ltr"}`} dir={isArabic ? "rtl" : "ltr"}>
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        <FaArchive className="me-2 " /> الأرشيف
+                        <FaArchive className="me-2 " /> {t.archiveTitle}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <h5 className="text-center mb-3"> الطالب: {selectedStudent?.name}</h5>
+                    <h5 className="text-center mb-3"> {t.student} {selectedStudent?.name}</h5>
                     <Form>
 
                         {/* نوع التقييم */}
                         <Form.Group className="mt-3">
-                            <Form.Label>نوع التقييم</Form.Label>
+                            <Form.Label>{t.evaluationType}</Form.Label>
                             <Form.Select value={evaluationType} onChange={(e) => setEvaluationType(e.target.value)}>
-                                <option value="">اختر نوع التقييم</option>
+                                <option value="">{t.selectEvaluation}</option>
                                 <option value="حفظ">حفظ</option>
                                 <option value="مراجعة">مراجعة</option>
                             </Form.Select>
@@ -122,17 +166,17 @@ const StudentRecords = () => {
 
                         {/*  سبب الأرشفة */}
                         <Form.Group>
-                            <Form.Label>سبب الأرشفة</Form.Label>
+                            <Form.Label>{t.archiveReason}</Form.Label>
                             <Form.Group className="reasons">
                                 <Form.Check
                                     type="radio"
-                                    label="تم الانتهاء"
+                                    label={t.completed}
                                     name="archiveReason"
                                     onChange={() => setArchiveReason("تم الانتهاء")}
                                 />
                                 <Form.Check
                                     type="radio"
-                                    label="خطأ في التقييم"
+                                    label={t.evaluationError}
                                     name="archiveReason"
                                     onChange={() => setArchiveReason("خطأ في التقييم")}
                                 />
@@ -144,10 +188,10 @@ const StudentRecords = () => {
                         {/* إدخال سبب الخطأ في التقييم */}
                         {archiveReason === "خطأ في التقييم" && (
                             <Form.Group className="mt-3">
-                                <Form.Label>الرجاء إدخال سبب الخطأ</Form.Label>
+                                <Form.Label>{t.enterErrorReason}</Form.Label>
                                 <Form.Control
                                     type="text"
-                                    placeholder="اكتب سبب الخطأ هنا..."
+                                    placeholder={t.enterErrorReason}
                                     value={errorReason}
                                     onChange={(e) => setErrorReason(e.target.value)}
                                 />
@@ -158,23 +202,23 @@ const StudentRecords = () => {
                 <Modal.Footer>
                     <Button
                         disabled={(archiveReason === "خطأ في التقييم" && !errorReason) || !evaluationType} onClick={handleCloseModal}>
-                        تأكيد الأرشفة
+                        {t.confirmArchive}
                     </Button>
                 </Modal.Footer>
             </Modal>
 
             {/*  مودال إدخال سبب الإزالة */}
-            <Modal show={showRemoveModal} onHide={() => setShowRemoveModal(false)} centered>
+            <Modal show={showRemoveModal} onHide={() => setShowRemoveModal(false)} centered className={`modal-Remove ${isArabic ? "rtl" : "ltr"}`} dir={isArabic ? "rtl" : "ltr"}>
                 <Modal.Header closeButton>
-                    <Modal.Title> <FaTrash className="me-2" /> الإزالة</Modal.Title>
+                    <Modal.Title> <FaTrash className="me-2" /> {t.removeTitle}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form.Group>
-                        <h5 className="text-center mb-3"> الطالب: {selectedStudent?.name}</h5>
+                        <h5 className="text-center mb-3"> {t.student} {selectedStudent?.name}</h5>
                         <Form.Control
                             as="textarea"
                             rows={3}
-                            placeholder="اكتب السبب هنا"
+                            placeholder={t.enterRemoveReason}
                             value={archiveRemoveReason}
                             onChange={(e) => setArchiveRemoveReason(e.target.value)}
                         />
@@ -183,7 +227,7 @@ const StudentRecords = () => {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button className="Container-StudentsList-btn" disabled={!archiveRemoveReason} onClick={handleCloseModal}>
-                        حفظ
+                    {t.save}
                     </Button>
 
                 </Modal.Footer>
