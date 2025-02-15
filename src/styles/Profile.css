@@ -150,3 +150,16 @@
     color: #541A7D;
     border: 2px solid #541A7D;
 }
+
+/* ************************************************Profile Student  */
+.profile-container.rtl{
+    margin-left: 270px;
+}
+
+.modal-Report.rtl .modal-title {
+    margin-left: 320px; 
+} 
+
+.modal-Complaint.rtl .modal-title {
+    margin-left: 350px; 
+} 

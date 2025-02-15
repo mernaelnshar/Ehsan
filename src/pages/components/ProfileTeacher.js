@@ -1,19 +1,56 @@
 import "../../styles/Profile.css";
-import { FaUser} from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 import { Form, Container, Card, Row, Col, Button, Modal } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { LanguageContext } from "../../context/LanguageContext";
+
+const texts = {
+    en: {
+        generalInfo: "General Information",
+        username: "Username",
+        birthDate: "Birth Date",
+        idNumber: "ID Number",
+        contactInfo: "Contact Information",
+        phoneNumber: "Phone Number",
+        email: "Email Address",
+        complaint: "Complaint",
+        enterComplaint: "Enter Complaint",
+        writeReason: "Please write the reason for your complaint",
+        cancel: "Cancel",
+        save: "Save",
+        successMessage: "Complaint submitted successfully!",
+    },
+    ar: {
+        generalInfo: "معلومات عامة",
+        username: "اسم المستخدم",
+        birthDate: "تاريخ الميلاد",
+        idNumber: "رقم ID",
+        contactInfo: "معلومات الاتصال",
+        phoneNumber: "رقم الهاتف",
+        email: "البريد الإلكتروني",
+        complaint: "شكوى",
+        enterComplaint: "إدخال الشكوى",
+        writeReason: "يرجى كتابة سبب الشكوى",
+        cancel: "إلغاء",
+        save: "حفظ",
+        successMessage: "تم إرسال الشكوى بنجاح!",
+    }
+};
 
 const ProfileStudent = () => {
+    const { language } = useContext(LanguageContext);
+    const isArabic = language === "ar";
+    const t = texts[language];
     const [showModal, setShowModal] = useState(false);
-    const navigate = useNavigate(); // ✅ استخدام useNavigate
+    const navigate = useNavigate();
 
     const handleShow = () => setShowModal(true);
     const handleClose = () => setShowModal(false);
 
     const handleReport = () => {
-        alert("تم الإبلاغ بنجاح!");
-        navigate("/StudentRecords"); // ✅ الانتقال لصفحة تسجيل الدخول بدون إعادة تحميل
+        alert(t.successMessage);
+        navigate("/StudentRecords");
     };
 
     const [user] = useState({
@@ -25,28 +62,28 @@ const ProfileStudent = () => {
     });
 
     return (
-        <div className="profile-container ">
+        <div className={`profile-container ${isArabic ? "rtl" : "ltr"}`} dir={isArabic ? "rtl" : "ltr"}>
             <Container className="profile-content me-5">
                 <Card className="profile-card">
                     <Card.Body>
-                        <Card.Title className="profile-title">معلومات عامة</Card.Title>
+                        <Card.Title className="profile-title">{t.generalInfo}</Card.Title>
                         <Form>
                             <Row className="mb-3">
                                 <Col>
                                     <Form.Group>
-                                        <Form.Label>اسم المستخدم</Form.Label>
+                                        <Form.Label>{t.username}</Form.Label>
                                         <Form.Control type="text" value={user.name} disabled />
                                     </Form.Group>
                                 </Col>
                                 <Col>
                                     <Form.Group>
-                                        <Form.Label>تاريخ الميلاد</Form.Label>
+                                        <Form.Label>{t.birthDate}</Form.Label>
                                         <Form.Control type="text" value={user.birthDate} disabled />
                                     </Form.Group>
                                 </Col>
                                 <Col>
                                     <Form.Group>
-                                        <Form.Label>رقم ID</Form.Label>
+                                        <Form.Label>{t.idNumber}</Form.Label>
                                         <Form.Control type="text" value={user.id} disabled />
                                     </Form.Group>
                                 </Col>
@@ -57,20 +94,18 @@ const ProfileStudent = () => {
 
                 <Card className="profile-card">
                     <Card.Body>
-                        <Card.Title className="profile-title">
-                            معلومات الاتصال
-                        </Card.Title>
+                        <Card.Title className="profile-title">{t.contactInfo}</Card.Title>
                         <Form>
                             <Row className="mb-3">
                                 <Col>
                                     <Form.Group>
-                                        <Form.Label>رقم الهاتف</Form.Label>
+                                        <Form.Label>{t.phoneNumber}</Form.Label>
                                         <Form.Control type="text" value={user.phone} disabled />
                                     </Form.Group>
                                 </Col>
                                 <Col>
                                     <Form.Group>
-                                        <Form.Label>البريد الإلكتروني</Form.Label>
+                                        <Form.Label>{t.email}</Form.Label>
                                         <Form.Control type="text" value={user.email} disabled />
                                     </Form.Group>
                                 </Col>
@@ -80,7 +115,7 @@ const ProfileStudent = () => {
                 </Card>
 
                 <Button className="del-btn w-25" onClick={handleShow}>
-                    شكوي
+                    {t.complaint}
                 </Button>
             </Container>
 
@@ -89,32 +124,25 @@ const ProfileStudent = () => {
                 <h3>{user.name}</h3>
             </Container>
 
-            {/*  مودال إدخال سبب الابلاغ */}
-            <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+            <Modal show={showModal} onHide={handleClose} centered className={`modal-Complaint ${isArabic ? "rtl" : "ltr"}`} dir={isArabic ? "rtl" : "ltr"}>
                 <Modal.Header closeButton>
-                    <Modal.Title>الشكوي</Modal.Title>
+                    <Modal.Title>{t.enterComplaint}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form.Group>
-                        <Form.Label>يرجى كتابة سبب الشكوي</Form.Label>
-                        <Form.Control
-                            as="textarea"
-                            rows={3}
-                            placeholder="اكتب السبب هنا"
-                        />
+                        <Form.Label>{t.writeReason}</Form.Label>
+                        <Form.Control as="textarea" rows={3} placeholder={t.writeReason} />
                     </Form.Group>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={handleClose} className="Container-StudentsList-btn">
-                        إلغاء
+                        {t.cancel}
                     </Button>
                     <Button onClick={handleReport} className="Container-StudentsList-btn">
-                        حفظ
+                        {t.save}
                     </Button>
                 </Modal.Footer>
             </Modal>
-
-
         </div>
     );
 };

@@ -150,9 +150,9 @@ const StudentsList = () => {
                 </tbody>
             </Table>
 
-            <Modal show={showModal} onHide={() => setShowModal(false)} centered className={`${isArabic ? "rtl" : "ltr"}`} dir={isArabic ? "rtl" : "ltr"}>
+            <Modal show={showModal} onHide={() => setShowModal(false)} centered className={`modal-Excuse ${isArabic ? "rtl" : "ltr"}`} dir={isArabic ? "rtl" : "ltr"}>
                 <Modal.Header closeButton>
-                    <Modal.Title>{t.enterExcuse}</Modal.Title>
+                    <Modal.Title className="modal-title">{t.enterExcuse}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form.Group>

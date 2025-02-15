@@ -117,3 +117,7 @@ input[type="text"]:focus {
     background-color: #ffffff;
     border: 3px solid #7319b8;
 }
+
+.modal-Excuse.rtl .modal-title {
+    margin-left: 330px;
+} 
