@@ -1,9 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState , useContext } from 'react';
 import Select from 'react-select';
 import { Button } from 'react-bootstrap';
 import '../../styles/AddNewHifzReview.css';
 import { useLocation , useNavigate } from "react-router-dom";
+import { LanguageContext } from "../../context/LanguageContext";
 
+const texts = {
+    ar: {
+        sectionTitle: "إضافة حفظ أو مراجعة جديدة",
+        chooseSurah: "اختر السورة:",
+        fromAyah: "من الآية:",
+        toAyah: "إلى الآية:",
+        save: "حفظ"
+    },
+    en: {
+        sectionTitle: "Add New Hifz or Review",
+        chooseSurah: "Choose Surah:",
+        fromAyah: "From Ayah:",
+        toAyah: "To Ayah:",
+        save: "Save"
+    }
+};
 const surahs = [
     { value: 'البقرة', label: 'البقرة', ayahCount: 286 },
     { value: 'آل عمران', label: 'آل عمران', ayahCount: 200 },
@@ -14,8 +31,11 @@ const surahs = [
 
 
 function AddNewHifzReview() {
+    const { language } = useContext(LanguageContext);
+    const isArabic = language === "ar";
+    const t = texts[language];
     const location = useLocation();
-    const sectionTitle = location.state?.sectionTitle || "إضافة حفظ أو مراجعة جديدة";
+    const sectionTitle = location.state?.sectionTitle ||  t.sectionTitle;
 
 
     const [selectedSurah, setSelectedSurah] = useState(null);
@@ -26,7 +46,7 @@ function AddNewHifzReview() {
         if (selectedOption) {
             const ayahs = Array.from({ length: selectedOption.ayahCount }, (_, i) => ({
                 value: i + 1,
-                label: `الآية ${i + 1}`
+                label: `${t.fromAyah} ${i + 1}`
             }));
             setAyahOptions(ayahs);
         } else {
@@ -41,18 +61,18 @@ function AddNewHifzReview() {
         }
 
     return (
-        <div className="add-hifz-review" dir='rtl'>
+        <div className={`add-hifz-review ${isArabic ? "rtl" : "ltr"}`} dir={isArabic ? "rtl" : "ltr"}>
             <h2>{sectionTitle}</h2>
 
             <div className="selection-section">
-                <label>اختر السورة:</label>
+                <label>{t.chooseSurah}</label>
                 <Select options={surahs} onChange={handleSurahChange} className='custom-select' />
             </div>
 
             <div className="selection-section">
                 {selectedSurah && (
                     <>
-                        <label>من الآية:</label>
+                        <label>{t.fromAyah}</label>
                         <Select options={ayahOptions} className='custom-select' />
 
 
@@ -61,16 +81,14 @@ function AddNewHifzReview() {
             </div>
 
             <div className="selection-section">
-                <label>اختر السورة:</label>
+                <label>{t.chooseSurah}</label>
                 <Select options={surahs} onChange={handleSurahChange} className='custom-select' />
             </div>
 
             <div className="selection-section">
                 {selectedSurah && (
                     <>
-
-
-                        <label>إلى الآية:</label>
+                        <label>{t.toAyah}</label>
                         <Select options={ayahOptions} className='custom-select' />
                     </>
                 )}

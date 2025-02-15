@@ -2,9 +2,15 @@
     text-align: center;
     align-items: center;
     margin-top: 30px;
-    margin-left: 200px;
     padding: 50px;
     width: calc(100% - 270px);
+}
+
+.student-evaluation.rtl{
+    margin-left: 200px;
+}
+.student-evaluation.ltr{
+    margin-right: 200px;
 }
 
 .student-evaluation .student-evaluation-title {
