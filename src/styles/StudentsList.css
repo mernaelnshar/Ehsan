@@ -1,10 +1,12 @@
 /* 🌟 ضبط الصفحة الرئيسية */
 .Container-StudentsList {
-    margin-top: 50px;
-    max-width: 900px;
+    margin-top: 70px;
+    max-width: 1000px;
     padding: 20px;
     border-radius: 10px;
 }
+
+
 
 /* 📌 ضبط تنسيق العنوان والبحث */
 .Container-StudentsList .header-container {
@@ -16,6 +18,8 @@
 
 .Container-StudentsList .header-container h2{
     color: #541A7D;
+    font-weight: 600;
+
 }
 
 /* 🔍 مربع البحث */
