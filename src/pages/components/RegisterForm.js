@@ -1,4 +1,4 @@
-import React, { useState , useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { Alert, Form, Button, Row, Col } from 'react-bootstrap';
 import '../../styles/RegisterForm.css';
@@ -35,7 +35,7 @@ const texts = {
     registerError: { en: "An error occurred during registration, please try again", ar: "حدث خطأ أثناء التسجيل، الرجاء المحاولة مرة أخرى." }
 };
 
-const textsnational = [
+const textsnationalEn = [
     { en: "Afghan", ar: "أفغاني" },
     { en: "Albanian", ar: "ألباني" },
     { en: "Algerian", ar: "جزائري" },
@@ -88,7 +88,6 @@ const textsnational = [
     { en: "Dutch", ar: "هولندي" },
     { en: "Ecuadorean", ar: "إكوادوري" },
     { en: "Egyptian", ar: "مصري" },
-    { en: "Salvadoran", ar: "سلفادوري" },
     { en: "Equatorial Guinean", ar: "غيني استوائي" },
     { en: "Eritrean", ar: "إريتري" },
     { en: "Estonian", ar: "إستوني" },
@@ -130,8 +129,10 @@ const textsnational = [
     { en: "Kyrgyz", ar: "قيرغيزي" },
     { en: "Laotian", ar: "لاوسي" },
     { en: "Latvian", ar: "لاتفي" },
-    { en: "Lebanese", ar: "لبناني" },
+    { en: "Lebanese", ar: "لبناني" }
 ];
+const textsnationalAr = textsnationalEn.slice().sort((a, b) => a.ar.localeCompare(b.ar, 'ar'));
+
 
 
 const RegisterForm = () => {
@@ -198,7 +199,6 @@ const RegisterForm = () => {
     const handleRegister = async (e) => {
         e.preventDefault();
         if (!validate()) return;
-
         try {
             localStorage.setItem('pendingUser', JSON.stringify(formData));
             navigate('/TermsConfirmationForm');
@@ -210,6 +210,7 @@ const RegisterForm = () => {
             }
         }
     };
+
     return (
         <div dir={language === 'ar' ? 'rtl' : 'ltr'}>
             <div className="Navbar">
@@ -256,8 +257,8 @@ const RegisterForm = () => {
                         <Form.Group as={Row} className="mb-3 mx-3" controlId="formNationality">
                             <Col>
                                 <Form.Select name="nationality" value={formData.nationality} onChange={handleChange}>
-                                    <option value="">{texts.nationality[language]}</option>
-                                    {textsnational.map((nationality, index) => (
+                                    <option value="">{language === "ar" ? "اختر الجنسية" : "Select Nationality"}</option>
+                                    {(language === "ar" ? textsnationalAr : textsnationalEn).map((nationality, index) => (
                                         <option key={index} value={nationality.en}>
                                             {nationality[language]}
                                         </option>

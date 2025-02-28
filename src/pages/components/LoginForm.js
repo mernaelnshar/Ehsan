@@ -1,7 +1,7 @@
+import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState, useContext  } from 'react';
 import { Link , useNavigate} from "react-router-dom";
 import { Form, Button, Row, Col } from 'react-bootstrap';
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import emailIcon  from '../../assets/icon/email.png';
 import lockIcon  from '../../assets/icon/lock.png';
 import '../../styles/LoginForm.css'; // استيراد ملف الستايل
@@ -9,6 +9,7 @@ import logo from '../../assets/image/logo.png';
 import logoutIcon from '../../assets/icon/logout.png';
 import '../../firebase/firebaseConfig'; // تأكد من استيراد ملف إعدادات Firebase
 import { LanguageContext } from '../../context/LanguageContext';
+import{auth} from "../../firebase/firebaseConfig";
 const texts = {
     ar: {
         loginTitle: "تسجيل الدخول",
@@ -41,7 +42,7 @@ const LoginForm = () => {
     const [passwordValue, setPasswordValue] = useState('');  // تخزين كلمة المرور
     const [errorMessage, setErrorMessage] = useState('');  // لتخزين رسالة الخطأ
     const navigate = useNavigate();
-    const auth = getAuth();
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -52,17 +53,17 @@ const LoginForm = () => {
         }
 
         try {
-            // await signInWithEmailAndPassword(auth, emailValue, passwordValue);
-            // setErrorMessage('');
+            await signInWithEmailAndPassword(auth, emailValue, passwordValue);
+            alert("User logged in successfully");
             navigate('/Home');  // الانتقال للصفحة الرئيسية
         } catch (error) {
-            // if (error.code === 'auth/user-not-found') {
-            //     setErrorMessage(texts[language].userNotFound);
-            // } else if (error.code === 'auth/wrong-password') {
-            //     setErrorMessage(texts[language].wrongPassword);
-            // } else {
-            //     setErrorMessage(texts[language].errorOccurred);
-            // }
+            if (error.code === 'auth/user-not-found') {
+                setErrorMessage(texts[language].userNotFound);
+            } else if (error.code === 'auth/wrong-password') {
+                setErrorMessage(texts[language].wrongPassword);
+            } else {
+                setErrorMessage(texts[language].errorOccurred);
+            }
         }
     };
 
