@@ -5,35 +5,38 @@ import '../../styles/RegisterForm.css';
 import logo from '../../assets/image/logo.png';
 import logouticon from '../../assets/icon/logout.png';
 import { LanguageContext } from '../../context/LanguageContext';
+
 const texts = {
     registerTitle: { en: "Create a New Account", ar: "إنشاء حساب جديد" },
     personalInfo: { en: "Personal Information", ar: "المعلومات الشخصية" },
     firstName: { en: "Enter First Name", ar: "أدخل الاسم الأول" },
     fatherName: { en: "Enter Father's Name", ar: "أدخل اسم الأب" },
     grandfatherName: { en: "Enter Grandfather's Name", ar: "أدخل اسم الجد" },
-    lastName: { en: "Enter Last Name", ar: "أدخل اسم العائلة" },
+    familyName: { en: "Enter Last Name", ar: "أدخل اسم العائلة" },
     nationality: { en: "Select Nationality", ar: "اختر الجنسية" },
-    dateOfBirth: { en: "Enter Date of Birth", ar: "أدخل تاريخ الميلاد" },
+    birthDate: { en: "Enter Date of Birth", ar: "أدخل تاريخ الميلاد" },
     gender: { en: "Gender", ar: "الجنس" },
     male: { en: "Male", ar: "ذكر" },
     female: { en: "Female", ar: "أنثى" },
     contactInfo: { en: "Contact Information", ar: "معلومات الاتصال" },
-    phoneNumber: { en: "Enter Phone Number", ar: "أدخل رقم الهاتف" },
+    mobileNumber: { en: "Enter Phone Number", ar: "أدخل رقم الهاتف" },
     email: { en: "Enter Email", ar: "أدخل البريد الإلكتروني" },
     idInfo: { en: "Identity Information", ar: "معلومات الهوية" },
-    idNumber: { en: "Enter ID Number", ar: "أدخل رقم الهوية" },
+    nationalId: { en: "Enter ID Number", ar: "أدخل رقم الهوية" },
     accountInfo: { en: "Account Information", ar: "معلومات الحساب" },
     password: { en: "Enter Password", ar: "أدخل كلمة المرور" },
     confirmPassword: { en: "Re-enter Password", ar: "أعد إدخال كلمة المرور" },
     save: { en: "Save", ar: "حفظ" },
     errorRequired: { en: "This field is required", ar: "هذا الحقل مطلوب" },
-    errorIdNumber: { en: "ID number must be between 8 and 18 digits", ar: "رقم الهوية يجب أن يكون بين 8 و 18 رقمًا" },
-    errorPhoneNumber: { en: "Phone number must include country code and at least 8 digits", ar: "يجب أن يحتوي رقم الهاتف على رمز الدولة و8 أرقام على الأقل" },
+    errorNationalId: { en: "ID number must be between 8 and 18 digits", ar: "رقم الهوية يجب أن يكون بين 8 و 18 رقمًا" },
+    errorMobileNumber: { en: "Phone number must include country code and at least 8 digits", ar: "يجب أن يحتوي رقم الهاتف على رمز الدولة و8 أرقام على الأقل" },
     errorPassword: { en: "Password must be at least 6 characters, contain a number and a letter, and have no special symbols", ar: "يجب أن تكون كلمة المرور 6 خانات على الأقل، تحتوي على رقم وحرف واحد على الأقل، وبدون رموز خاصة" },
     errorConfirmPassword: { en: "Passwords do not match", ar: "كلمتا المرور غير متطابقتين" },
     emailExists: { en: "Email is already registered, please use another email", ar: "البريد الإلكتروني مسجل بالفعل، الرجاء استخدام بريد إلكتروني آخر." },
     registerError: { en: "An error occurred during registration, please try again", ar: "حدث خطأ أثناء التسجيل، الرجاء المحاولة مرة أخرى." }
 };
+
+
 
 const textsnationalEn = [
     { en: "Afghan", ar: "أفغاني" },
@@ -134,7 +137,6 @@ const textsnationalEn = [
 const textsnationalAr = textsnationalEn.slice().sort((a, b) => a.ar.localeCompare(b.ar, 'ar'));
 
 
-
 const RegisterForm = () => {
     const { language } = useContext(LanguageContext);
     const navigate = useNavigate();
@@ -142,13 +144,14 @@ const RegisterForm = () => {
         firstName: '',
         fatherName: '',
         grandfatherName: '',
-        lastName: '',
+        familyName: '',
         nationality: '',
-        dateOfBirth: '',
+        birthDate: '',
         gender: '',
-        phoneNumber: '',
+        mobileNumber: '',
+        code: '',
         email: '',
-        idNumber: '',
+        nationalId: '',
         password: '',
         confirmPassword: ''
     });
@@ -159,7 +162,7 @@ const RegisterForm = () => {
     const handleChange = (e) => {
         let { name, value } = e.target;
 
-        if (name === "dateOfBirth" && value.includes("/")) {
+        if (name === "birthDate" && value.includes("/")) {
             const [day, month, year] = value.split("/");
             value = `${year}-${month}-${day}`;
         }
@@ -176,12 +179,12 @@ const RegisterForm = () => {
             }
         });
 
-        if (formData.idNumber && (formData.idNumber.length < 8 || formData.idNumber.length > 18 || !/^[0-9]+$/.test(formData.idNumber))) {
-            newErrors.idNumber = texts.errorIdNumber[language];
+        if (formData.nationalId && (formData.nationalId.length < 8 || formData.nationalId.length > 18 || !/^[0-9]+$/.test(formData.nationalId))) {
+            newErrors.nationalId = texts.errorNationalId[language];
         }
 
-        if (formData.phoneNumber && !/^\+?[0-9]{8,}$/.test(formData.phoneNumber)) {
-            newErrors.phoneNumber = texts.errorPhoneNumber[language];
+        if (formData.mobileNumber && !/^\+?[0-9]{8,}$/.test(formData.mobileNumber)) {
+            newErrors.mobileNumber = texts.errorMobileNumber[language];
         }
 
         if (formData.password && (!/^\w{6,}$/.test(formData.password) || !/[0-9]/.test(formData.password) || !/[a-zA-Z]/.test(formData.password))) {
@@ -210,6 +213,24 @@ const RegisterForm = () => {
             }
         }
     };
+
+
+    const handleDateChange = (e) => {
+        const selectedDate = e.target.value;
+        const [year, month, day] = selectedDate.split('-');
+        if (year && month && day) {
+            const formattedDate = `${day}/${month}/${year}`;
+            setFormData((prevData) => ({
+                ...prevData,
+                birthDate: formattedDate
+            }));
+        }
+    };
+
+
+
+
+
 
     return (
         <div dir={language === 'ar' ? 'rtl' : 'ltr'}>
@@ -248,10 +269,10 @@ const RegisterForm = () => {
 
 
                     <Form.Group className='d-flex'>
-                        <Form.Group as={Row} className="mb-3 mx-3" controlId="formLastName">
+                        <Form.Group as={Row} className="mb-3 mx-3" controlId="formFamilyName">
                             <Col>
-                                <Form.Control type="text" name="lastName" placeholder={texts.lastName[language]} value={formData.lastName} onChange={handleChange} />
-                                {errors.lastName && <p className="text-danger">{errors.lastName}</p>}
+                                <Form.Control type="text" name="familyName" placeholder={texts.familyName[language]} value={formData.familyName} onChange={handleChange} />
+                                {errors.familyName && <p className="text-danger">{errors.familyName}</p>}
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3 mx-3" controlId="formNationality">
@@ -267,10 +288,15 @@ const RegisterForm = () => {
                                 {errors.nationality && <p className="text-danger">{errors.nationality}</p>}
                             </Col>
                         </Form.Group>
-                        <Form.Group as={Row} className="mb-3 mx-3" controlId="formDateOfBirth">
+                        <Form.Group as={Row} className="mb-3 mx-3" controlId="formBirthDate">
                             <Col>
-                                <Form.Control type="date" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleChange} />
-                                {errors.dateOfBirth && <p className="text-danger">{errors.dateOfBirth}</p>}
+                                <Form.Control
+                                    type="date"
+                                    name="birthDate"
+                                    value={formData.birthDate.split('/').reverse().join('-') || ''}
+                                    onChange={handleDateChange}
+                                />
+                                {errors.birthDate && <p className="text-danger">{errors.birthDate}</p>}
                             </Col>
                         </Form.Group>
 
@@ -303,10 +329,28 @@ const RegisterForm = () => {
 
                     <h4>{texts.contactInfo[language]}</h4>
                     <Form.Group className='d-flex'>
-                        <Form.Group as={Row} className="mb-3 mx-3" controlId="formPhoneNumber">
-                            <Col>
-                                <Form.Control type="text" name="phoneNumber" placeholder={texts.phoneNumber[language]} value={formData.phoneNumber} onChange={handleChange} />
-                                {errors.phoneNumber && <p className="text-danger">{errors.phoneNumber}</p>}
+                        <Form.Group as={Row} className="mb-3 mx-3 d-flex" controlId="formMobileNumber">
+                            <Col xs={3}>
+                                <Form.Control
+                                    name="code"
+                                    value={formData.code}
+                                    onChange={handleChange}
+                                    aria-label="Code"
+                                    placeholder={"+966"}
+                                >
+                                </Form.Control>
+                                {errors.code && <p className="text-danger">{errors.code}</p>}
+                            </Col>
+
+                            <Col xs={6}>
+                                <Form.Control
+                                    type="text"
+                                    name="mobileNumber"
+                                    placeholder={texts.mobileNumber[language]}
+                                    value={formData.mobileNumber}
+                                    onChange={handleChange}
+                                />
+                                {errors.mobileNumber && <p className="text-danger">{errors.mobileNumber}</p>}
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3 mx-3" controlId="formEmail">
@@ -320,8 +364,8 @@ const RegisterForm = () => {
                     <h4> {texts.idInfo[language]}</h4>
                     <Form.Group as={Row} className="mb-3 mx-3">
                         <Col sm="4">
-                            <Form.Control type="text" name="idNumber" placeholder={texts.idNumber[language]} value={formData.idNumber} onChange={handleChange} />
-                            {errors.idNumber && <p className="text-danger">{errors.idNumber}</p>}
+                            <Form.Control type="text" name="nationalId" placeholder={texts.nationalId[language]} value={formData.nationalId} onChange={handleChange} />
+                            {errors.nationalId && <p className="text-danger">{errors.nationalId}</p>}
                         </Col>
                     </Form.Group>
 

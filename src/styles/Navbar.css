@@ -52,7 +52,7 @@
 
 /* قائمة الإشعارات */
 .navbar-content .notifications-dropdown {
-    position: absolute;
+    position: absolute; /* أو استخدمي fixed لو عايزة القائمة تفضل ثابتة */
     top: 40px;
     width: 250px;
     background: white;
@@ -61,7 +61,9 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     overflow: hidden;
     transition: all 0.3s ease;
+    z-index: 15000; /* لضمان ظهور القائمة فوق كل حاجة */
 }
+
 
 /* ضبط مكان قائمة الإشعارات بناءً على اللغة */
 .navbar.rtl .notifications-dropdown {

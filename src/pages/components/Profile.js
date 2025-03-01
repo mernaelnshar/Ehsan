@@ -12,9 +12,9 @@ const texts = {
     generalInfo: { ar: "معلومات عامة", en: "General Information" },
     username: { ar: "اسم المستخدم", en: "Username" },
     birthDate: { ar: "تاريخ الميلاد", en: "Birth Date" },
-    idNumber: { ar: "رقم ID", en: "ID Number" },
+    nationalId: { ar: "رقم ID", en: "ID Number" },
     contactInfo: { ar: "معلومات الاتصال", en: "Contact Information" },
-    phoneNumber: { ar: "رقم الهاتف", en: "Phone Number" },
+    mobileNumber: { ar: "رقم الهاتف", en: "Phone Number" },
     email: { ar: "البريد الإلكتروني", en: "Email" },
     deleteAccount: { ar: "حذف الحساب", en: "Delete Account" },
     confirmDelete: { ar: "هل أنت متأكد من انك تريد حذف الحساب؟", en: "Are you sure you want to delete your account?" },
@@ -82,7 +82,7 @@ const Profile = () => {
 
     useEffect(() => {
         if (userDetails) {
-            setEditedPhone(userDetails.phoneNumber || "");
+            setEditedPhone(userDetails.mobileNumber || "");
             setEditedEmail(userDetails.email || "");
         }
     }, [userDetails]);
@@ -96,7 +96,7 @@ const Profile = () => {
             const userRef = doc(db, "users", auth.currentUser.uid);
         
             // تحديث رقم الهاتف مباشرةً
-            await updateDoc(userRef, { phoneNumber: editedPhone });
+            await updateDoc(userRef, { mobileNumber: editedPhone });
     
             if (editedEmail !== auth.currentUser.email) {
                 const password = prompt(texts.confirmpasswordPlaceholder[language]);
@@ -141,7 +141,7 @@ const Profile = () => {
                                                 <Form.Label>{texts.username[language]}</Form.Label>
                                                 <Form.Control
                                                     type="text"
-                                                    value={`${userDetails.firstName} ${userDetails.fatherName} ${userDetails.lastName}`}
+                                                    value={`${userDetails.firstName} ${userDetails.fatherName} ${userDetails.familyName}`}
                                                     disabled
                                                 />
 
@@ -150,13 +150,13 @@ const Profile = () => {
                                         <Col>
                                             <Form.Group>
                                                 <Form.Label>{texts.birthDate[language]}</Form.Label>
-                                                <Form.Control type="text" value={userDetails.dateOfBirth} disabled />
+                                                <Form.Control type="text" value={userDetails.birthDate} disabled />
                                             </Form.Group>
                                         </Col>
                                         <Col>
                                             <Form.Group>
-                                                <Form.Label>{texts.idNumber[language]}</Form.Label>
-                                                <Form.Control type="text" value={userDetails.idNumber} disabled />
+                                                <Form.Label>{texts.nationalId[language]}</Form.Label>
+                                                <Form.Control type="text" value={userDetails.nationalId} disabled />
                                             </Form.Group>
                                         </Col>
                                     </Row>
@@ -173,8 +173,8 @@ const Profile = () => {
                                     <Row className="mb-3">
                                         <Col>
                                             <Form.Group>
-                                                <Form.Label>{texts.phoneNumber[language]}</Form.Label>
-                                                <Form.Control type="text" value={userDetails.phoneNumber} disabled />
+                                                <Form.Label>{texts.mobileNumber[language]}</Form.Label>
+                                                <Form.Control type="text" value={userDetails.mobileNumber} disabled />
                                             </Form.Group>
                                         </Col>
                                         <Col>
@@ -195,7 +195,7 @@ const Profile = () => {
 
                     <Container className="profile-image">
                         <FaUser size={100} className="user-icon" />
-                        <h3>{`${userDetails.firstName} ${userDetails.fatherName} ${userDetails.lastName}`}</h3>
+                        <h3>{`${userDetails.firstName} ${userDetails.fatherName} ${userDetails.familyName}`}</h3>
                     </Container>
 
                     <Modal show={showModal} onHide={handleClose} className={`modal-delet-profile ${isArabic ? "rtl" : "ltr"}`} dir={isArabic ? "rtl" : "ltr"} centered>
@@ -219,7 +219,7 @@ const Profile = () => {
                             <h3>{texts.editContact[language]}</h3>
                             <Form>
                                 <Form.Group className="mb-3">
-                                    <Form.Label>{texts.phoneNumber[language]}</Form.Label>
+                                    <Form.Label>{texts.mobileNumber[language]}</Form.Label>
                                     <Form.Control
                                         type="text"
                                         value={editedPhone}

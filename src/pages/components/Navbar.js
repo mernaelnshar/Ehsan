@@ -1,9 +1,25 @@
-import React, { useState , useContext} from 'react';
+import React, {useEffect, useState , useContext} from 'react';
 import { FaBell } from 'react-icons/fa';
 import '../../styles/Navbar.css'; // تأكدي من وجود ملف CSS
 import { LanguageContext } from '../../context/LanguageContext'; // استيراد الكونتكست
+import { auth, db } from "../../firebase/firebaseConfig";
+import { doc, getDoc } from "firebase/firestore";
 
 const Navbar = () => {
+
+    const [userDetails, setUserDetails] = useState(null);
+        const fetchUserDetails = async () => {
+            const docRef = doc(db, "users", auth.currentUser.uid);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                setUserDetails(docSnap.data());
+            } else {
+                console.log("No such document!");
+            }
+        };
+        useEffect(() => {
+            fetchUserDetails();
+        }, []);
     const { language} = useContext(LanguageContext);
     const isArabic = language === "ar";
     // حالة التحكم في ظهور قائمة الإشعارات
@@ -20,7 +36,11 @@ const Navbar = () => {
         <div className={`navbar ${isArabic ? "rtl" : "ltr"}`} dir={language === 'ar' ? 'rtl' : 'ltr'}>
             <div className="navbar-content">
                 {/* اسم الموقع */}
-                <h2 className="navbar-title">ميرنا حماده حنفي</h2>
+                {userDetails ? (
+                    <h2 className="navbar-title">{`${userDetails.firstName} ${userDetails.fatherName} ${userDetails.familyName}`}</h2>
+                ) : (
+                    <h2 className="navbar-title">...</h2>
+                )}
 
                 {/* أيقونة الإشعارات */}
                 <div className="notifications-container">

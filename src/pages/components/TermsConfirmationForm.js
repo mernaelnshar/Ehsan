@@ -85,13 +85,15 @@ const TermsConfirmationForm = () => {
                 firstName: formData.firstName,
                 fatherName: formData.fatherName,
                 grandfatherName: formData.grandfatherName,
-                lastName: formData.lastName,
+                familyName: formData.familyName,
                 nationality: formData.nationality,
-                dateOfBirth: formData.dateOfBirth,
+                birthDate: formData.birthDate,
                 gender: formData.gender,
-                phoneNumber: formData.phoneNumber,
+                mobileNumber: formData.mobileNumber,
+                code: formData.code,
                 email: formData.email,
-                idNumber: formData.idNumber,
+                nationalId: formData.nationalId,
+
 
             });
 

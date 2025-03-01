@@ -37,6 +37,8 @@
     border: #541A7D solid 3px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
+    position: relative; /* عشان تقدر تستقبل z-index */
+    z-index: 1; /* رقم أقل من قائمة الإشعارات */
 }
 
 .profile-title {
