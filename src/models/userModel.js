@@ -1,20 +1,60 @@
-// src/models/userModel.js
-class UserModel {
-    constructor(email, firstName, lastName, role) {
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.role = role;
-    }
+// UserModel.js
 
-    toMap() {
-        return {
-            email: this.email,
-            firstName: this.firstName,
-            lastName: this.lastName,
-            role: this.role,
-        };
-    }
-}
+// نموذج UserModel في React JavaScript
+import { kEmail, kNationalId, kBirthDate, kFirstName, kFatherName, kGrandFatherName, kFamilyName, kGender, kNationality, kCode, kMobileNumber } from 'ehsan/core/utils/constants';
 
-export default UserModel;
+export const UserModel = ({
+    email,
+    nationalId,
+    birthDate,
+    firstName,
+    fatherName,
+    grandFatherName,
+    familyName,
+    gender,
+    nationality,
+    code,
+    mobileNumber,
+}) => ({
+    email,
+    nationalId,
+    birthDate,
+    firstName,
+    fatherName,
+    grandFatherName,
+    familyName,
+    gender,
+    nationality,
+    code,
+    mobileNumber,
+});
+
+// تحويل كائن إلى Map
+export const toMap = (user) => ({
+    [kEmail]: user.email,
+    [kNationalId]: user.nationalId,
+    [kBirthDate]: user.birthDate,
+    [kFirstName]: user.firstName,
+    [kFatherName]: user.fatherName,
+    [kGrandFatherName]: user.grandFatherName,
+    [kFamilyName]: user.familyName,
+    [kGender]: user.gender,
+    [kNationality]: user.nationality,
+    [kCode]: user.code,
+    [kMobileNumber]: user.mobileNumber,
+});
+
+// تحويل Map إلى UserModel
+export const fromMap = (map) => ({
+    email: map[kEmail],
+    nationalId: map[kNationalId],
+    birthDate: map[kBirthDate],
+    firstName: map[kFirstName],
+    fatherName: map[kFatherName],
+    grandFatherName: map[kGrandFatherName],
+    familyName: map[kFamilyName],
+    gender: map[kGender],
+    nationality: map[kNationality],
+    code: map[kCode],
+    mobileNumber: map[kMobileNumber],
+});

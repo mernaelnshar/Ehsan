@@ -48,9 +48,10 @@ const texts = {
         en: "Back"
     },
     error: {
-        ar: "حدث خطأ أثناء التسجيل، الرجاء المحاولة مرة أخرى.",
-        en: "An error occurred during registration. Please try again."
+        ar: "حدث خطأ أثناء التسجيل، أو أن البريد الإلكتروني مستخدم من قبل. الرجاء المحاولة مرة أخرى.",
+        en: "An error occurred during registration, or the email is already in use. Please try again."
     }
+    
 };
 
 
