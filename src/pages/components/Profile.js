@@ -1,6 +1,6 @@
 import "../../styles/Profile.css";
 import { FaUser, FaEdit } from "react-icons/fa";
-import { Form, Container, Card, Row, Col, Button, Modal } from "react-bootstrap";
+import { Form, Container, Card, Row, Col, Button, Modal , Spinner } from "react-bootstrap";
 import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { LanguageContext } from "../../context/LanguageContext";
@@ -250,7 +250,11 @@ const Profile = () => {
 
                 </>
             ) : (
-                <p>Loading...</p>
+                <div className="d-flex justify-content-center">
+                                            <Spinner animation="border" role="status" variant="primary">
+                                                <span className="visually-hidden">Loading...</span>
+                                            </Spinner>
+                </div>
             )}
 
 
