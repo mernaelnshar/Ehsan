@@ -1,13 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
 import "../../styles/RegisterStudent.css";
 import { FaCheckCircle, FaHourglassHalf, FaPlus } from "react-icons/fa";
-import { Button, Modal, Form, Spinner } from "react-bootstrap";
+import { Button, Modal, Form, Spinner, Card } from "react-bootstrap";
 import { LanguageContext } from "../../context/LanguageContext";
 import { getHalqatTypes, getHalqatByTypeStudent, getSessionTimes, formatTime } from "../../firebase/firebaseService"; // تعديل المسار حسب المشروع
-import { db } from "../../firebase/firebaseConfig"; // تأكدي من إعداد Firebase بشكل صحيح
-import { collection, addDoc , getDocs } from "firebase/firestore";
-import { kRequestsCollection, kName, kRequestStatus, kAcceptedStatus, kUid, kRole } from "../../constants/constants";
-
+import { db, auth } from "../../firebase/firebaseConfig"; // تأكدي من إعداد Firebase بشكل صحيح
+import { collection, addDoc, getDocs, getDoc, doc } from "firebase/firestore";
+import { kStudentRole, kRequestsCollection, kName, kRequestStatus, kAcceptedStatus, kUid, kRole, kHalqaId, kHalqaName, kHalqaTime, kTypeName, kSessionId } from "../../constants/constants";
 
 const texts = {
     registerStudentTitle: { ar: "تسجيل طالب في الحلقة", en: "Register Student in the Session" },
@@ -128,57 +127,91 @@ const RegisterStudent = () => {
 
 
     // دالة لإضافة الجلسة الجديدة
-const handleAddSession = async () => {
-    if (!selectedType || !selectedHalqa || !newSession.time) {
-        alert(texts.alertMessage[language]);
-        return;
-    }
-
-    const selectedTime = sessionTimes.find((time) => time.timeId === newSession.time);
-
-    const newSessionData = {
-        id: Date.now(),
-        [kName]: newSession.name,
-        type: halqatTypes.find((type) => type.typeId === selectedType)?.typeName || "",
-        time: selectedTime?.halqaTime ?? "",
-        status: kRequestStatus,
-        [kRequestStatus]: kAcceptedStatus,
-        [kUid]: 'uid',
-        [kRole]: 'role'
-    };
-
-    try {
-        await addDoc(collection(db, kRequestsCollection), newSessionData);
-        alert("تم إرسال الطلب بنجاح!");
-
-        // إضافة الجلسة الجديدة للـ State المحلي
-        setSessions((prevSessions) => [...prevSessions, newSessionData]);
-
-        // إعادة تعيين الحقول
-        setShowModal(false);
-        setNewSession({ name: "", time: "", type: "", status: texts.pending[language] });
-        setSelectedType("");
-        setSelectedHalqa("");
-    } catch (error) {
-        console.error("فشل في إرسال الطلب:", error);
-        alert("حدث خطأ أثناء إرسال الطلب!");
-    }
-};
-
-// جلب البيانات من Firebase عند تحميل الصفحة
-useEffect(() => {
-    const fetchSessions = async () => {
-        try {
-            const querySnapshot = await getDocs(collection(db, kRequestsCollection));
-            const sessionsData = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-            setSessions(sessionsData);
-        } catch (error) {
-            console.error("فشل في جلب البيانات:", error);
+    const handleAddSession = async () => {
+        if (!selectedType || !selectedHalqa || !newSession.time) {
+            alert(texts.alertMessage[language]);
+            return;
         }
+
+        setLoading(true);
+
+        const selectedTime = sessionTimes.find((time) => time.timeId === newSession.time);
+
+        try {
+            // جلب بيانات الحلقات بناءً على نوع الحلقة
+            const halqatList = await getHalqatByTypeStudent(selectedType);
+
+            // إيجاد الحلقة المختارة بواسطة الـ halqaId
+            const selectedHalqaData = halqatList.find((halqa) => halqa.halqaId === selectedHalqa);
+
+            // جلب UID المستخدم الحالي من Firebase Authentication
+            const currentUser = auth.currentUser;
+            const userUid = currentUser?.uid;
+
+            if (!userUid) {
+                alert("لا يوجد مستخدم مسجل حاليًا.");
+                setLoading(false);
+                return;
+            }
+            // جلب بيانات المستخدم من مجموعة الـ users بناءً على UID
+            const userDoc = await getDoc(doc(db, 'users', userUid));
+            const userData = userDoc.data();
+
+            console.log("selectedHalqaData:", selectedHalqaData);
+
+            const newSessionData = {
+                [kHalqaId]: selectedHalqa,
+                [kHalqaName]: selectedHalqaData?.halqaName || '',
+                [kHalqaTime]: selectedTime?.halqaTime ?? '',
+                [kName]: `${userData?.firstName || ''} ${userData?.fatherName || ''}`.trim(),
+                [kRole]: kStudentRole,
+                [kSessionId]: selectedHalqaData?.sessionId || '',
+                [kTypeName]: selectedHalqaData?.halqaTypeName || '',
+                [kUid]: userUid
+            };
+
+            await addDoc(collection(db, kRequestsCollection), newSessionData);
+            alert("تم إرسال الطلب بنجاح!");
+
+            setSessions([...sessions, { ...newSessionData, status: kRequestStatus }]);
+            setShowModal(false);
+            setNewSession({ name: "", time: "", type: "", status: "" });
+        } catch (error) {
+            console.error("Failed to add session: ", error);
+        }
+        setLoading(false);
+        handleCloseModal();
+
     };
 
-    fetchSessions();
-}, []); // المصفوفة الفارغة عشان الـ useEffect يشتغل مرة واحدة عند تحميل الصفحة
+    // جلب البيانات من Firebase عند تحميل الصفحة
+    useEffect(() => {
+        const fetchSessions = async () => {
+            try {
+                // جلب UID المستخدم الحالي من Firebase Authentication
+                const currentUser = auth.currentUser;
+                const userUid = currentUser?.uid;
+
+                if (!userUid) {
+                    console.warn("لا يوجد مستخدم مسجل حاليًا.");
+                    return;
+                }
+
+                // جلب البيانات من مجموعة الطلبات مع فلترة حسب UID المستخدم الحالي
+                const querySnapshot = await getDocs(collection(db, kRequestsCollection));
+                const sessionsData = querySnapshot.docs
+                    .map((doc) => ({ ...doc.data(), id: doc.id }))
+                    .filter((session) => session[kUid] === userUid); // فلترة حسب UID المستخدم
+
+                console.log("طلبات المستخدم الحالي:", sessionsData);
+                setSessions(sessionsData);
+            } catch (error) {
+                console.error("فشل في جلب البيانات:", error);
+            }
+        };
+
+        fetchSessions();
+    }, []);
 
     const handleCloseModal = () => {
         setShowModal(false);
@@ -193,16 +226,27 @@ useEffect(() => {
             <h1 className="register-student-title">{texts.registerStudentTitle[language]}</h1>
             <div className="register-student-grid">
                 {sessions.map((session) => (
-                    <div key={session.id} className="session-card">
-                        <h3 className="session-title">{session.name}</h3>
-                        <div className="session-details">
-                            <p className="session">{session.type}</p>
-                            <p className="session">{formatTime({ time: session.time, translations })}</p>
+                    
+                    <Card className="session-card mb-4 shadow-sm" style={{ borderRadius: "15px" }}>
+                    <Card.Body className="text-center">
+                        <Card.Title className="session-title mb-3 text-white" style={{ backgroundColor: "#9E7DB7", borderRadius: "8px", padding: "10px" }}>
+                            {session.halqaName}
+                        </Card.Title>
+                        
+                        <div className="session-details d-flex justify-content-center gap-2">
+                            <p className="session">{session.typeName}</p>
+                            <p className="session">{formatTime({ time: session.halqaTime, translations })}</p>
                         </div>
-                        <p className={`session-status ${session.status === texts.accepted[language] ? "accepted" : "pending"}`}>
-                            {getStatusIcon(session.status, language)} {session.status === kRequestStatus ? texts.pending[language] : texts.accepted[language]}
+        
+                        <p className={`session-status  mt-3 ${session.status === texts.accepted[language] ? "accepted" : "pending"}`}>
+                        {getStatusIcon(kRequestStatus, language)}
+                        {kRequestStatus ? texts.pending[language] : texts.accepted[language]}
                         </p>
-                    </div>
+                    </Card.Body>
+                </Card>
+
+
+
                 ))}
 
                 {/* زر الإضافة */}
@@ -223,14 +267,14 @@ useEffect(() => {
                     <Modal.Body className="modal-content">
                         {loading ? (
                             <div className="d-flex justify-content-center">
-                            <Spinner animation="border" role="status" variant="primary">
-                                <span className="visually-hidden">Loading...</span>
-                            </Spinner>
-                        </div>
-                        ):(<>
-                        <Form>
-                        <Form.Group className="mb-2">
-                                <Form.Label>{texts.sessionType[language]}</Form.Label>
+                                <Spinner animation="border" role="status" variant="primary">
+                                    <span className="visually-hidden">Loading...</span>
+                                </Spinner>
+                            </div>
+                        ) : (<>
+                            <Form>
+                                <Form.Group className="mb-2">
+                                    <Form.Label>{texts.sessionType[language]}</Form.Label>
                                     <Form.Select
                                         className={`modal-input custom-select ${isArabic ? "arabic-select" : "english-select"}`}
                                         value={selectedType}
@@ -246,9 +290,9 @@ useEffect(() => {
                                             </option>
                                         ))}
                                     </Form.Select>
-                            </Form.Group>
-                            <Form.Group className="mb-2">
-                                <Form.Label>{texts.sessionName[language]}</Form.Label>
+                                </Form.Group>
+                                <Form.Group className="mb-2">
+                                    <Form.Label>{texts.sessionName[language]}</Form.Label>
                                     <Form.Select
                                         className={`modal-input custom-select ${isArabic ? "arabic-select" : "english-select"}`}
                                         value={selectedHalqa}
@@ -266,10 +310,10 @@ useEffect(() => {
                                             </option>
                                         ))}
                                     </Form.Select>
-                            </Form.Group>
+                                </Form.Group>
 
-                            <Form.Group className="mb-2">
-                                <Form.Label>{texts.sessionTime[language]}</Form.Label>
+                                <Form.Group className="mb-2">
+                                    <Form.Label>{texts.sessionTime[language]}</Form.Label>
                                     <Form.Select
                                         className={`modal-input custom-select ${isArabic ? "arabic-select" : "english-select"}`}
                                         value={newSession.time}
@@ -290,10 +334,10 @@ useEffect(() => {
                                             <option disabled>{texts.noAvailableTimes[language]}</option>
                                         )}
                                     </Form.Select>
-                            </Form.Group>
-                        </Form>
+                                </Form.Group>
+                            </Form>
                         </>)}
-                        
+
                         <Modal.Footer>
                             <Button className="add-btn" onClick={handleAddSession} disabled={loading}>
                                 {texts.save[language]}

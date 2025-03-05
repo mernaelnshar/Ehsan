@@ -18,8 +18,9 @@
 }
 .register-student-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 50px;
+    justify-content: center; 
 }
 
 .register-student-container .session-card {
@@ -28,10 +29,13 @@
     border-radius: 10px;
     border: #ffffff solid 2px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    width: 80%;
+    width: 300px;
+    max-width: 100%;
     text-align: center;
     transition: 0.3s ease-in-out;
+    margin: 0 auto;
 }
+
 
 .register-student-container .session-title {
     color: #ffffff;
@@ -43,11 +47,11 @@
 
 
 
-.register-student-container .session-details {
+.register-student-container .session-details  {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
-    
+    margin-right: 20px;    
 }
 
 .register-student-container p {

@@ -2,6 +2,8 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } f
 import { getFirestore, doc, setDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { app, db } from "./firebaseConfig"; // تأكد من إعداد Firebase
 import HalqatDetailsModel  from "../models/halqatDetailsModel";
+import HalqatModel from "../models/halqatModel"; // استيراد الموديل
+
 
 // رسائل الخطأ المستخدمة
 const ERROR_MESSAGES = {
@@ -67,9 +69,10 @@ export const getHalqatTypes = async () => {
 export const getHalqatByTypeStudent = async (halqaTypeId) => {
     try {
         const halqatList = [];
+        let halqatDetailsList = [];
         const halqatIdSet = new Set();
 
-        // إنشاء استعلام لجلب الحلقات من Firebase
+        // جلب الحلقات بناءً على نوع الحلقة
         const halqatQuery = query(
             collection(db, "halqat"),
             where("halqaTypeId", "==", halqaTypeId)
@@ -77,32 +80,63 @@ export const getHalqatByTypeStudent = async (halqaTypeId) => {
 
         const querySnapshot = await getDocs(halqatQuery);
 
-        // التكرار على النتائج وملء بيانات الحلقات
         querySnapshot.forEach((doc) => {
-            const data = doc.data();
-            const halqaId = doc.id;
+            halqatList.push(
+                new HalqatModel(
+                    doc.id,
+                    doc.data().halqaName || "",
+                    doc.data().halqaTypeId || ""
+                )
+            );
+        });
 
-            if (!halqatIdSet.has(halqaId)) {
-                halqatIdSet.add(halqaId);
-                halqatList.push(
+        // إضافة الـ halqaId إلى المجموعة
+        halqatList.forEach((halqa) => {
+            halqatIdSet.add(halqa.halqaId);
+        });
+
+        // جلب تفاصيل الحلقات
+        const halqatDetailsQuery = query(
+            collection(db, "halqatDetails"),
+            where("teacherUid", "!=", null)
+        );
+
+        const detailsSnapshot = await getDocs(halqatDetailsQuery);
+
+        detailsSnapshot.forEach((doc) => {
+            const data = doc.data();
+            if (halqatIdSet.has(data.halqaId) && (data.studentsCount || 0) < 26) {
+                halqatDetailsList.push(
                     new HalqatDetailsModel(
-                        data.sessionId || '',
-                        halqaId,
-                        data.halqaName || '',
-                        data.halqaTime || '',
-                        data.halqaTypeName || '',
-                        data.teacherId || '',
-                        data.studentsId || [],
+                        doc.id,
+                        data.halqaId || "",
+                        data.halqaTime || "",
+                        data.teacherUid || "",
+                        data.studentsUid || [],
                         data.studentsCount || 0,
+                        data.halqaName || "",
+                        data.typeName || "",
                         data.active || false
                     )
                 );
             }
         });
 
-        return halqatList; // إرجاع قائمة الحلقات
+        // التحقق من الحلقات الموجودة وإزالة الغير مرتبطة
+        halqatList.forEach((halqa) => {
+            const isExist = halqatDetailsList.some(
+                (details) => details.halqaId === halqa.halqaId
+            );
+            if (!isExist) {
+                halqatDetailsList = halqatDetailsList.filter(
+                    (details) => details.halqaId !== halqa.halqaId
+                );
+            }
+        });
+
+        return halqatDetailsList;
     } catch (error) {
-        console.error("Error fetching Halqat:", error);
+        console.error("Failed to fetch halqat by type for students", error);
         throw new Error("Failed to fetch halqat by type for students");
     }
 };

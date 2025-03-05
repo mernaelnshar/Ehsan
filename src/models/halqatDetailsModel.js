@@ -1,24 +1,14 @@
 class HalqatDetailsModel {
-    constructor(
-        sessionId = '',
-        halqaId = '',
-        halqaName = '',
-        halqaTime = '',
-        halqaTypeName = '',
-        teacherId = '',
-        studentsId = [],
-        studentsCount = 0,
-        active = false
-    ) {
-        this.sessionId = sessionId; // رقم الجلسة
-        this.halqaId = halqaId; // رقم الحلقة
-        this.halqaName = halqaName; // اسم الحلقة
-        this.halqaTime = halqaTime; // وقت الحلقة
-        this.halqaTypeName = halqaTypeName; // نوع الحلقة
-        this.teacherId = teacherId; // رقم المعلم
-        this.studentsId = studentsId; // قائمة بأرقام الطلاب
-        this.studentsCount = studentsCount; // عدد الطلاب
-        this.active = active; // حالة الحلقة (نشطة أم لا)
+    constructor(sessionId, halqaId, halqaTime, teacherId, studentsId, studentsCount, halqaName, halqaTypeName, active) {
+        this.sessionId = sessionId;
+        this.halqaId = halqaId;
+        this.halqaTime = halqaTime;
+        this.teacherId = teacherId;
+        this.studentsId = studentsId;
+        this.studentsCount = studentsCount;
+        this.halqaName = halqaName;
+        this.halqaTypeName = halqaTypeName;
+        this.active = active;
     }
 }
 
