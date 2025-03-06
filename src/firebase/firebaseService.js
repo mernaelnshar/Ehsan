@@ -1,9 +1,23 @@
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, doc, setDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { app, db } from "./firebaseConfig"; // تأكد من إعداد Firebase
-import HalqatDetailsModel  from "../models/halqatDetailsModel";
+import HalqatDetailsModel from "../models/halqatDetailsModel";
 import HalqatModel from "../models/halqatModel"; // استيراد الموديل
-
+import {
+    kHalqatCollection,
+    kHalqatDetailsCollection,
+    kHalqaTypeId,
+    kHalqaName,
+    kTeacherUid,
+    kHalqaId,
+    kHalqaTime,
+    kStudentsUid,
+    kStudentsCount,
+    kTypeName,
+    kActive,
+    kFailedToFetchHalqatByTypeForTeacher,
+    kFailedToFetchHalqatByTypeForStudent
+} from "../constants/constants.js";
 
 // رسائل الخطأ المستخدمة
 const ERROR_MESSAGES = {
@@ -74,8 +88,8 @@ export const getHalqatByTypeStudent = async (halqaTypeId) => {
 
         // جلب الحلقات بناءً على نوع الحلقة
         const halqatQuery = query(
-            collection(db, "halqat"),
-            where("halqaTypeId", "==", halqaTypeId)
+            collection(db, kHalqatCollection),
+            where(kHalqaTypeId, '==', halqaTypeId)
         );
 
         const querySnapshot = await getDocs(halqatQuery);
@@ -84,8 +98,8 @@ export const getHalqatByTypeStudent = async (halqaTypeId) => {
             halqatList.push(
                 new HalqatModel(
                     doc.id,
-                    doc.data().halqaName || "",
-                    doc.data().halqaTypeId || ""
+                    doc.data()[kHalqaName] || '',
+                    doc.data()[kHalqaTypeId] || ''
                 )
             );
         });
@@ -97,26 +111,26 @@ export const getHalqatByTypeStudent = async (halqaTypeId) => {
 
         // جلب تفاصيل الحلقات
         const halqatDetailsQuery = query(
-            collection(db, "halqatDetails"),
-            where("teacherUid", "!=", null)
+            collection(db, kHalqatDetailsCollection),
+            where(kTeacherUid, '!=', null)
         );
 
         const detailsSnapshot = await getDocs(halqatDetailsQuery);
 
         detailsSnapshot.forEach((doc) => {
             const data = doc.data();
-            if (halqatIdSet.has(data.halqaId) && (data.studentsCount || 0) < 26) {
+            if (halqatIdSet.has(data[kHalqaId]) && (data[kStudentsCount] || 0) < 26) {
                 halqatDetailsList.push(
                     new HalqatDetailsModel(
                         doc.id,
-                        data.halqaId || "",
-                        data.halqaTime || "",
-                        data.teacherUid || "",
-                        data.studentsUid || [],
-                        data.studentsCount || 0,
-                        data.halqaName || "",
-                        data.typeName || "",
-                        data.active || false
+                        data[kHalqaId] || '',
+                        data[kHalqaTime] || '',
+                        data[kTeacherUid] || '',
+                        data[kStudentsUid] || [],
+                        data[kStudentsCount] || 0,
+                        data[kHalqaName] || '',
+                        data[kTypeName] || '',
+                        data[kActive] || false
                     )
                 );
             }
@@ -136,19 +150,20 @@ export const getHalqatByTypeStudent = async (halqaTypeId) => {
 
         return halqatDetailsList;
     } catch (error) {
-        console.error("Failed to fetch halqat by type for students", error);
-        throw new Error("Failed to fetch halqat by type for students");
+        console.error(kFailedToFetchHalqatByTypeForStudent, error);
+        throw new Error(kFailedToFetchHalqatByTypeForStudent);
     }
 };
+
 
 
 export const getSessionTimes = async (halqaId) => {
     try {
         const q = query(collection(db, "halqatDetails"), where("halqaId", "==", halqaId));
         const querySnapshot = await getDocs(q);
-        return querySnapshot.docs.map((doc) => ({ 
-            timeId: doc.id, 
-            halqaTime: doc.data().halqaTime 
+        return querySnapshot.docs.map((doc) => ({
+            timeId: doc.id,
+            halqaTime: doc.data().halqaTime
         }));
     } catch (error) {
         console.error("Error fetching session times:", error.message);
@@ -178,6 +193,75 @@ export const formatTime = ({ time, translations = {} }) => {
 
     return `${translations.From || "From"} ${startTime} ${startPeriod} ${translations.To || "To"} ${endTime} ${endPeriod}`;
 };
+
+export const getHalqatByTypeTeacher = async (halqaTypeId) => {
+    try {
+        const halqatList = [];
+        let halqatDetailsList = [];
+        const halqatIdSet = new Set();
+
+        // 🔍 جلب مجموعة الحلقات بناءً على معرف نوع الحلقة
+        const halqatQuery = query(
+            collection(db, kHalqatCollection),
+            where(kHalqaTypeId, '==', halqaTypeId)
+        );
+
+        const querySnapshot = await getDocs(halqatQuery);
+
+        querySnapshot.forEach((doc) => {
+            halqatList.push(
+                new HalqatModel(
+                    doc.id,
+                    doc.data()[kHalqaName],
+                    doc.data()[kHalqaTypeId],
+                )
+            );
+        });
+        // إضافة الـ halqaId إلى المجموعة
+        halqatList.forEach((halqa) => {
+            halqatIdSet.add(halqa.halqaId);
+        });
+        // 🔍 جلب تفاصيل الحلقات حيث المعلم غير محدد
+        const halqatDetailsQuery = query(
+            collection(db, kHalqatDetailsCollection),
+            where(kTeacherUid, '==', null)
+        );
+        const detailsSnapshot = await getDocs(halqatDetailsQuery);
+        detailsSnapshot.forEach((doc) => {
+            const data = doc.data();
+            if (halqatIdSet.has(data[kHalqaId])) {
+                halqatDetailsList.push(
+                    new HalqatDetailsModel(
+                        doc.id,
+                        data[kHalqaId],
+                        data[kHalqaTime],
+                        data[kTeacherUid],
+                        data[kStudentsUid] || [],
+                        data[kStudentsCount],
+                        data[kHalqaName],
+                        data[kTypeName],
+                        data[kActive],
+                    )
+                );
+            }
+        });
+
+        // ✅ إزالة التكرار باستخدام `Set`
+        const uniqueHalqatDetails = Array.from(
+            new Map(halqatDetailsList.map(item => [item.halqaId, item])).values()
+        );
+
+        return uniqueHalqatDetails;
+
+        
+    } catch (e) {
+        console.error("❌ حدث خطأ أثناء جلب البيانات:", e);
+        throw new Error(kFailedToFetchHalqatByTypeForTeacher);
+    }
+};
+
+
+
 
 
 

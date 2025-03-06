@@ -38,11 +38,14 @@
 
 
 .register-student-container .session-title {
+    width: 100%;
     color: #ffffff;
     text-align: center;
     font-size: 18px;
     font-weight: bold;
-    margin: 12px 0;
+    background-color: #7842a2;
+    border-radius: 8px;
+    padding: 10px;
 }
 
 
@@ -52,30 +55,27 @@
     justify-content: space-between;
     margin-top: 20px;
     margin-right: 20px;    
+    gap: 20px;
 }
 
 .register-student-container p {
-    font-size: 20px;
-    color: #541A7D;
+    font-size: 22px;
+    color: #ffffff;
     font-weight: bold;
     padding: 5px;
 }
 
 
-.session-status{
-    margin-right: 60px;
+.register-student-container .session-status{
     background-color: #ffffff;
-    width: 40%;
     border: #541A7D solid 2px;
     border-radius: 5px;
+    font-size: 20px;
+    align-items: center;
+    text-align: center;
 }
 
-.register-student-container.ltr .session-status{
-    width: 100px;
-    font-size: 15px;
-    padding: 2px;
-    margin-left: 60px;
-}
+
 /* تغيير لون نص الحالة */
 .register-student-container .session-status.accepted {
     color: green;

@@ -46,7 +46,7 @@ const RegisterStudent = () => {
     const isArabic = language === "ar";
     const [showModal, setShowModal] = useState(false);
     const [sessions, setSessions] = useState([]);
-    const [newSession, setNewSession] = useState({ name: "", time: "", type: isArabic ? "الحفظ" : "Hifz", status: isArabic ? "انتظار" : "Pending" });
+    const [newSession, setNewSession] = useState({ name: "", time: "", type: "", status: "" });
 
     const [halqatTypes, setHalqatTypes] = useState([]);
     const [selectedType, setSelectedType] = useState("");
@@ -191,27 +191,31 @@ const RegisterStudent = () => {
                 // جلب UID المستخدم الحالي من Firebase Authentication
                 const currentUser = auth.currentUser;
                 const userUid = currentUser?.uid;
-
+    
                 if (!userUid) {
                     console.warn("لا يوجد مستخدم مسجل حاليًا.");
                     return;
                 }
-
-                // جلب البيانات من مجموعة الطلبات مع فلترة حسب UID المستخدم الحالي
+    
+                // جلب البيانات من مجموعة الطلبات مع فلترة حسب UID المستخدم والدور "طالب"
                 const querySnapshot = await getDocs(collection(db, kRequestsCollection));
                 const sessionsData = querySnapshot.docs
                     .map((doc) => ({ ...doc.data(), id: doc.id }))
-                    .filter((session) => session[kUid] === userUid); // فلترة حسب UID المستخدم
-
-                console.log("طلبات المستخدم الحالي:", sessionsData);
+                    .filter((session) => 
+                        session[kUid] === userUid && 
+                        session[kRole] === kStudentRole // فقط كطالب
+                    );
+    
+                console.log("طلبات المستخدم الحالي كطالب:", sessionsData);
                 setSessions(sessionsData);
             } catch (error) {
                 console.error("فشل في جلب البيانات:", error);
             }
         };
-
+    
         fetchSessions();
     }, []);
+    
 
     const handleCloseModal = () => {
         setShowModal(false);
@@ -226,24 +230,24 @@ const RegisterStudent = () => {
             <h1 className="register-student-title">{texts.registerStudentTitle[language]}</h1>
             <div className="register-student-grid">
                 {sessions.map((session) => (
-                    
+
                     <Card className="session-card mb-4 shadow-sm" style={{ borderRadius: "15px" }}>
-                    <Card.Body className="text-center">
-                        <Card.Title className="session-title mb-3 text-white" style={{ backgroundColor: "#9E7DB7", borderRadius: "8px", padding: "10px" }}>
-                            {session.halqaName}
-                        </Card.Title>
-                        
-                        <div className="session-details d-flex justify-content-center gap-2">
-                            <p className="session">{session.typeName}</p>
-                            <p className="session">{formatTime({ time: session.halqaTime, translations })}</p>
-                        </div>
-        
-                        <p className={`session-status  mt-3 ${session.status === texts.accepted[language] ? "accepted" : "pending"}`}>
-                        {getStatusIcon(kRequestStatus, language)}
-                        {kRequestStatus ? texts.pending[language] : texts.accepted[language]}
-                        </p>
-                    </Card.Body>
-                </Card>
+                        <Card.Body className="text-center d-flex flex-column justify-content-center align-items-center">
+                            <Card.Title className="session-title mb-3" >
+                                {session.halqaName}
+                            </Card.Title>
+
+                            <div className="session-details d-flex justify-content-center ">
+                                <p className="session">{session.typeName}</p>
+                                <p className="session">{formatTime({ time: session.halqaTime, translations })}</p>
+                            </div>
+
+                            <p className={`session-status  mt-2 w-50 ${session.status === texts.accepted[language] ? "accepted" : "pending"}`}>
+                                {getStatusIcon(kRequestStatus, language)}
+                                {kRequestStatus ? texts.pending[language] : texts.accepted[language]}
+                            </p>
+                        </Card.Body>
+                    </Card>
 
 
 
