@@ -29,15 +29,29 @@ import ProfileStudent from './pages/components/ProfileStudent';
 import ProfileTeacher from './pages/components/ProfileTeacher';
 import EducationalPlan from './pages/components/EducationalPlan';
 
+import { loadQuranJson } from './services/quranJsonService';
 function App() {
   const [user, setUser] = useState(null);
+  const [isQuranLoading, setIsQuranLoading] = useState(true);
+  const [isUserLoading, setIsUserLoading] = useState(true);
+
+  useEffect(() => {
+    loadQuranJson().then(() => setIsQuranLoading(false)); // تحميل بيانات القرآن
+  }, []);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
       setUser(currentUser);
+      setIsUserLoading(false); // انتهاء تحميل المستخدم
     });
+
     return () => unsubscribe();
   }, []);
+
+  if (isQuranLoading || isUserLoading) {
+    return <div>📖 جاري تحميل البيانات...</div>; // رسالة تحميل موحدة
+  }
+
 
   return (
     <LanguageProvider>

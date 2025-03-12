@@ -245,7 +245,7 @@ export const getHalqatByTypeTeacher = async (halqaTypeId) => {
                 );
             }
         });
-
+    
         // ✅ إزالة التكرار باستخدام `Set`
         const uniqueHalqatDetails = Array.from(
             new Map(halqatDetailsList.map(item => [item.halqaId, item])).values()
