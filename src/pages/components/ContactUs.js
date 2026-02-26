@@ -39,6 +39,9 @@ function ContactUs({ language }) {
     const handleSubmit = (event) => {
         event.preventDefault(); // منع إعادة تحميل الصفحة
         alert(`Name: ${name}\nEmail: ${email}\nMessage: ${message}`);
+        setName('');
+        setEmail('');
+        setMessage('');
     };
 
     return (

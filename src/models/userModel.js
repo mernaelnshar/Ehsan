@@ -1,6 +1,3 @@
-// UserModel.js
-
-// نموذج UserModel في React JavaScript
 import { kEmail, kNationalId, kBirthDate, kFirstName, kFatherName, kGrandFatherName, kFamilyName, kGender, kNationality, kCode, kMobileNumber } from 'ehsan/core/utils/constants';
 
 export const UserModel = ({
@@ -29,7 +26,7 @@ export const UserModel = ({
     mobileNumber,
 });
 
-// تحويل كائن إلى Map
+
 export const toMap = (user) => ({
     [kEmail]: user.email,
     [kNationalId]: user.nationalId,
@@ -44,7 +41,7 @@ export const toMap = (user) => ({
     [kMobileNumber]: user.mobileNumber,
 });
 
-// تحويل Map إلى UserModel
+
 export const fromMap = (map) => ({
     email: map[kEmail],
     nationalId: map[kNationalId],

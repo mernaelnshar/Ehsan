@@ -2,24 +2,13 @@ import React, { useEffect, useState, useContext } from 'react';
 import { FaBell } from 'react-icons/fa';
 import '../../styles/SidebarHome.css';
 import { LanguageContext } from '../../context/LanguageContext'; // استيراد الكونتكست
-import { auth, db } from "../../firebase/firebaseConfig";
-import { doc, getDoc } from "firebase/firestore";
 import { Spinner } from "react-bootstrap";
 
 const NavbarHome = () => {
     const [userDetails, setUserDetails] = useState(null);
-    const fetchUserDetails = async () => {
-        const docRef = doc(db, "users", auth.currentUser.uid);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-            setUserDetails(docSnap.data());
-        } else {
-            console.log("No such document!");
-        }
-    };
     useEffect(() => {
-        fetchUserDetails();
-    }, []);
+            setUserDetails({ firstName: "Merna", fatherName: "Hamada" });
+        }, []);
 
 
     const { language } = useContext(LanguageContext);

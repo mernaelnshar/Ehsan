@@ -1,6 +1,3 @@
-// UserHalqatHomeModel.js
-
-// نموذج UserHalqatHomeModel في React JavaScript
 export const UserHalqatHomeModel = ({
     teacherUid,
     halqaName,

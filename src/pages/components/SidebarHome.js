@@ -5,22 +5,16 @@ import { FaHome, FaChalkboardTeacher, FaUserGraduate, FaUser, FaSignOutAlt, FaGl
 import logo from '../../assets/image/logo.png'; // تأكد من وضع مسار الصورة الصحيح
 import '../../styles/SidebarHome.css'; // ملف الستايل
 import { LanguageContext } from '../../context/LanguageContext'; // استيراد الكونتكست
-import { auth } from '../../firebase/firebaseConfig';
 
 const SidebarHome = () => {
     const location = useLocation(); // تحديد الصفحة الحالية
     const { language, switchLanguage } = useContext(LanguageContext);
     const isArabic = language === "ar";
 
-    async function handleLogout() {
-            try {
-                await auth.signOut();
-                alert("User logged out successfully");
-                window.location.href = "/";
-            } catch (err) {
-                alert(err.message);
-            }
-        }
+    function handleLogout() {
+        alert("تم تسجيل الخروج");
+        window.location.href = "/";
+    }
 
     return (
         <div className={`sidebarHome ${isArabic ? "rtl" : "ltr"}`} dir={language === "ar" ? "rtl" : "ltr"}>
@@ -51,7 +45,7 @@ const SidebarHome = () => {
 
                 <Nav.Item>
                     <Nav.Link onClick={() => switchLanguage(language === "ar" ? "en" : "ar")} className="nav-link">
-                        <FaGlobe className="icon" /> 
+                        <FaGlobe className="icon" />
                     </Nav.Link>
                 </Nav.Item>
 
@@ -62,7 +56,7 @@ const SidebarHome = () => {
                 </Nav.Item>
 
                 <Nav.Item>
-                    <Nav.Link as={Link}  className="nav-link logout" onClick={handleLogout}>
+                    <Nav.Link as={Link} className="nav-link logout" onClick={handleLogout}>
                         <FaSignOutAlt className="icon" />
                     </Nav.Link>
                 </Nav.Item>

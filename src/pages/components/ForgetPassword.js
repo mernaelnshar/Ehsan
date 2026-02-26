@@ -7,7 +7,6 @@ import wrong from '../../assets/icon/wrong.png';
 import logo from '../../assets/image/logo.png';
 import logouticon from '../../assets/icon/logout.png';
 import { LanguageContext } from '../../context/LanguageContext';
-import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
 const texts = {
     en: {
@@ -49,15 +48,15 @@ const ForgetPassword = () => {
     const handleSuccessShow = () => setShowSuccess(true);
     const handleSuccessClose = () => setShowSuccess(false);
 
-    const handleResetPassword = async (email) => {
-        const auth = getAuth();
-        try {
-            await sendPasswordResetEmail(auth, email);
-            handleSuccessShow();
-        } catch (error) {
-            handleShow();
-        }
-    };
+    const handleResetPassword = (email) => {
+    if (!email) {
+        handleShow(); 
+        return;
+    }
+    // لو عايزة simulation:
+    console.log("Password reset requested for:", email);
+    handleSuccessShow();
+};
 
     return (
         <div dir={language === 'ar' ? 'rtl' : 'ltr'}>

@@ -4,8 +4,6 @@ import { Form, Button } from 'react-bootstrap';
 import '../../styles/TermsConfirmationForm.css';
 import logo from '../../assets/image/logo.png';
 import logouticon from '../../assets/icon/logout.png';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { getFirestore, doc, setDoc } from "firebase/firestore";
 import { LanguageContext } from '../../context/LanguageContext';
 
 const texts = {
@@ -51,16 +49,12 @@ const texts = {
         ar: "حدث خطأ أثناء التسجيل، أو أن البريد الإلكتروني مستخدم من قبل. الرجاء المحاولة مرة أخرى.",
         en: "An error occurred during registration, or the email is already in use. Please try again."
     }
-    
+
 };
-
-
 
 const TermsConfirmationForm = () => {
     const { language } = useContext(LanguageContext);
     const navigate = useNavigate();
-    const auth = getAuth();
-    const db = getFirestore();
 
     const [formData, setFormData] = useState(null);
     const [checked, setChecked] = useState(false);
@@ -75,34 +69,12 @@ const TermsConfirmationForm = () => {
         }
     }, [navigate]);
 
-    const handleConfirm = async () => {
+    const handleConfirm = () => {
         if (!formData) return;
 
         try {
-            const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
-            const user = userCredential.user;
-
-            await setDoc(doc(db, "users", user.uid), {
-                firstName: formData.firstName,
-                fatherName: formData.fatherName,
-                grandfatherName: formData.grandfatherName,
-                familyName: formData.familyName,
-                nationality: formData.nationality,
-                birthDate: formData.birthDate,
-                gender: formData.gender,
-                mobileNumber: formData.mobileNumber,
-                code: formData.code,
-                email: formData.email,
-                nationalId: formData.nationalId,
-
-
-            });
-
-            localStorage.setItem('registeredUser', JSON.stringify({
-                email: formData.email,
-                password: formData.password
-            }));
-
+            // تخزين مؤقت بدون Firebase
+            localStorage.setItem('registeredUser', JSON.stringify(formData));
             localStorage.removeItem('pendingUser');
             navigate('/RegistrationMessage');
         } catch (error) {
@@ -138,10 +110,10 @@ const TermsConfirmationForm = () => {
 
                     <Form.Group className='d-flex justify-content-between'>
                         <Button onClick={handleConfirm} className="terms-btn" disabled={!checked}>
-                        {texts.confirm[language]}
+                            {texts.confirm[language]}
                         </Button>
                         <Button onClick={() => navigate('/RegisterForm')} type="button" className="back-btn">
-                        {texts.back[language]}
+                            {texts.back[language]}
                         </Button>
                     </Form.Group>
                 </Form>
@@ -152,3 +124,4 @@ const TermsConfirmationForm = () => {
 };
 
 export default TermsConfirmationForm;
+

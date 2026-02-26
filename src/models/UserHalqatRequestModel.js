@@ -1,6 +1,3 @@
-// UserHalqatRequestModel.js
-
-// نموذج UserHalqatRequestModel في React JavaScript
 import { kHalqaName, kTypeName, kHalqaTime, kStatus, kStudentsCount } from 'ehsan/core/utils/constants';
 
 export const UserHalqatRequestModel = ({
@@ -17,7 +14,7 @@ export const UserHalqatRequestModel = ({
     studentsCount,
 });
 
-// تحويل كائن إلى Map
+
 export const toMap = (request) => ({
     [kHalqaName]: request.halqaName,
     [kTypeName]: request.halqaTypeName,
@@ -26,7 +23,7 @@ export const toMap = (request) => ({
     [kStudentsCount]: request.studentsCount,
 });
 
-// تحويل Map إلى UserHalqatRequestModel
+
 export const fromMap = (map) => ({
     halqaName: map[kHalqaName],
     halqaTypeName: map[kTypeName],

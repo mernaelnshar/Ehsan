@@ -6,21 +6,15 @@ import logo from '../../assets/image/logo.png'; // تأكد من وضع مسار
 import '../../styles/Sidebar.css'; // ملف الستايل
 import { LanguageContext } from '../../context/LanguageContext'; // استيراد الكونتكست
 
-import { auth } from '../../firebase/firebaseConfig';
 const Sidebar = () => {
     const location = useLocation(); // تحديد الصفحة الحالية
     const { language, switchLanguage } = useContext(LanguageContext);
     const isArabic = language === "ar";
 
     async function handleLogout() {
-        try {
-            await auth.signOut();
-            alert("User logged out successfully");
-            window.location.href = "/";
-        } catch (err) {
-            alert(err.message);
-        }
-    }
+    alert(language === "ar" ? "تم تسجيل الخروج" : "User logged out successfully");
+    window.location.href = "/";
+}
     return (
         <div className={`sidebar ${isArabic ? "rtl" : "ltr"}`} dir={language === "ar" ? "rtl" : "ltr"}>
             {/* اللوجو */}

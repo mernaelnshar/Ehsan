@@ -6,12 +6,14 @@ const DashboardLayout = () => {
     return (
         <div className="dashboard-container">
             <Navbar />
-            <div className="dashboard-layout">
+
+            <main className="dashboard-layout">
                 <Sidebar />
-                <div className="content">
-                    <Outlet />  {/* هنا هيتم عرض الصفحة حسب التنقل */}
-                </div>
-            </div>
+
+                <section className="content">
+                    <Outlet />
+                </section>
+            </main>
         </div>
     );
 };

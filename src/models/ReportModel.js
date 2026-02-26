@@ -1,6 +1,3 @@
-// ReportModel.js
-
-// نموذج ReportModel في React JavaScript
 import { kSenderUid, kUidPersonReported, kSessionId, kReason, kType, kDate } from 'ehsan/core/utils/constants';
 
 export const ReportModel = ({
@@ -19,7 +16,6 @@ export const ReportModel = ({
   date,
 });
 
-// تحويل كائن إلى Map
 export const toMap = (report) => ({
   [kSenderUid]: report.senderUid,
   [kUidPersonReported]: report.uidPersonReported,
@@ -29,7 +25,6 @@ export const toMap = (report) => ({
   [kDate]: report.date,
 });
 
-// تحويل Map إلى ReportModel
 export const fromMap = (map) => ({
   senderUid: map[kSenderUid],
   uidPersonReported: map[kUidPersonReported],

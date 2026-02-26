@@ -1,12 +1,9 @@
 import "../../styles/Profile.css";
 import { FaUser, FaEdit } from "react-icons/fa";
-import { Form, Container, Card, Row, Col, Button, Modal , Spinner } from "react-bootstrap";
+import { Form, Container, Card, Row, Col, Button, Modal, Spinner } from "react-bootstrap";
 import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { LanguageContext } from "../../context/LanguageContext";
-import { auth, db } from "../../firebase/firebaseConfig";
-import { doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
-import { deleteUser, reauthenticateWithCredential, EmailAuthProvider , verifyBeforeUpdateEmail , signOut  } from "firebase/auth";
 
 const texts = {
     generalInfo: { ar: "معلومات عامة", en: "General Information" },
@@ -31,17 +28,16 @@ const texts = {
 
 const Profile = () => {
     const [userDetails, setUserDetails] = useState(null);
-    const fetchUserDetails = async () => {
-        const docRef = doc(db, "users", auth.currentUser.uid);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-            setUserDetails(docSnap.data());
-        } else {
-            console.log("No such document!");
-        }
-    };
     useEffect(() => {
-        fetchUserDetails();
+        setUserDetails({
+            firstName: "Merna",
+            fatherName: "Hamada",
+            familyName: "Mohmoud",
+            birthDate: "01-01-1990",
+            nationalId: "123456789",
+            mobileNumber: "01012345678",
+            email: "merna@example.com"
+        });
     }, []);
 
     const { language } = useContext(LanguageContext);
@@ -52,27 +48,22 @@ const Profile = () => {
     const handleShow = () => setShowModal(true);
     const handleClose = () => setShowModal(false);
 
-    const handleDelete = async () => {
-        if (!auth.currentUser) return;
-        try {
-
-            const password = prompt(texts.confirmpasswordPlaceholder[language]);
-            if (!password) return alert(texts.passwordPlaceholder[language]);
-            const credential = EmailAuthProvider.credential(auth.currentUser.email, password);
-            await reauthenticateWithCredential(auth.currentUser, credential);
-
-            const userRef = doc(db, "users", auth.currentUser.uid);
-            await deleteDoc(userRef);
-            await deleteUser(auth.currentUser);
-            alert(texts.accountDeleted[language]);
+    const handleDelete = () => {
+        if (window.confirm("هل أنت متأكد من حذف الحساب؟")) {
+            alert("تم حذف الحساب بنجاح!");
             navigate("/login");
-
-        } catch (error) {
-
-            console.error("Error deleting account: ", error);
-            alert(texts.errorDeleting[language]);
         }
-    }
+    };
+
+    const handleSaveChanges = () => {
+        setUserDetails((prev) => ({
+            ...prev,
+            mobileNumber: editedPhone,
+            email: editedEmail
+        }));
+        alert("تم تحديث البيانات بنجاح!");
+        handleEditClose();
+    };
 
 
 
@@ -90,42 +81,9 @@ const Profile = () => {
     const handleEditShow = () => setShowEditModal(true);
     const handleEditClose = () => setShowEditModal(false);
 
-    const handleSaveChanges = async () => {
-        if (!auth.currentUser) return;
-        try {
-            const userRef = doc(db, "users", auth.currentUser.uid);
-        
-            // تحديث رقم الهاتف مباشرةً
-            await updateDoc(userRef, { mobileNumber: editedPhone });
-    
-            if (editedEmail !== auth.currentUser.email) {
-                const password = prompt(texts.confirmpasswordPlaceholder[language]);
-                if (!password) return alert(texts.passwordPlaceholder[language]);
-    
-                const credential = EmailAuthProvider.credential(auth.currentUser.email, password);
-                await reauthenticateWithCredential(auth.currentUser, credential); // إعادة المصادقة ✅
-    
-                // إرسال تأكيد للبريد الجديد
-                await verifyBeforeUpdateEmail(auth.currentUser, editedEmail);
-                alert("A verification email has been sent to your new email. Please confirm it to complete the update.");
 
-                await updateDoc(userRef, { email: editedEmail });
-                // تسجيل خروج المستخدم وتوجيهه إلى صفحة تسجيل الدخول
-                await signOut(auth);
-                navigate("/login");
-            } else {
-                alert("Profile updated successfully!");
-            }
-    
-            handleEditClose();
-        } catch (error) {
-            console.error("Error updating profile:", error);
-            alert(`Error: ${error.message}`);
-        }
-    };
-    
-    
-    
+
+
     return (
         <div className={`profile-container ${isArabic ? "rtl" : "ltr"}`} dir={isArabic ? "rtl" : "ltr"}>
             {userDetails ? (
@@ -251,9 +209,9 @@ const Profile = () => {
                 </>
             ) : (
                 <div className="d-flex justify-content-center">
-                                            <Spinner animation="border" role="status" variant="primary">
-                                                <span className="visually-hidden">Loading...</span>
-                                            </Spinner>
+                    <Spinner animation="border" role="status" variant="primary">
+                        <span className="visually-hidden">Loading...</span>
+                    </Spinner>
                 </div>
             )}
 

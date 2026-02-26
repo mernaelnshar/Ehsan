@@ -1,4 +1,4 @@
-import React, { useState , useEffect , useContext} from 'react';
+import React, {  useEffect , useContext} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from "react-scroll";
 import '../styles/LandingPage.css';
@@ -84,16 +84,7 @@ const texts = {
 function LandingPage() {
     const { language } = useContext(LanguageContext);
     const navigate = useNavigate()
-    // const [language, setLanguage] = useState('ar');  // Default language is Arabic
-    // نصوص الصفحة بناءً على اللغة
     
-
-    // // تحديث اللغة عند التبديل
-    // const switchLanguage = (lang) => {
-    //     setLanguage(lang);
-    // };
-
-    // تغيير اتجاه الصفحة بناءً على اللغة
     useEffect(() => {
         document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
         document.documentElement.style.setProperty('--text-align', language === "ar" ? "right" : "left");

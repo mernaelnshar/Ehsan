@@ -1,6 +1,3 @@
-// RequestModel.js
-
-// نموذج RequestModel في React JavaScript
 import { kUid, kName, kRole, kHalqaName, kHalqaTime, kTypeName, kHalqaId, kSessionId } from 'ehsan/core/utils/constants';
 
 export const RequestModel = ({
@@ -23,7 +20,6 @@ export const RequestModel = ({
     sessionId,
 });
 
-// تحويل كائن إلى Map
 export const toMap = (request) => ({
     [kUid]: request.uid,
     [kName]: request.name,
@@ -35,7 +31,6 @@ export const toMap = (request) => ({
     [kSessionId]: request.sessionId,
 });
 
-// تحويل Map إلى RequestModel
 export const fromMap = (map) => ({
     uid: map[kUid],
     name: map[kName],

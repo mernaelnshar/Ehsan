@@ -3,11 +3,12 @@ import "../../styles/RegisterStudent.css";
 import { FaCheckCircle, FaHourglassHalf, FaPlus } from "react-icons/fa";
 import { Button, Modal, Form, Spinner, Card } from "react-bootstrap";
 import { LanguageContext } from "../../context/LanguageContext";
-import { getHalqatTypes, getHalqatByTypeStudent, getSessionTimes, formatTime } from "../../firebase/firebaseService"; // تعديل المسار حسب المشروع
-import { db, auth } from "../../firebase/firebaseConfig"; // تأكدي من إعداد Firebase بشكل صحيح
-import { collection, addDoc, getDocs, getDoc, doc } from "firebase/firestore";
-import { kStudentRole, kRequestsCollection, kName, kRequestStatus, kAcceptedStatus, kUid, kRole, kHalqaId, kHalqaName, kHalqaTime, kTypeName, kSessionId } from "../../constants/constants";
+import {
+    kStudentRole, kRequestsCollection, kName, kRequestStatus, kAcceptedStatus,
+    kUid, kRole, kHalqaId, kHalqaName, kHalqaTime, kTypeName, kSessionId
+} from "../../constants/constants";
 
+// ترجمة النصوص
 const texts = {
     registerStudentTitle: { ar: "تسجيل طالب في الحلقة", en: "Register Student in the Session" },
     addSession: { ar: "إضافة جلسة جديدة", en: "Add New Session" },
@@ -27,9 +28,8 @@ const texts = {
     noAvailableTimes: { ar: "لا توجد أوقات متاحة.", en: "No available times." },
 };
 
-
 // أيقونات الحالة
-const getStatusIcon = (status, language) => {
+const getStatusIcon = (status) => {
     switch (status) {
         case kAcceptedStatus:
             return <FaCheckCircle className="status-icon accepted" />;
@@ -40,10 +40,43 @@ const getStatusIcon = (status, language) => {
     }
 };
 
-const RegisterStudent = () => {
+// بيانات وهمية
+const halqatTypesMock = [
+    { typeId: "t1", typeName: "قراءة" },
+    { typeId: "t2", typeName: "تجويد" },
+];
 
+const halqatByTypeMock = {
+    t1: [
+        { halqaId: "h1", halqaName: "حلقة 1", halqaTypeName: "قراءة", sessionId: "s1" },
+        { halqaId: "h2", halqaName: "حلقة 2", halqaTypeName: "قراءة", sessionId: "s2" },
+    ],
+    t2: [
+        { halqaId: "h3", halqaName: "حلقة 3", halqaTypeName: "تجويد", sessionId: "s3" },
+    ],
+};
+
+const sessionTimesMock = {
+    h1: [{ timeId: "1", halqaTime: "08:00" }, { timeId: "2", halqaTime: "10:00" }],
+    h2: [{ timeId: "3", halqaTime: "12:00" }],
+    h3: [{ timeId: "4", halqaTime: "14:00" }],
+};
+
+// دوال محاكاة
+const getHalqatTypes = async () => halqatTypesMock;
+const getHalqatByTypeStudent = async (typeId) => halqatByTypeMock[typeId] || [];
+const getSessionTimes = async (halqaId) => sessionTimesMock[halqaId] || [];
+
+// مستخدم وهمي
+const currentUserMock = { uid: "user1", firstName: "أحمد", fatherName: "محمد" };
+
+// تنسيق الوقت
+const formatTime = ({ time }) => time;
+
+const RegisterStudent = () => {
     const { language } = useContext(LanguageContext);
     const isArabic = language === "ar";
+
     const [showModal, setShowModal] = useState(false);
     const [sessions, setSessions] = useState([]);
     const [newSession, setNewSession] = useState({ name: "", time: "", type: "", status: "" });
@@ -54,19 +87,19 @@ const RegisterStudent = () => {
     const [selectedHalqa, setSelectedHalqa] = useState("");
     const [sessionTimes, setSessionTimes] = useState([]);
     const [loading, setLoading] = useState(false);
-    // Fetch halqat types on component mount
+
+    // تحميل أنواع الحلقات
     useEffect(() => {
-        const fetchHalqatTypes = async () => {
+        const fetchTypes = async () => {
             setLoading(true);
             const types = await getHalqatTypes();
             setHalqatTypes(types);
             setLoading(false);
         };
-        fetchHalqatTypes();
+        fetchTypes();
     }, [showModal]);
 
-
-    // Fetch halqat list when type is selected
+    // تغيير النوع
     const handleTypeChange = async (typeId) => {
         setSelectedType(typeId);
         setSelectedHalqa("");
@@ -79,54 +112,17 @@ const RegisterStudent = () => {
         }
     };
 
-    // Fetch session times when halqa is selected
-    // عند تغيير الحلقة، يتم جلب أوقات الجلسات المرتبطة بها
+    // تغيير الحلقة
     const handleHalqaChange = async (halqaId) => {
         setSelectedHalqa(halqaId);
         setSessionTimes([]);
-
         if (!halqaId) return;
-
-        try {
-            setLoading(true);
-            const times = await getSessionTimes(halqaId);
-            setSessionTimes(times);
-        } catch (error) {
-            console.error("Error fetching session times:", error.message);
-        } finally {
-            setLoading(false);
-        }
+        setLoading(true);
+        const times = await getSessionTimes(halqaId);
+        setSessionTimes(times);
+        setLoading(false);
     };
 
-    useEffect(() => {
-        const fetchSessionTimes = async () => {
-            if (!selectedHalqa) return;
-
-            try {
-                setLoading(true);
-                const times = await getSessionTimes(selectedHalqa);
-                console.log("Raw Times Data:", times); // عرض البيانات الأصلية
-                setSessionTimes(times);
-            } catch (error) {
-                console.error("Error fetching session times:", error.message);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchSessionTimes();
-    }, [selectedHalqa]);
-
-    const translations = {
-        AM: "ص",
-        PM: "م",
-        From: "من",
-        To: "إلى",
-    };
-
-
-
-    // دالة لإضافة الجلسة الجديدة
     const handleAddSession = async () => {
         if (!selectedType || !selectedHalqa || !newSession.time) {
             alert(texts.alertMessage[language]);
@@ -134,88 +130,28 @@ const RegisterStudent = () => {
         }
 
         setLoading(true);
-
         const selectedTime = sessionTimes.find((time) => time.timeId === newSession.time);
+        const selectedHalqaData = halqatList.find((halqa) => halqa.halqaId === selectedHalqa);
 
-        try {
-            // جلب بيانات الحلقات بناءً على نوع الحلقة
-            const halqatList = await getHalqatByTypeStudent(selectedType);
-
-            // إيجاد الحلقة المختارة بواسطة الـ halqaId
-            const selectedHalqaData = halqatList.find((halqa) => halqa.halqaId === selectedHalqa);
-
-            // جلب UID المستخدم الحالي من Firebase Authentication
-            const currentUser = auth.currentUser;
-            const userUid = currentUser?.uid;
-
-            if (!userUid) {
-                alert("لا يوجد مستخدم مسجل حاليًا.");
-                setLoading(false);
-                return;
-            }
-            // جلب بيانات المستخدم من مجموعة الـ users بناءً على UID
-            const userDoc = await getDoc(doc(db, 'users', userUid));
-            const userData = userDoc.data();
-
-            console.log("selectedHalqaData:", selectedHalqaData);
-
-            const newSessionData = {
-                [kHalqaId]: selectedHalqa,
-                [kHalqaName]: selectedHalqaData?.halqaName || '',
-                [kHalqaTime]: selectedTime?.halqaTime ?? '',
-                [kName]: `${userData?.firstName || ''} ${userData?.fatherName || ''}`.trim(),
-                [kRole]: kStudentRole,
-                [kSessionId]: selectedHalqaData?.sessionId || '',
-                [kTypeName]: selectedHalqaData?.halqaTypeName || '',
-                [kUid]: userUid
-            };
-
-            await addDoc(collection(db, kRequestsCollection), newSessionData);
-            alert("تم إرسال الطلب بنجاح!");
-
-            setSessions([...sessions, { ...newSessionData, status: kRequestStatus }]);
-            setShowModal(false);
-            setNewSession({ name: "", time: "", type: "", status: "" });
-        } catch (error) {
-            console.error("Failed to add session: ", error);
-        }
-        setLoading(false);
-        handleCloseModal();
-
-    };
-
-    // جلب البيانات من Firebase عند تحميل الصفحة
-    useEffect(() => {
-        const fetchSessions = async () => {
-            try {
-                // جلب UID المستخدم الحالي من Firebase Authentication
-                const currentUser = auth.currentUser;
-                const userUid = currentUser?.uid;
-    
-                if (!userUid) {
-                    console.warn("لا يوجد مستخدم مسجل حاليًا.");
-                    return;
-                }
-    
-                // جلب البيانات من مجموعة الطلبات مع فلترة حسب UID المستخدم والدور "طالب"
-                const querySnapshot = await getDocs(collection(db, kRequestsCollection));
-                const sessionsData = querySnapshot.docs
-                    .map((doc) => ({ ...doc.data(), id: doc.id }))
-                    .filter((session) => 
-                        session[kUid] === userUid && 
-                        session[kRole] === kStudentRole // فقط كطالب
-                    );
-    
-                console.log("طلبات المستخدم الحالي كطالب:", sessionsData);
-                setSessions(sessionsData);
-            } catch (error) {
-                console.error("فشل في جلب البيانات:", error);
-            }
+        const newSessionData = {
+            [kHalqaId]: selectedHalqa,
+            [kHalqaName]: selectedHalqaData?.halqaName || '',
+            [kHalqaTime]: selectedTime?.halqaTime ?? '',
+            [kName]: `${currentUserMock.firstName} ${currentUserMock.fatherName}`.trim(),
+            [kRole]: kStudentRole,
+            [kSessionId]: selectedHalqaData?.sessionId || '',
+            [kTypeName]: selectedHalqaData?.halqaTypeName || '',
+            [kUid]: currentUserMock.uid,
+            status: kRequestStatus,
         };
-    
-        fetchSessions();
-    }, []);
-    
+
+        setSessions([...sessions, newSessionData]);
+        setShowModal(false);
+        setNewSession({ name: "", time: "", type: "", status: "" });
+        setSelectedType("");
+        setSelectedHalqa("");
+        setLoading(false);
+    };
 
     const handleCloseModal = () => {
         setShowModal(false);
@@ -224,47 +160,31 @@ const RegisterStudent = () => {
         setSelectedHalqa("");
     };
 
-
     return (
         <div className={`register-student-container ${isArabic ? "rtl" : "ltr"}`} dir={isArabic ? "rtl" : "ltr"}>
             <h1 className="register-student-title">{texts.registerStudentTitle[language]}</h1>
             <div className="register-student-grid">
-                {sessions.map((session) => (
-
-                    <Card className="session-card mb-4 shadow-sm" style={{ borderRadius: "15px" }}>
+                {sessions.map((session, index) => (
+                    <Card key={index} className="session-card mb-4 shadow-sm" style={{ borderRadius: "15px" }}>
                         <Card.Body className="text-center d-flex flex-column justify-content-center align-items-center">
-                            <Card.Title className="session-title mb-3" >
-                                {session.halqaName}
-                            </Card.Title>
-
-                            <div className="session-details d-flex justify-content-center ">
-                                <p className="session">{session.typeName}</p>
-                                <p className="session">{formatTime({ time: session.halqaTime, translations })}</p>
+                            <Card.Title className="session-title mb-3">{session[kHalqaName]}</Card.Title>
+                            <div className="session-details d-flex justify-content-center">
+                                <p className="session">{session[kTypeName]}</p>
+                                <p className="session">{formatTime({ time: session[kHalqaTime] })}</p>
                             </div>
-
-                            <p className={`session-status  mt-2 w-50 ${session.status === texts.accepted[language] ? "accepted" : "pending"}`}>
-                                {getStatusIcon(kRequestStatus, language)}
-                                {kRequestStatus ? texts.pending[language] : texts.accepted[language]}
+                            <p className={`session-status mt-2 w-50 ${session.status === kAcceptedStatus ? "accepted" : "pending"}`}>
+                                {getStatusIcon(session.status)}
+                                {session.status === kAcceptedStatus ? texts.accepted[language] : texts.pending[language]}
                             </p>
                         </Card.Body>
                     </Card>
-
-
-
                 ))}
 
-                {/* زر الإضافة */}
                 <button className="add-session-btn" onClick={() => setShowModal(true)}>
                     <FaPlus />
                 </button>
 
-                {/* المودال لإضافة جلسة جديدة */}
-                <Modal
-                    show={showModal}
-                    onHide={handleCloseModal}
-                    className={`modal-add-session ${isArabic ? "rtl" : "ltr"}`}
-                    dir={isArabic ? "rtl" : "ltr"}
-                >
+                <Modal show={showModal} onHide={handleCloseModal} className={`modal-add-session ${isArabic ? "rtl" : "ltr"}`} dir={isArabic ? "rtl" : "ltr"}>
                     <Modal.Header closeButton>
                         <Modal.Title>{texts.addSession[language]}</Modal.Title>
                     </Modal.Header>
@@ -275,43 +195,31 @@ const RegisterStudent = () => {
                                     <span className="visually-hidden">Loading...</span>
                                 </Spinner>
                             </div>
-                        ) : (<>
+                        ) : (
                             <Form>
                                 <Form.Group className="mb-2">
                                     <Form.Label>{texts.sessionType[language]}</Form.Label>
                                     <Form.Select
-                                        className={`modal-input custom-select ${isArabic ? "arabic-select" : "english-select"}`}
                                         value={selectedType}
-                                        onChange={(e) => {
-                                            setSelectedType(e.target.value);
-                                            setNewSession({ ...newSession, type: e.target.value });
-                                            handleTypeChange(e.target.value);
-                                        }}>
+                                        onChange={(e) => { handleTypeChange(e.target.value); setNewSession({ ...newSession, type: e.target.value }); }}
+                                    >
                                         <option value="">{texts.selectType[language]}</option>
                                         {halqatTypes.map((type) => (
-                                            <option key={type.typeId} value={type.typeId}>
-                                                {type.typeName}
-                                            </option>
+                                            <option key={type.typeId} value={type.typeId}>{type.typeName}</option>
                                         ))}
                                     </Form.Select>
                                 </Form.Group>
+
                                 <Form.Group className="mb-2">
                                     <Form.Label>{texts.sessionName[language]}</Form.Label>
                                     <Form.Select
-                                        className={`modal-input custom-select ${isArabic ? "arabic-select" : "english-select"}`}
                                         value={selectedHalqa}
-                                        onChange={(e) => {
-                                            const selectedHalqa = halqatList.find((halqa) => halqa.halqaId === e.target.value);
-                                            setSelectedHalqa(e.target.value);
-                                            setNewSession({ ...newSession, name: selectedHalqa?.halqaName || "" });
-                                            handleHalqaChange(e.target.value);
-                                        }}
-                                        disabled={!selectedType}>
+                                        onChange={(e) => { handleHalqaChange(e.target.value); const selected = halqatList.find(h => h.halqaId === e.target.value); setNewSession({ ...newSession, name: selected?.halqaName || "" }); }}
+                                        disabled={!selectedType}
+                                    >
                                         <option value="">{texts.selectSession[language]}</option>
                                         {halqatList.map((halqa) => (
-                                            <option key={halqa.halqaId} value={halqa.halqaId}>
-                                                {halqa.halqaName}
-                                            </option>
+                                            <option key={halqa.halqaId} value={halqa.halqaId}>{halqa.halqaName}</option>
                                         ))}
                                     </Form.Select>
                                 </Form.Group>
@@ -319,33 +227,24 @@ const RegisterStudent = () => {
                                 <Form.Group className="mb-2">
                                     <Form.Label>{texts.sessionTime[language]}</Form.Label>
                                     <Form.Select
-                                        className={`modal-input custom-select ${isArabic ? "arabic-select" : "english-select"}`}
                                         value={newSession.time}
                                         onChange={(e) => setNewSession({ ...newSession, time: e.target.value })}
                                         disabled={!selectedHalqa}
                                     >
                                         <option value="">{texts.selectTime[language]}</option>
                                         {sessionTimes.length > 0 ? (
-                                            sessionTimes.map((time) => {
-                                                const formattedTime = formatTime({ time: time.halqaTime, translations });
-                                                return (
-                                                    <option key={time.timeId} value={time.timeId}>
-                                                        {formattedTime}
-                                                    </option>
-                                                );
-                                            })
+                                            sessionTimes.map((time) => (
+                                                <option key={time.timeId} value={time.timeId}>{formatTime({ time: time.halqaTime })}</option>
+                                            ))
                                         ) : (
                                             <option disabled>{texts.noAvailableTimes[language]}</option>
                                         )}
                                     </Form.Select>
                                 </Form.Group>
                             </Form>
-                        </>)}
-
+                        )}
                         <Modal.Footer>
-                            <Button className="add-btn" onClick={handleAddSession} disabled={loading}>
-                                {texts.save[language]}
-                            </Button>
+                            <Button className="add-btn" onClick={handleAddSession} disabled={loading}>{texts.save[language]}</Button>
                         </Modal.Footer>
                     </Modal.Body>
                 </Modal>

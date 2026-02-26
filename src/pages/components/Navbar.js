@@ -2,31 +2,19 @@ import React, { useEffect, useState, useContext } from 'react';
 import { FaBell } from 'react-icons/fa';
 import '../../styles/Navbar.css'; // تأكدي من وجود ملف CSS
 import { LanguageContext } from '../../context/LanguageContext'; // استيراد الكونتكست
-import { auth, db } from "../../firebase/firebaseConfig";
-import { doc, getDoc } from "firebase/firestore";
 import { Spinner } from "react-bootstrap";
 
 const Navbar = () => {
 
     const [userDetails, setUserDetails] = useState(null);
-    const fetchUserDetails = async () => {
-        const docRef = doc(db, "users", auth.currentUser.uid);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-            setUserDetails(docSnap.data());
-        } else {
-            console.log("No such document!");
-        }
-    };
+
     useEffect(() => {
-        fetchUserDetails();
+        setUserDetails({ firstName: "Merna", fatherName: "Hamada" });
     }, []);
     const { language } = useContext(LanguageContext);
     const isArabic = language === "ar";
-    // حالة التحكم في ظهور قائمة الإشعارات
     const [showNotifications, setShowNotifications] = useState(false);
 
-    // بيانات الإشعارات (يمكن جلبها من API لاحقًا)
     const notifications = [
         { id: 1, text: 'تم قبول طلب انضمامك إلى مجموعة التحفيظ.' },
         { id: 2, text: 'لديك رسالة جديدة من المشرف' },

@@ -1,4 +1,3 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState, useContext  } from 'react';
 import { Link , useNavigate} from "react-router-dom";
 import { Form, Button, Row, Col } from 'react-bootstrap';
@@ -7,9 +6,7 @@ import lockIcon  from '../../assets/icon/lock.png';
 import '../../styles/LoginForm.css'; // استيراد ملف الستايل
 import logo from '../../assets/image/logo.png';
 import logoutIcon from '../../assets/icon/logout.png';
-import '../../firebase/firebaseConfig'; // تأكد من استيراد ملف إعدادات Firebase
 import { LanguageContext } from '../../context/LanguageContext';
-import{auth} from "../../firebase/firebaseConfig";
 const texts = {
     ar: {
         loginTitle: "تسجيل الدخول",
@@ -44,28 +41,22 @@ const LoginForm = () => {
     const navigate = useNavigate();
     
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleSubmit = (e) => {
+    e.preventDefault();
 
-        if (!emailValue || !passwordValue) {
-            setErrorMessage(texts[language].fillAllFields);
-            return;
-        }
+    if (!emailValue || !passwordValue) {
+        setErrorMessage(texts[language].fillAllFields);
+        return;
+    }
 
-        try {
-            await signInWithEmailAndPassword(auth, emailValue, passwordValue);
-            alert("User logged in successfully");
-            navigate('/Home');  // الانتقال للصفحة الرئيسية
-        } catch (error) {
-            if (error.code === 'auth/user-not-found') {
-                setErrorMessage(texts[language].userNotFound);
-            } else if (error.code === 'auth/wrong-password') {
-                setErrorMessage(texts[language].wrongPassword);
-            } else {
-                setErrorMessage(texts[language].errorOccurred);
-            }
-        }
-    };
+    // مثال Local: تسجيل الدخول Dummy
+    if (emailValue === "test@example.com" && passwordValue === "123456") {
+        alert("User logged in successfully (Local)");
+        navigate('/Home');
+    } else {
+        setErrorMessage(texts[language].userNotFound); 
+    }
+};
 
     return (
         <div dir={language === 'ar' ? 'rtl' : 'ltr'}>
