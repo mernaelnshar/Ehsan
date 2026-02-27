@@ -43,7 +43,7 @@ function App() {
   }
 
   return (
-    <Router>
+    
       <Routes>
         {/* صفحات عامة */}
         <Route path='/' element={<LandingPage />} />
@@ -74,7 +74,7 @@ function App() {
             </Route>
           
       </Routes>
-    </Router>
+    
   );
 }
 
