@@ -10,8 +10,8 @@ import { LanguageContext } from '../../context/LanguageContext';
 const texts = {
     ar: {
         loginTitle: "تسجيل الدخول",
-        emailPlaceholder: "email@example.com",
-        passwordPlaceholder: "أدخل كلمة المرور",
+        emailPlaceholder: "test@example.com",
+        passwordPlaceholder: "123456",
         fillAllFields: "يرجى ملء جميع الحقول!",
         userNotFound: "المستخدم غير موجود، يرجى التأكد من البريد الإلكتروني.",
         wrongPassword: "كلمة المرور غير صحيحة، حاول مرة أخرى.",
@@ -22,8 +22,8 @@ const texts = {
     },
     en: {
         loginTitle: "Login",
-        emailPlaceholder: "email@example.com",
-        passwordPlaceholder: "Enter your password",
+        emailPlaceholder: "test@example.com",
+        passwordPlaceholder: "123456",
         fillAllFields: "Please fill in all fields!",
         userNotFound: "User not found, please check your email.",
         wrongPassword: "Incorrect password, please try again.",
