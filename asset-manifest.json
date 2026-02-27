@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/Ehsan/static/css/main.18ece640.css",
+    "main.js": "/Ehsan/static/js/main.bc431666.js",
+    "static/media/logo.png": "/Ehsan/static/media/logo.b0a8df96390915e9d098.png",
+    "static/media/Home.png": "/Ehsan/static/media/Home.a4b184059bcfb46d5728.png",
+    "static/media/send-mail (1) 1.png": "/Ehsan/static/media/send-mail (1) 1.6e06532ea29014bde42c.png",
+    "index.html": "/Ehsan/index.html",
+    "main.18ece640.css.map": "/Ehsan/static/css/main.18ece640.css.map",
+    "main.bc431666.js.map": "/Ehsan/static/js/main.bc431666.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.18ece640.css",
+    "static/js/main.bc431666.js"
+  ]
+}
