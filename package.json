@@ -1,7 +1,7 @@
 {
   "name": "ehsan",
   "version": "0.1.0",
-  "homepage": "https://mernaelnshar.git hub.io/Ehsan",
+  "homepage": "https://mernaelnshar.github.io/Ehsan",
   "private": true,
   "dependencies": {
     "bootstrap": "^5.3.3",
