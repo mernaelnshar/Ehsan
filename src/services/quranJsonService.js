@@ -283,8 +283,7 @@ export const loadQuranJson = async () => {
     if (quranCache) return quranCache;
 
     try {
-        const response = await fetch("/quran.json"); // تأكد من مسار الملف
-        quranCache = await response.json();
+        const response = await fetch(`${process.env.PUBLIC_URL}/quran.json`);        quranCache = await response.json();
         console.log("✅ Quran JSON Loaded Successfully!");
         return quranCache;
     } catch (error) {
